@@ -14,15 +14,14 @@
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
-    "chai": "^4.3.6",
     "discord-api-types": "^0.36.1",
     "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
-    "nodemon": "^2.0.19",
     "sequelize": "^6.21.2",
     "sqlite3": "^5.0.8"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "codecov": "^3.8.3",
     "eslint": "^8.19.0",
