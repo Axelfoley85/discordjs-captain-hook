@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const Hooks = require('../helper/HooksHandler');
 const { alphabet } = require('../models/valueObjects')
 
+
 module.exports = {
 	data: new SlashCommandBuilder()
         .setName('hookpoll')

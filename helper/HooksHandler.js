@@ -2,6 +2,7 @@ const MissionHook = require('../models/missionHook.js');
 const { hookToString, hookToPoll} = require('./hookToString')
 const { alphabet } = require('../models/valueObjects')
 
+
 class Hooks {
     static async get() {
         const hooklist = await MissionHook.findAll()

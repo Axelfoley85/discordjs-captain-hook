@@ -12,7 +12,7 @@ class HookToString {
     }
 
     static hookToPoll(title, dm, tier) {
-        let string =  "**" + title + "**" +
+        let string =  "**" + title + "**, " +
             "tier " + tier + ", " + 
             dm
             

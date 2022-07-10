@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const MissionHook = require('../models/missionHook.js');
 const { hookToString } = require('../helper/hookToString')
 
+
 module.exports = {
 	data: new SlashCommandBuilder()
         .setName('hookadd')

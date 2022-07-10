@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const Hooks = require('../helper/HooksHandler');
 
+
 module.exports = {
 	data: new SlashCommandBuilder()
         .setName('hooksshowall')
