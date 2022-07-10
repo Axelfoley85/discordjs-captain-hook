@@ -7,7 +7,7 @@ class HookToString {
         treasurePoints,
         description
     ) {
-        let string = '**' + title + '**,\n*' +
+        let string = '**' + title + '**\n*' +
             dm + ', ' +
             'tier ' + tier + ' - ' +
             checkpoints + ' checkpoints, ' +
