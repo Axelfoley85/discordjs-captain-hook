@@ -3,7 +3,7 @@ const Hooks = require('../helper/HooksHandler');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-        .setName('deletehook')
+        .setName('hookdelete')
         .setDescription('delete single hook by id')
         .addIntegerOption(
             option => option

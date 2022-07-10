@@ -4,7 +4,7 @@ const { hookToString } = require('../helper/hookToString')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-        .setName('register')
+        .setName('hookadd')
         .setDescription('registers a new mission hook')
         .addStringOption(option =>
             option.setName('title')

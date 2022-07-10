@@ -4,7 +4,7 @@ const Hooks = require('../helper/HooksHandler');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-        .setName('showhooks')
+        .setName('hooksshowall')
         .setDescription('list all mission hooks'),
     async execute(interaction) {
         let response = await Hooks.get()
