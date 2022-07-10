@@ -1,4 +1,4 @@
-name: 'Run linting'
+name: 'Lint workflows'
 
 on:
   push:
@@ -13,5 +13,4 @@ jobs:
       - uses: cschleiden/actions-linter@v1
         with:
           workflows: '[".github/workflows/*.yaml"]'
-      
-      - run: npm run lint
+
