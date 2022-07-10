@@ -1,16 +1,15 @@
-const MissionHook = require('../models/missionHook.js');
-const { hookToString, hookToPoll} = require('./hookToString')
+const MissionHook = require('../models/missionHook.js')
+const { hookToString, hookToPoll } = require('./hookToString')
 const { alphabet } = require('../models/valueObjects')
 
-
 class Hooks {
-    static async get() {
+    static async get () {
         const hooklist = await MissionHook.findAll()
-        let string = ""
-        hooklist.forEach( 
+        let string = ''
+        hooklist.forEach(
             (hook) => {
                 const item = hook.dataValues
-                string += "\n\n**#" + item.id + "**\n" +
+                string += '\n\n**#' + item.id + '**\n' +
                     hookToString(
                         item.title,
                         item.dm,
@@ -18,14 +17,14 @@ class Hooks {
                         item.checkpoints,
                         item.treasurePoints,
                         item.description
-                )
+                    )
             }
-        );
+        )
 
-        return string;
+        return string
     }
 
-    static async getPoll() {
+    static async getPoll () {
         const hooklist = await MissionHook.findAll()
         let string = ''
         let i = 0
@@ -37,31 +36,31 @@ class Hooks {
                     item.dm,
                     item.tier
                 ) + '\n'
-                i++;
+                i++
             }
-        );
+        )
 
-        return [string, i];
+        return [string, i]
     }
 
-    static async delete(id) {
+    static async delete (id) {
         const response = await MissionHook.destroy({
             where: {
-                id: id,
+                id
             }
-        });
-        console.log(response);
+        })
+        console.log(response)
     }
 
-    static async getOne(id) {
+    static async getOne (id) {
         const hooklist = await MissionHook.findAll({
             where: {
-                id: id,
+                id
             }
-        });
+        })
 
-        return hooklist;
+        return hooklist
     }
 };
 
-module.exports = Hooks;
+module.exports = Hooks

@@ -1,5 +1,12 @@
 class HookToString {
-    static hookToString (title, dm, tier, checkpoints, treasurePoints, description) {
+    static hookToString (
+        title,
+        dm,
+        tier,
+        checkpoints,
+        treasurePoints,
+        description
+    ) {
         let string = '**' + title + '**,\n*' +
             dm + ', ' +
             'tier ' + tier + ' - ' +

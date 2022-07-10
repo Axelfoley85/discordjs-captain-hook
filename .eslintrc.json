@@ -12,6 +12,6 @@
     },
     "rules": {
         "indent": ["error", 4],
-        "code": 80,
+        "max-len": ["error", 80]
     }
 }
