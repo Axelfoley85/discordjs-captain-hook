@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "fix": "eslint --fix .",
-    "test": "eslint . && mocha 'tests/mocha/**/*.js' --recursive"
+    "test": "eslint . && npm run mocha --recursive",
+    "mocha": "mocha 'tests/mocha/**/*.js'",
+    "coverage": "nyc npm run mocha"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
     "nodemon": "^2.0.19",
+    "nyc": "^15.1.0",
     "sequelize": "^6.21.2",
     "sqlite3": "^5.0.8"
   },

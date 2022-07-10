@@ -2,8 +2,6 @@
 
 /* eslint-disable */
 
-const assert = require('assert')
-// const { describe, before, it } = require('assert')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const HookToString = require('../../helper/hookToString')
