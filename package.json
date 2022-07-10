@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "fix": "eslint --fix .",
-    "test": "eslint . && npm run mocha --recursive",
-    "mocha": "mocha 'tests/mocha/**/*.js'",
-    "coverage": "nyc npm run mocha"
+    "lint": "eslint .",
+    "test": "mocha 'tests/mocha/**/*.js' --recursive",
+    "coverage": "nyc npm run test"
   },
   "author": "",
   "license": "ISC",
