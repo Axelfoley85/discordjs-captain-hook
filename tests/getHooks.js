@@ -1,12 +1,12 @@
-const Hooks = require('../helper/HooksHandler');
-const MissionHook = require('../models/missionHook.js');
+const Hooks = require('../helper/HooksHandler')
+const MissionHook = require('../models/missionHook.js')
 
-async function testOne(id) {
-  const response = await Hooks.getOne(id)
-    if (typeof response[0] == 'undefined') {
-      console.log(id + " does not exist");
+async function testOne (id) {
+    const response = await Hooks.getOne(id)
+    if (typeof response[0] === 'undefined') {
+        console.log(id + ' does not exist')
     } else {
-      console.log(response[0]);
+        console.log(response[0])
     }
 }
 
@@ -52,17 +52,16 @@ async function testOne(id) {
         //     checkpoints: 4,
         //     treasurePoints: 2,
         // });
-        // await Hooks.delete(16)        
+        // await Hooks.delete(16)
 
         const response = await Hooks.get()
-        console.log(response);
+        console.log(response)
 
-        await testOne(3);
-        await testOne(9999);
+        await testOne(3)
+        await testOne(9999)
 
-        console.log(await Hooks.getPoll());
-  
+        console.log(await Hooks.getPoll())
     } catch (e) {
-        console.error(e);
+        console.error(e)
     };
-})().catch((e) => console.error());
+})().catch((e) => console.error())

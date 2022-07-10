@@ -11,5 +11,7 @@
         "ecmaVersion": "latest"
     },
     "rules": {
+        "indent": ["error", 4],
+        "code": 80,
     }
 }
