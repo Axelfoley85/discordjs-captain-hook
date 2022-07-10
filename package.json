@@ -6,8 +6,8 @@
   "scripts": {
     "fix": "eslint --fix .",
     "lint": "eslint .",
-    "test": "nyc --reporter=lcov mocha 'tests/mocha/**/*.js' --recursive",
-    "coverage": "codecov"
+    "test": "nyc mocha 'tests/mocha/**/*.js' --recursive",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "",
   "license": "ISC",
