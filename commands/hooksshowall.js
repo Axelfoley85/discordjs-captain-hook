@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const { MessageEmbed } = require('discord.js')
+const Action = require('../helper/Action')
 const Hooks = require('../helper/HooksHandler')
 
 module.exports = {
@@ -7,14 +8,6 @@ module.exports = {
         .setName('hooksshowall')
         .setDescription('list all mission hooks'),
     async execute (interaction) {
-        const response = await Hooks.get()
-
-        const embed = new MessageEmbed()
-            .setColor('#ff0000')
-            .setDescription(response)
-        await interaction.reply({
-            embeds: [embed],
-            content: '**Available mission hooks**'
-        })
+        await interaction.reply(await Action.post_hooks())
     }
 }
