@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js')
 const Hooks = require('./HooksHandler')
 
 class Action {
-    async post_hooks () {
+    static async post_hooks () {
         const response = await Hooks.get()
 
         const embed = new MessageEmbed()
