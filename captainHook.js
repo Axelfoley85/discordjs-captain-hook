@@ -24,8 +24,6 @@ client.once('ready', () => {
     // MissionHook.sync({ force: true })
 
     client.user.setPresence({ activities: [{ name: 'treasure hunt' }] })
-    // const channel = client.channels.cache.get('992389917701324922');
-    // channel.send('content')
 })
 
 client.commands = new Collection()

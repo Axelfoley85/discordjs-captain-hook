@@ -15,13 +15,20 @@ class Action {
     }
 
     static async deleteAllMessages (client, channelID) {
-        let fetched
-        const channel = client.channels.cache.get(channelID)
-        do {
-            fetched = await channel.fetchMessages({ limit: 100 })
-            message.channel.bulkDelete(fetched)
-        }
-        while (fetched.size >= 2)
+        const channel = client.channels.cache.get(channelID);
+        (async () => {
+            let deleted
+            do {
+                deleted = await channel.bulkDelete(100)
+            } while (deleted.size !== 0)
+        })()
+        // let fetched
+        // const channel = client.channels.cache.get(channelID)
+        // do {
+        //     fetched = await channel.fetchMessages({ limit: 100 })
+        //     message.channel.bulkDelete(fetched)
+        // }
+        // while (fetched.size >= 2)
     }
 }
 
