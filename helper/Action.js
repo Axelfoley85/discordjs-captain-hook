@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js')
 const Hooks = require('./HooksHandler')
 
 class Action {
-    static async post_hooks () {
+    static async postHooks () {
         const response = await Hooks.get()
 
         const embed = new MessageEmbed()
@@ -12,6 +12,16 @@ class Action {
             embeds: [embed],
             content: '**Available mission hooks**'
         }
+    }
+
+    static async deleteAllMessages (client, channelID) {
+        let fetched
+        const channel = client.channels.cache.get(channelID)
+        do {
+            fetched = await channel.fetchMessages({ limit: 100 })
+            message.channel.bulkDelete(fetched)
+        }
+        while (fetched.size >= 2)
     }
 }
 

@@ -6,6 +6,6 @@ module.exports = {
         .setName('hooksshowall')
         .setDescription('list all mission hooks'),
     async execute (interaction) {
-        await interaction.reply(await Action.post_hooks())
+        await interaction.reply(await Action.postHooks())
     }
 }
