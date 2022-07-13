@@ -4,6 +4,6 @@ module.exports = {
     clientId: process.env.clientId || 'foo',
     guildId: process.env.guildId || 'foo',
     token: process.env.token || 'foo',
-    hook_channel: process.env.hook_channel || '0000',
-    vote_channel: process.env.vote_channel || '000'
+    hookChannel: process.env.hookChannel || '0000',
+    voteChannel: process.env.voteChannel || '000'
 }

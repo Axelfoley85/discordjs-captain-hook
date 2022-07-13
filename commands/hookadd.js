@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const MissionHook = require('../models/missionHook.js')
 const { hookToString } = require('../helper/messageFormat')
-const { hook_channel } = require('../config.js')
+const { hookChannel } = require('../config.js')
 const { updateHookChannel } = require('../helper/Action.js')
 
 module.exports = {
@@ -61,7 +61,7 @@ module.exports = {
             console.error(error)
             return interaction.reply('Arrrr, something went wrong!')
         }
-        await updateHookChannel(client, hook_channel)
+        await updateHookChannel(client, hookChannel)
 
         await interaction.reply({
             content: 'Mission hook created: \n' + hookToString(

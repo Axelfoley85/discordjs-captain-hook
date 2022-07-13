@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const Hooks = require('../helper/HooksHandler')
-const { vote_channel } = require('../config.js')
+const { voteChannel } = require('../config.js')
 const { sendPollVote } = require('../helper/Action')
 
 module.exports = {
@@ -8,10 +8,10 @@ module.exports = {
         .setName('hookpoll')
         .setDescription('make poll for next mission hooks'),
     async execute (interaction, client) {
-        const channel = client.channels.cache.get(vote_channel);
+        const channel = client.channels.cache.get(voteChannel)
         const response = await Hooks.getPoll()
 
-        const message = await interaction.reply({
+        await interaction.reply({
             content: 'Vote has been posted in <#' + channel + '>',
             ephemeral: true
         })
@@ -19,4 +19,3 @@ module.exports = {
         await sendPollVote(response, channel)
     }
 }
-

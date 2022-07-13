@@ -13,14 +13,14 @@ class Action {
     }
 
     static async updateHookChannel (client, channelID) {
-        const channel = client.channels.cache.get(channelID);
+        const channel = client.channels.cache.get(channelID)
 
-        let deleted;
+        let deleted
         do {
-            deleted = await channel.bulkDelete(100);
-        } while (deleted.size != 0);
+            deleted = await channel.bulkDelete(100)
+        } while (deleted.size !== 0)
 
-        channel.send(await Action.postHooks());
+        channel.send(await Action.postHooks())
     }
 
     static async sendPollVote (content, channel) {
