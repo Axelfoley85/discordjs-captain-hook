@@ -1,11 +1,13 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const MissionHook = require('../models/missionHook.js')
-const { hookToString } = require('../helper/hookToString')
+const { hookToString } = require('../helper/messageFormat')
+const { hook_channel } = require('../config.js')
+const { updateHookChannel } = require('../helper/Action.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('hookadd')
-        .setDescription('registers a new mission hook')
+        .setDescription('add a mission hook')
         .addStringOption(option =>
             option.setName('title')
                 .setDescription('The title of the mission hook')
@@ -34,7 +36,7 @@ module.exports = {
                 .setName('treasurepoints')
                 .setDescription('treasure points')
                 .setRequired(true)),
-    async execute (interaction) {
+    async execute (interaction, client) {
         const title = interaction.options.getString('title')
         const description = interaction.options.getString('description')
         const dm = interaction.options.getString('dm')
@@ -59,11 +61,11 @@ module.exports = {
             console.error(error)
             return interaction.reply('Arrrr, something went wrong!')
         }
+        await updateHookChannel(client, hook_channel)
 
         await interaction.reply({
             content: 'Mission hook created: \n' + hookToString(
                 title,
-                description,
                 dm,
                 tier,
                 checkpoints,

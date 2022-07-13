@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js')
+
 class HookToString {
     static hookToString (
         title,
@@ -24,6 +26,12 @@ class HookToString {
             dm
 
         return string
+    }
+
+    static embedMessageFrom (content) {
+        return new MessageEmbed()
+            .setColor('#ff0000')
+            .setDescription(content)
     }
 }
 

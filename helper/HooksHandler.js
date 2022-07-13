@@ -1,5 +1,5 @@
 const MissionHook = require('../models/missionHook.js')
-const { hookToString, hookToPoll } = require('./hookToString')
+const { hookToString, hookToPoll } = require('./messageFormat')
 const { alphabet } = require('../models/valueObjects')
 
 class Hooks {

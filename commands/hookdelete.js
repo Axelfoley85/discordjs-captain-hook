@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const Hooks = require('../helper/HooksHandler')
+const { hook_channel } = require('../config.js')
+const { updateHookChannel } = require('../helper/Action')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,7 +12,7 @@ module.exports = {
                 .setName('id')
                 .setDescription('hook id')
                 .setRequired(true)),
-    async execute (interaction) {
+    async execute (interaction, client) {
         const id = interaction.options.getInteger('id')
         try {
             const response = await Hooks.getOne(id)
@@ -28,6 +30,7 @@ module.exports = {
                 ephemeral: true
             })
         }
+        await updateHookChannel(client, hook_channel)
 
         await interaction.reply({
             content: 'Hook with id: ' + id + ' was deleted',
