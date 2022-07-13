@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const MissionHook = require('../models/missionHook.js')
-const { hookToString } = require('../helper/messageFormat')
+const { hookToString } = require('../helper/MessageFormat')
 const { hookChannel } = require('../config.js')
 const { updateHookChannel } = require('../helper/Action.js')
 

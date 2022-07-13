@@ -1,6 +1,6 @@
 const Hooks = require('./HooksHandler')
 const { alphabet } = require('../models/valueObjects')
-const { embedMessageFrom } = require('./messageFormat')
+const { embedMessageFrom } = require('./MessageFormat')
 
 class Action {
     static async postHooks () {
