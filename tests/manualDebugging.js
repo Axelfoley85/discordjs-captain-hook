@@ -15,21 +15,21 @@ async function testOne (id) {
 (async () => {
     try {
         // await MissionHook.create({
-        //     title: "Ask for Dax Winterfield in the Golden Mug",
+        //     title: 'Ask for Dax Winterfield in the Golden Mug',
         //     description: "Ask for Dax Winterfield in the Golden Mug about the raided delivery for Aldig's Inn.",
-        //     dm: "Axel",
+        //     dm: 'Axel',
         //     tier: 1,
         //     checkpoints: 4,
-        //     treasurePoints: 2,
-        // });
+        //     treasurePoints: 2
+        // })
         // await MissionHook.create({
         //     title: "Talk to Bredan Murielson's superior, Irsu Kewap",
         //     description: "Talk to Bredan Murielson's superior, Irsu Kewap, about other locations impacted by the gods whose strengths are fed and profiting of the current conflicts.",
-        //     dm: "Axel",
+        //     dm: 'Axel',
         //     tier: 1,
         //     checkpoints: 4,
-        //     treasurePoints: 2,
-        // });
+        //     treasurePoints: 2
+        // })
         // await MissionHook.create({
         //     title: "The Underground Cult (easy and wacky)",
         //     description: "Rumours of something new in town are spreading fast, people are seen walking with confused minds and authorities are looking for information. Will you discover the truth that lays underground?",
@@ -56,13 +56,14 @@ async function testOne (id) {
         // });
         // await Hooks.delete(16)
 
-        const response = await Hooks.get()
-        console.log(response)
+        // const response = await Hooks.get()
+        // console.log(response)
 
-        await testOne(3)
-        await testOne(9999)
+        // await testOne(3)
+        // await testOne(9999)
 
-        console.log(await Hooks.getPoll())
+        console.log(await Hooks.get())
+        console.log(typeof (await Hooks.getOne(1)))
     } catch (e) {
         console.error(e)
     };

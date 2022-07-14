@@ -26,6 +26,7 @@ class Hooks {
 
     static async getPoll () {
         const hooklist = await MissionHook.findAll()
+        console.log(hooklist)
         let string = ''
         let i = 0
         hooklist.forEach(
@@ -53,13 +54,13 @@ class Hooks {
     }
 
     static async getOne (id) {
-        const hooklist = await MissionHook.findAll({
+        const idEntry = await MissionHook.findAll({
             where: {
                 id
             }
         })
 
-        return hooklist
+        return idEntry
     }
 };
 
