@@ -1,15 +1,16 @@
 const Hooks = require('./HooksHandler')
 const { alphabet } = require('../models/valueObjects')
-const { embedMessageFrom } = require('./MessageFormat')
+const MessageFormat = require('./MessageFormat')
 
 class Action {
     static async postHooks () {
         const allHooks = await Hooks.get()
 
-        return {
-            embeds: [embedMessageFrom(allHooks)],
+        const embeddedMessage = {
+            embeds: [MessageFormat.embedMessageFrom(allHooks)],
             content: '**Available mission hooks**'
         }
+        return embeddedMessage
     }
 
     static async updateHookChannel (client, channelID) {
@@ -25,7 +26,7 @@ class Action {
 
     static async sendPollVote (content, channel) {
         const message = await channel.send({
-            embeds: [embedMessageFrom(content[0])],
+            embeds: [MessageFormat.embedMessageFrom(content[0])],
             content: '**:bar_chart: HOOK! HOOK! HOOK! HOOK! HOOK!**',
             fetchReply: true
         })

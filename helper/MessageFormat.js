@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 
-class HookToString {
+class MessageFormat {
     static hookToString (
         title,
         dm,
@@ -35,4 +35,4 @@ class HookToString {
     }
 }
 
-module.exports = HookToString
+module.exports = MessageFormat

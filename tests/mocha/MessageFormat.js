@@ -9,7 +9,7 @@ const { MessageEmbed } = require('discord.js')
 chai.use(chaiAsPromised)
 const expect = chai.expect
 
-describe('../helper/hookToString', () => {
+describe('../../helper/MessageFormat', () => {
     describe('# hookToString', () => {
         it('will return expected values', () => {
             return expect(MessageFormat.hookToString('myTitle', 'myDM', 1, 1, 1, 'myDescr')).to.equal(

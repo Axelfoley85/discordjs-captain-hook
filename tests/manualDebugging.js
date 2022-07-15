@@ -64,6 +64,20 @@ async function testOne (id) {
 
         console.log(await Hooks.get())
         console.log(typeof (await Hooks.getOne(1)))
+
+        class Client {
+            channels = {
+                cache: {
+                    get () { return 'myChannel' }
+                }
+            }
+        }
+
+        const client = new Client()
+        console.log(client)
+
+        const channel = client.channels.cache.get()
+        console.log(channel)
     } catch (e) {
         console.error(e)
     };

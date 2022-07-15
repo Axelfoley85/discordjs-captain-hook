@@ -76,7 +76,7 @@ describe('../../helper/HooksHandler', () => {
 
         sinon.assert.calledOnce(MissionHookstub)
         // eslint-disable-next-line max-len
-        expect(response[0]).to.equal(
+        expect(response[0]).to.deep.equal(
             // This should return several lines of string, but isn't fetched
             // here in the test
             '\n'
