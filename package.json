@@ -5,7 +5,7 @@
   "main": "captainHook.js",
   "scripts": {
     "fix": "eslint --fix .",
-    "test": "eslint . && nyc mocha 'tests/mocha/**/*.js' --recursive",
+    "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "",
@@ -23,6 +23,7 @@
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "codecov": "^3.8.3",
+    "delay": "^5.0.0",
     "eslint": "^8.19.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
