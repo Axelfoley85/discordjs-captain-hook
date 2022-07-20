@@ -3,13 +3,11 @@
 /* eslint-disable */
 
 const sinon = require('sinon')
-const { Client, Intents } = require('discord.js')
 const Action = require('../../helper/Action')
 const Hooks = require('../../helper/HooksHandler')
 const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-// var sandbox = require("sinon").createSandbox();
 const sinonChai = require('sinon-chai')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)

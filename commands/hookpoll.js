@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const Hooks = require('../helper/HooksHandler')
+const Action = require('../helper/Action')
 const { voteChannel } = require('../config.js')
-const { sendPollVote } = require('../helper/Action')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,6 +16,6 @@ module.exports = {
             ephemeral: true
         })
 
-        await sendPollVote(response[0], response[1], channel)
+        await Action.sendPollVote(response[0], response[1], channel)
     }
 }
