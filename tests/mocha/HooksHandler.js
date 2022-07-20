@@ -46,12 +46,16 @@ describe('../../helper/HooksHandler', () => {
 
     it('HooksHandler.delete should output to console log', async () => {
         sinon.spy(console, 'log')
-        const MissionHookstub = sinon.stub(MissionHook, 'destroy').resolves(1)
+        const id = 1
+        const MissionHookstub = sinon.stub(MissionHook, 'destroy').resolves(id)
 
-        await HooksHandler.delete(1)
+        await HooksHandler.delete(id)
 
-        sinon.assert.calledOnce(MissionHookstub)
-        expect(console.log).to.have.been.calledWith(1)
+        sinon.assert.calledOnceWithExactly(
+            MissionHookstub,
+            { where: { id: 1 } }
+        )
+        expect(console.log).to.have.been.calledWith(id)
     })
 
     it('HooksHandler.getPoll should return string and count', async () => {
