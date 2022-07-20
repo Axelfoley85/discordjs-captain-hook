@@ -24,15 +24,15 @@ class Action {
         channel.send(await Action.postHooks())
     }
 
-    static async sendPollVote (content, channel) {
+    static async sendPollVote (content, hookCount, channel) {
         const message = await channel.send({
-            embeds: [MessageFormat.embedMessageFrom(content[0])],
+            embeds: [MessageFormat.embedMessageFrom(content)],
             content: '**:bar_chart: HOOK! HOOK! HOOK! HOOK! HOOK!**',
             fetchReply: true
         })
 
         try {
-            for (let i = 0; i < content[1]; i++) {
+            for (let i = 0; i < hookCount; i++) {
                 await message.react(alphabet[i])
             }
         } catch (error) {

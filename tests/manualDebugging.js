@@ -12,6 +12,16 @@ async function testOne (id) {
     }
 }
 
+class FakeClient {
+    constructor () {
+        this.foo = 'bar'
+    }
+
+    channel (self) {
+        return self.foo
+    }
+}
+
 (async () => {
     try {
         // await MissionHook.create({
@@ -39,14 +49,6 @@ async function testOne (id) {
         //     treasurePoints: 2,
         // });
         // await MissionHook.create({
-        //     title: "Track down Dream and Moon",
-        //     description: "Track down Dream and Moon, who have gone missing near the Westwoods.",
-        //     dm: "Hannah",
-        //     tier: 1,
-        //     checkpoints: 4,
-        //     treasurePoints: 2,
-        // });
-        // await MissionHook.create({
         //     title: "Attend Duke Oleander's birthday party",
         //     description: "Attend Duke Oleander's birthday party and help Daleth \"acquire\" a mysterious artefact locked in the Duke's vault.",
         //     dm: "Hannah",
@@ -62,22 +64,26 @@ async function testOne (id) {
         // await testOne(3)
         // await testOne(9999)
 
-        console.log(await Hooks.get())
-        console.log(typeof (await Hooks.getOne(1)))
+        // console.log(await Hooks.get())
+        // console.log(typeof (await Hooks.getOne(1)))
 
-        class Client {
-            channels = {
-                cache: {
-                    get () { return 'myChannel' }
-                }
-            }
-        }
+        // class Client {
+        //     channels = {
+        //         cache: {
+        //             get () { return 'myChannel' }
+        //         }
+        //     }
+        // }
 
-        const client = new Client()
-        console.log(client)
+        const client = new FakeClient()
+        const channel = client.channel()
 
-        const channel = client.channels.cache.get()
         console.log(channel)
+
+        // console.log(client)
+
+        // const channel = client.channels.cache.get()
+        // console.log(channel)
     } catch (e) {
         console.error(e)
     };

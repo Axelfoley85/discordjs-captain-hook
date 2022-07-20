@@ -16,6 +16,6 @@ module.exports = {
             ephemeral: true
         })
 
-        await sendPollVote(response, channel)
+        await sendPollVote(response[0], response[1], channel)
     }
 }

@@ -2,21 +2,32 @@
 
 /* eslint-disable */
 
-const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
-const { Client, Intents } = require('discord.js')
 const sinon = require('sinon')
-// var sandbox = require("sinon").createSandbox();
-const sinonChai = require('sinon-chai')
+const { Client, Intents } = require('discord.js')
 const Action = require('../../helper/Action')
 const Hooks = require('../../helper/HooksHandler')
 const MessageFormat = require('../../helper/MessageFormat')
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
+// var sandbox = require("sinon").createSandbox();
+const sinonChai = require('sinon-chai')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-const delay = require('delay')
 
-// eslint-disable-next-line no-undef
+var client = {
+    channels: {
+        cache: { 
+            get: function () {}
+        }
+    }
+}
+var channel = {
+    bulkDelete: function () {},
+    send: function () {}
+}
+var message = { react: function () {} }
+
 describe('../../helper/Action', function () {
 
     beforeEach( function () {
@@ -25,92 +36,79 @@ describe('../../helper/Action', function () {
 
     afterEach( function () {
         sinon.restore()
-        // sandbox.restore();
     })
 
     describe('Action.postHooks', function () {
-        // eslint-disable-next-line no-undef
         it('should return embeddedMessage', async function () {
-            const HooksStub = sinon.stub(Hooks, 'get')
-            // eslint-disable-next-line max-len
-            const embedMessageStub = sinon.stub(MessageFormat, 'embedMessageFrom').returns('Bar1\nBar2')
-    
-            const embeddedMessage = Action.postHooks()
-    
-            await delay(1000)
-            sinon.assert.calledOnce(HooksStub)
-            sinon.assert.calledOnce(embedMessageStub)
-            expect(embeddedMessage).to.eventually.deep.equal({
+            const HooksStub = sinon.stub(Hooks, 'get').resolves('foo')
+            const embedMessageStub = sinon
+                .stub(MessageFormat, 'embedMessageFrom')
+                .returns('Bar1\nBar2')
+            const expectedEmbedMessage = {
                 embeds: ['Bar1\nBar2'],
                 content: '**Available mission hooks**'
-            })
+            }
+
+            const embeddedMessage = await Action.postHooks()
+
+            sinon.assert.calledOnce(HooksStub)
+            sinon.assert.calledOnce(embedMessageStub)
+            sinon.assert.match(embeddedMessage, expectedEmbedMessage)
         })
     })
 
-    // // eslint-disable-next-line no-undef
-    // describe('Action.updateHookChannel', async function () {
-    //     it(
-    //         'should run ' +
-    //         'channel.bulkDelete + channel.send',
-    //         async function () {
-    //             // sinon.stub(Client.prototype)
-    //             const client = new Client({
-    //                 intents: [
-    //                     Intents.FLAGS.GUILDS,
-    //                 ]
-    //             })
-    //             const channel = client.channels.cache.get(1234)
-    //             // const clientStub = sinon.stub(client, 'channels.cache.get')
-    //             // sinon.stub(Client, 'get')
-
-    //             const deleted = sinon.stub(channel, 'bulkDelete').resolves([])
-    //             const channelSendStubd = sinon.stub(channel, 'send')
+    describe('Action.updateHookChannel', async function () {
+        it(
+            'should run ' +
+            'channel.bulkDelete + channel.send',
+            async function () {
+                const clientMock = client
+                const clientStub = sinon.stub(client.channels.cache, 'get')
+                    .returns(channel)
+                const deleted = sinon.stub(channel, 'bulkDelete')
+                deleted.onCall(0).resolves({ size: 5})
+                deleted.onCall(1).resolves({ size: 0})
+                const channelSendStubd = sinon.stub(channel, 'send')
     
-    //             expect(Action.updateHookChannel(clientStub, '1234'))
-    //                 .to.eventually.not.throw()
-                
-    //             await delay(1000)
-    //             sinon.assert.called(deleted)
-    //             sinon.assert.calledOnce(channelSendStubd)
-    //         }
-    //     )
-    // })
-
-    // describe('Action.sendPollVote', async function () {
-    //     it(
-    //         ' should run ' +
-    //         'channel.send + message.react',
-    //         async function () {
-    //             const messageStub = sinon.stub(channel, 'send').resolves({
-    //                 react: 'foo'
-    //             })
-    //             const reactions = sinon.stub(message, 'react')
+                await Action.updateHookChannel(client, '1234')
     
-    //             expect(Action.sendPollVote(['baz', 2], 'foo'))
-    //                 .to.eventually.not.throw()
-                
-    //             await delay(1000)
-    //             sinon.assert.calledOnce(messageStub)
-    //             sinon.assert.calledTwice(reactions)
-    //         }
-    //     )
+                sinon.assert.calledTwice(deleted)
+                sinon.assert.calledOnce(channelSendStubd)
+            }
+        )
+    })
 
-    //     it(
-    //         'should run ' +
-    //         'should log error', async function () {
-    //             sinon.stub(channel, 'send').resolves({
-    //                 react: 'foo'
-    //             })
-    //             // sandbox.stub(message, 'react').throws(new Error('foo'))
-    //             sinon.stub(message, 'react').rejects(Error('foo'))
-                
-    //             Action.sendPollVote(['baz', 2], 'foo')
+    describe('Action.sendPollVote', async function () {
+        it(
+            ' should run ' +
+            'channel.send + message.react',
+            async function () {
+                const hookCount = 5
+                const sendStub = sinon.stub(channel, 'send')
+                    .resolves(message)
+                const reactions = sinon.stub(message, 'react')
     
-    //             await delay(1000)
-    //             expect(console.error).to.have.been.calledWith(
-    //                 'One of the emojis failed to react: foo'
-    //             )
-    //         }
-    //     )
-    // })
+                await Action.sendPollVote('baz', hookCount, channel)
+
+                sinon.assert.calledOnce(sendStub)
+                sinon.assert.callCount(reactions, hookCount)
+            }
+        )
+
+        it(
+            'should run ' +
+            'log error', async function () {
+                sinon.stub(channel, 'send').resolves(message)
+                const exception = Error('foo')
+                const reactStub = sinon.stub(message, 'react')
+                    .throws(exception)
+
+                await Action.sendPollVote('baz', 2, channel)
+
+                expect(console.error).to.have.been.calledWith(
+                    'One of the emojis failed to react:'
+                )
+            }
+        )
+    })
 })
