@@ -62,8 +62,8 @@ describe('../../helper/Action', function () {
             'should run ' +
             'channel.bulkDelete + channel.send',
             async function () {
-                const clientMock = client
-                const clientStub = sinon.stub(client.channels.cache, 'get')
+                sinon.stub(Action, 'postHooks')
+                sinon.stub(client.channels.cache, 'get')
                     .returns(channel)
                 const deleted = sinon.stub(channel, 'bulkDelete')
                 deleted.onCall(0).resolves({ size: 5})
