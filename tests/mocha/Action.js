@@ -62,7 +62,7 @@ describe('../../helper/Action', function () {
             'should run ' +
             'channel.bulkDelete + channel.send',
             async function () {
-                sinon.stub(Action, 'postHooks')
+                const postHooksStub = sinon.stub(Action, 'postHooks')
                 sinon.stub(client.channels.cache, 'get')
                     .returns(channel)
                 const deleted = sinon.stub(channel, 'bulkDelete')
@@ -74,6 +74,7 @@ describe('../../helper/Action', function () {
     
                 sinon.assert.calledTwice(deleted)
                 sinon.assert.calledOnce(channelSendStubd)
+                sinon.assert.calledOnce(postHooksStub)
             }
         )
     })
