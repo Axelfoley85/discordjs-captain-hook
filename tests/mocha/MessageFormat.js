@@ -5,7 +5,7 @@
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const MessageFormat = require('../../helper/MessageFormat')
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 chai.use(chaiAsPromised)
 const expect = chai.expect
 
@@ -27,7 +27,7 @@ describe('../../helper/MessageFormat', () => {
     describe('# embedMessageFrom', () => {
         it('will return expected object', () => {
             return expect(MessageFormat.embedMessageFrom('Some text')).to.be.
-                instanceof(MessageEmbed)
+                instanceof(EmbedBuilder)
         })
     })
 })

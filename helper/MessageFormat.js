@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 
 class MessageFormat {
     static hookToString (
@@ -29,7 +29,7 @@ class MessageFormat {
     }
 
     static embedMessageFrom (content) {
-        return new MessageEmbed()
+        return new EmbedBuilder()
             .setColor('#ff0000')
             .setDescription(content)
     }
