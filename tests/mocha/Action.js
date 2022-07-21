@@ -9,22 +9,10 @@ const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
+const { message, channel, client } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-
-var client = {
-    channels: {
-        cache: { 
-            get: function () {}
-        }
-    }
-}
-var channel = {
-    bulkDelete: function () {},
-    send: function () {}
-}
-var message = { react: function () {} }
 
 describe('../../helper/Action', function () {
 
@@ -98,9 +86,8 @@ describe('../../helper/Action', function () {
             'should run ' +
             'log error', async function () {
                 sinon.stub(channel, 'send').resolves(message)
-                const exception = Error('foo')
                 const reactStub = sinon.stub(message, 'react')
-                    .throws(exception)
+                    .throws(Error('foo'))
 
                 await Action.sendPollVote('baz', 2, channel)
 

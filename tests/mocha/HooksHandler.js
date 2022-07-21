@@ -9,26 +9,10 @@ const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
 const HooksHandler = require('../../helper/HooksHandler')
 const MissionHook = require('../../models/missionHook')
+const { missionHookEntry } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-
-const missionHookEntry = [
-    {
-        dataValues: {
-            id: 1,
-            title: 'Ask for Dax Winterfield in the Golden Mug',
-            // eslint-disable-next-line max-len
-            description: "Ask for Dax Winterfield in the Golden Mug about the raided delivery for Aldig's Inn.",
-            dm: 'Axel',
-            tier: 1,
-            checkpoints: 4,
-            treasurePoints: 2,
-            createdAt: '2022-07-10T03:25:51.279Z',
-            updatedAt: '2022-07-10T03:25:51.279Z'
-        }
-    }
-]
 
 describe('../../helper/HooksHandler', () => {
     // eslint-disable-next-line no-undef
