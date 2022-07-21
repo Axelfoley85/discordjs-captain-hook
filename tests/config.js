@@ -14,7 +14,8 @@ module.exports = {
     interaction: {
         reply () {},
         options: {
-            getInteger () {}
+            getInteger () {},
+            getString () {}
         }
     },
     missionHookEntry: [

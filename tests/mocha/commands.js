@@ -11,6 +11,7 @@ const Action = require('../../helper/Action')
 const Hooks = require('../../helper/HooksHandler')
 const { interaction, client, channel, missionHookEntry } = require('../config')
 const { hookChannel } = require('../../config')
+const MissionHook = require('../../models/missionHook')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -154,5 +155,109 @@ describe('../../commands', function () {
                     }
                 )
         })
+    })
+
+    describe('hookadd', function () {
+        it(
+            'should call MissionHook.create + ' + 
+            'Action.updateHookChannel + ' +
+            'interaction.reply + ',
+            async function () {
+                const command = require(path.join(commandPath, 'hookadd'))
+                sinon.stub(interaction.options, 'getString')
+                    .onCall(0)
+                    .returns('title')
+                    .onCall(1)
+                    .returns('descr')
+                    .onCall(2)
+                    .returns('dm')
+                sinon.stub(interaction.options, 'getInteger')
+                    .onCall(0)
+                    .returns(1)
+                    .onCall(1)
+                    .returns(2)
+                    .onCall(2)
+                    .returns(3)
+                const createStub = sinon.stub(MissionHook, 'create')
+                const updateStub = sinon.stub(Action, 'updateHookChannel')
+                const replyStub = sinon.stub(interaction, 'reply')
+
+                await command.execute(interaction, client)
+
+                sinon.assert.calledOnceWithExactly(
+                    createStub,
+                    {
+                        title: 'title',
+                        description: 'descr',
+                        dm: 'dm',
+                        tier: 1,
+                        checkpoints: 2,
+                        treasurePoints: 3
+                    }
+                )
+                sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
+                sinon.assert.calledOnceWithExactly(
+                    replyStub,
+                    {
+                        content: 'Mission hook created: \n' +
+                          '**title**\n' +
+                          '*dm, tier 1 - 2 checkpoints, 3 treasure points*\n' +
+                          'descr',
+                        ephemeral: true
+                      }
+                )
+        })
+
+        // it(
+        //     'should log error on missing id + ' + 
+        //     'interaction.reply error message ',
+        //     async function () {
+        //         const id = 1
+        //         const command = require(path.join(commandPath, 'hookadd'))
+        //         sinon.stub(interaction.options, 'getInteger')
+        //             .returns(id)
+        //         sinon.stub(Hooks, 'getOne')
+        //             .resolves([])
+        //         const replyStub = sinon.stub(interaction, 'reply')
+
+        //         await command.execute(interaction, client)
+
+        //         expect(console.log).to.have.been.calledWith(
+        //             'User requested delete for non-existent', {id}
+        //         )
+        //         sinon.assert.calledOnceWithExactly(
+        //             replyStub,
+        //             {
+        //                 content: 'Arrrrr, that id doesn\'t exist',
+        //                 ephemeral: true
+        //             }
+        //         )
+        // })
+
+        // it(
+        //     'should log error on unknown error + ' + 
+        //     'interaction.reply error message',
+        //     async function () {
+        //         const id = 1
+        //         const error = Error('test error')
+        //         const command = require(path.join(commandPath, 'hookadd'))
+        //         sinon.stub(interaction.options, 'getInteger')
+        //             .returns(id)
+        //         sinon.stub(Hooks, 'getOne').throws(error)
+        //         const replyStub = sinon.stub(interaction, 'reply')
+
+        //         await command.execute(interaction, client)
+
+        //         expect(console.error).to.have.been.calledWith(
+        //             'Something went wrong:'
+        //         )
+        //         sinon.assert.calledOnceWithExactly(
+        //             replyStub,
+        //             {
+        //                 content: 'Arrrrr, something went wrong!',
+        //                 ephemeral: true
+        //             }
+        //         )
+        // })
     })
 })

@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const MissionHook = require('../models/missionHook.js')
-const { hookToString } = require('../helper/MessageFormat')
 const { hookChannel } = require('../config.js')
-const { updateHookChannel } = require('../helper/Action.js')
+const Action = require('../helper/Action.js')
+const MessageFormat = require('../helper/MessageFormat')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -56,15 +56,21 @@ module.exports = {
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 console.error(error)
-                return interaction.reply('Arrrrrr, that title already exists.')
+                return interaction.reply({
+                    content: 'Arrrrrr, that title already exists.',
+                    ephemeral: true
+                })
             }
             console.error(error)
-            return interaction.reply('Arrrr, something went wrong!')
+            return interaction.reply({
+                content: 'Arrrr, something went wrong!',
+                ephemeral: true
+            })
         }
-        await updateHookChannel(client, hookChannel)
+        await Action.updateHookChannel(client, hookChannel)
 
         await interaction.reply({
-            content: 'Mission hook created: \n' + hookToString(
+            content: 'Mission hook created: \n' + MessageFormat.hookToString(
                 title,
                 dm,
                 tier,
