@@ -55,13 +55,13 @@ module.exports = {
             })
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
-                console.error(error)
+                console.error('Hook title already exists:', error)
                 return interaction.reply({
                     content: 'Arrrrrr, that title already exists.',
                     ephemeral: true
                 })
             }
-            console.error(error)
+            console.error('Something went wrong!', error)
             return interaction.reply({
                 content: 'Arrrr, something went wrong!',
                 ephemeral: true

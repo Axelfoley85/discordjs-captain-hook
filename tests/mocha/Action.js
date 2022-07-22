@@ -47,54 +47,49 @@ describe('../../helper/Action', function () {
         it(
             'should run ' +
             'channel.bulkDelete + channel.send',
-            async function () {
-                const postHooksStub = sinon.stub(Action, 'postHooks')
-                sinon.stub(client.channels.cache, 'get')
-                    .returns(channel)
-                const deleted = sinon.stub(channel, 'bulkDelete')
-                deleted.onCall(0).resolves({ size: 5})
-                deleted.onCall(1).resolves({ size: 0})
-                const channelSendStubd = sinon.stub(channel, 'send')
-    
-                await Action.updateHookChannel(client, '1234')
-    
-                sinon.assert.calledTwice(deleted)
-                sinon.assert.calledOnce(channelSendStubd)
-                sinon.assert.calledOnce(postHooksStub)
-            }
-        )
+        async function () {
+            const postHooksStub = sinon.stub(Action, 'postHooks')
+            sinon.stub(client.channels.cache, 'get')
+                .returns(channel)
+            const deleted = sinon.stub(channel, 'bulkDelete')
+            deleted.onCall(0).resolves({ size: 5})
+            deleted.onCall(1).resolves({ size: 0})
+            const channelSendStubd = sinon.stub(channel, 'send')
+
+            await Action.updateHookChannel(client, '1234')
+
+            sinon.assert.calledTwice(deleted)
+            sinon.assert.calledOnce(channelSendStubd)
+            sinon.assert.calledOnce(postHooksStub)
+        })
     })
 
     describe('Action.sendPollVote', async function () {
         it(
             ' should run ' +
             'channel.send + message.react',
-            async function () {
-                const hookCount = 5
-                const sendStub = sinon.stub(channel, 'send')
-                    .resolves(message)
-                const reactions = sinon.stub(message, 'react')
-    
-                await Action.sendPollVote('baz', hookCount, channel)
+        async function () {
+            const hookCount = 5
+            const sendStub = sinon.stub(channel, 'send')
+                .resolves(message)
+            const reactions = sinon.stub(message, 'react')
 
-                sinon.assert.calledOnce(sendStub)
-                sinon.assert.callCount(reactions, hookCount)
-            }
-        )
+            await Action.sendPollVote('baz', hookCount, channel)
 
-        it(
-            'should run ' +
-            'log error', async function () {
-                sinon.stub(channel, 'send').resolves(message)
-                const reactStub = sinon.stub(message, 'react')
-                    .throws(Error('foo'))
+            sinon.assert.calledOnce(sendStub)
+            sinon.assert.callCount(reactions, hookCount)
+        })
 
-                await Action.sendPollVote('baz', 2, channel)
+        it('should run log error', async function () {
+            sinon.stub(channel, 'send').resolves(message)
+            const reactStub = sinon.stub(message, 'react')
+                .throws(Error('foo'))
 
-                expect(console.error).to.have.been.calledWith(
-                    'One of the emojis failed to react:'
-                )
-            }
-        )
+            await Action.sendPollVote('baz', 2, channel)
+
+            expect(console.error).to.have.been.calledWith(
+                'One of the emojis failed to react:'
+            )
+        })
     })
 })
