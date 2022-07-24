@@ -1,6 +1,6 @@
 const fs = require('node:fs')
 const path = require('node:path')
-const { Client, Collection, Intents } = require('discord.js')
+const { Client, Collection, GatewayIntentBits } = require('discord.js')
 /* eslint-disable no-unused-vars */
 const { clientId, guildId, token } = require('./config.js')
 const MissionHook = require('./models/missionHook.js')
@@ -8,14 +8,14 @@ const sequelize = require('./models/ORM')
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_MESSAGE_TYPING,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGE_TYPING
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessageTyping,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessageTyping
     ]
 })
 
