@@ -1,6 +1,7 @@
 const fs = require('node:fs')
 const path = require('node:path')
 const { Client, Collection, GatewayIntentBits } = require('discord.js')
+require('log-timestamp')
 /* eslint-disable no-unused-vars */
 const { clientId, guildId, token } = require('./config.js')
 const MissionHook = require('./models/missionHook.js')
