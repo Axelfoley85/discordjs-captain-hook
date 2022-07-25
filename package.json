@@ -21,7 +21,7 @@
     "log-timestamp": "^0.3.0",
     "node-schedule": "^2.1.0",
     "sequelize": "^6.21.2",
-    "sqlite3": "^5.0.9"
+    "sqlite3": "^5.0.10"
   },
   "devDependencies": {
     "chai": "^4.3.6",
