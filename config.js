@@ -7,5 +7,6 @@ module.exports = {
     hookChannel: process.env.hookChannel || '0000',
     voteChannel: process.env.voteChannel || '000',
     adminChannel: process.env.adminChannel || '1234',
-    debugChannel: process.env.debugChannel || '5678'
+    debugChannel: process.env.debugChannel || '5678',
+    attendanceChannel: process.env.attendanceChannel || '0000'
 }

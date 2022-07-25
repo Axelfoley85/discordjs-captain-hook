@@ -1,4 +1,4 @@
-const { adminChannel } = require('../config')
+const { adminChannel, attendanceChannel } = require('../config')
 
 module.exports = {
     alphabet: [
@@ -45,6 +45,16 @@ module.exports = {
                 'from outside. If it wasn\'t locked properly replace ' +
                 'batteries or call Mr. Nader, 015118088875 from ' +
                 'Volkssolidarität'
+            ]
+        },
+        {
+            channel: attendanceChannel,
+            cron: '0 10 * * 4',
+            title: 'Who is coming next Wednesday, 7pm',
+            options: [
+                'I want to play',
+                'I want to DM/facilitate',
+                'I won\'t be there '
             ]
         }
     ]
