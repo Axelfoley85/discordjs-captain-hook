@@ -40,23 +40,26 @@ describe('../../commands', function () {
             await command.execute(interaction, client)
 
             sinon.assert.calledOnce(updateStub)
-            sinon.assert.calledOnceWithExactly(replyStub, '**Mission hooks updated successfull**')
+            sinon.assert.calledOnceWithExactly(
+                replyStub,
+                '**Mission hooks updated successfull** in <#0000>'
+            )
         })
     })
 
     describe('hookpoll', function () {
         it(
-            'should call Hooks.getPoll + ' + 
+            'should call Hooks.getHookPollLines + ' + 
             'interaction.reply' + 
-            'sendPollVote',
+            'postHookVote',
         async function () {
             const command = require(path.join(commandPath, 'hookpoll'))
             sinon.stub(client.channels.cache, 'get')
                 .returns(channel)
-            const pollStub = sinon.stub(Hooks, 'getPoll')
-                .resolves(['foo', 2])
+            const pollStub = sinon.stub(Hooks, 'getHookPollLines')
+                .resolves(['foo'])
             const replyStub = sinon.stub(interaction, 'reply')
-            const sendVoteStub = sinon.stub(Action, 'sendPollVote')
+            const sendVoteStub = sinon.stub(Action, 'postHookVote')
 
             await command.execute(interaction, client)
 
@@ -69,7 +72,7 @@ describe('../../commands', function () {
                     ephemeral: true
                 }
             )
-            sinon.assert.calledOnceWithExactly(sendVoteStub, 'foo', 2, channel)
+            sinon.assert.calledOnceWithExactly(sendVoteStub, ['foo'], channel)
         })
     })
 

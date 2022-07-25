@@ -1,6 +1,5 @@
 const MissionHook = require('../models/missionHook.js')
 const { hookToString, hookToPoll } = require('./MessageFormat')
-const { alphabet } = require('../models/valueObjects')
 
 class Hooks {
     static async get () {
@@ -24,24 +23,24 @@ class Hooks {
         return string
     }
 
-    static async getPoll () {
+    static async getHookPollLines () {
         const hooklist = await MissionHook.findAll()
         console.log(hooklist)
-        let string = ''
-        let i = 0
+        const string = []
         hooklist.forEach(
             (hook) => {
                 const item = hook.dataValues
-                string += alphabet[i] + ' ' + hookToPoll(
-                    item.title,
-                    item.dm,
-                    item.tier
-                ) + '\n'
-                i++
+                string.push(
+                    hookToPoll(
+                        item.title,
+                        item.dm,
+                        item.tier
+                    )
+                )
             }
         )
 
-        return [string, i]
+        return string
     }
 
     static async delete (id) {

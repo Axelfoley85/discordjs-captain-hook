@@ -33,5 +33,14 @@ module.exports = {
                 updatedAt: '2022-07-10T03:25:51.279Z'
             }
         }
-    ]
+    ],
+    scheduledPolls: [{
+        channel: '980524586028400670',
+        cron: '* * * * * *',
+        title: 'Chose between',
+        options: [
+            'One',
+            'Two'
+        ]
+    }]
 }

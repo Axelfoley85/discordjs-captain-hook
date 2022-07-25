@@ -5,6 +5,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js')
 const { clientId, guildId, token } = require('./config.js')
 const MissionHook = require('./models/missionHook.js')
 const sequelize = require('./models/ORM')
+const Action = require('./helper/Action.js')
 
 const client = new Client({
     intents: [
@@ -20,8 +21,6 @@ const client = new Client({
 })
 
 client.once('ready', () => {
-    // MissionHook.sync({ force: true })
-
     client.user.setPresence({ activities: [{ name: 'treasure hunt' }] })
 })
 
@@ -49,6 +48,7 @@ client.on('interactionCreate', async interaction => {
     } catch (error) {
         console.error(error)
         await interaction.reply({
+        // eslint-disable-next-line max-len
             content: 'Arrrrr, there was an error while executing this command!',
             ephemeral: true
         })
@@ -69,6 +69,8 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args))
     }
 }
+
+Action.postPolls(client)
 
 // Login to Discord with your client's token
 client.login(token)

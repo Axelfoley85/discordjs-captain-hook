@@ -9,13 +9,13 @@ module.exports = {
         .setDescription('make poll for next mission hooks'),
     async execute (interaction, client) {
         const channel = client.channels.cache.get(voteChannel)
-        const response = await Hooks.getPoll()
+        const response = await Hooks.getHookPollLines()
 
         await interaction.reply({
             content: 'Vote has been posted in <#' + channel + '>',
             ephemeral: true
         })
 
-        await Action.sendPollVote(response[0], response[1], channel)
+        await Action.postHookVote(response, channel)
     }
 }

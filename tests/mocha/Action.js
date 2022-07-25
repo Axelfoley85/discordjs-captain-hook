@@ -9,19 +9,23 @@ const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client } = require('../config')
+const { message, channel, client, scheduledPolls } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
+
+let clock
 
 describe('../../helper/Action', function () {
 
     beforeEach( function () {
         sinon.spy(console, 'error')
+        clock = sinon.useFakeTimers()
     })
 
     afterEach( function () {
         sinon.restore()
+        clock.restore();
     })
 
     describe('Action.postHooks', function () {
@@ -64,32 +68,62 @@ describe('../../helper/Action', function () {
         })
     })
 
-    describe('Action.sendPollVote', async function () {
+    describe('Action.postHookVote', async function () {
+        it(
+            ' should run Action.sendPollToChannel',
+        async function () {
+            const sendStub = sinon.stub(Action, 'sendPollToChannel')
+
+            await Action.postHookVote(['baz'], channel)
+
+            sinon.assert.calledOnceWithExactly(
+                sendStub,
+                channel,
+                '**:bar_chart: HOOK! HOOK! HOOK! HOOK! HOOK!**',
+                ['baz']
+            )
+        })
+    })
+
+    describe('Action.sendPollToChannel', async function () {
         it(
             ' should run ' +
             'channel.send + message.react',
         async function () {
-            const hookCount = 5
             const sendStub = sinon.stub(channel, 'send')
                 .resolves(message)
             const reactions = sinon.stub(message, 'react')
 
-            await Action.sendPollVote('baz', hookCount, channel)
+            await Action.sendPollToChannel(channel, 'this is a title', ['foo', 'bar'])
 
             sinon.assert.calledOnce(sendStub)
-            sinon.assert.callCount(reactions, hookCount)
+            sinon.assert.callCount(reactions, 2)
         })
 
         it('should run log error', async function () {
             sinon.stub(channel, 'send').resolves(message)
             const reactStub = sinon.stub(message, 'react')
-                .throws(Error('foo'))
+                .throws(Error('fooError'))
 
-            await Action.sendPollVote('baz', 2, channel)
+            await Action.sendPollToChannel(channel, 'this is a title', ['foo', 'bar'])
 
             expect(console.error).to.have.been.calledWith(
                 'One of the emojis failed to react:'
             )
+        })
+    })
+
+    describe('Action.postPolls', async function () {
+        it(
+            ' should run ' +
+            'cron + Action.sendPollToChannel',
+        async function () {
+            const sendStub = sinon.stub(Action, 'sendPollToChannel')
+
+            await Action.postPolls(client, scheduledPolls)
+            await clock.tickAsync(2150)
+
+            sinon.assert.calledWith(sendStub)
         })
     })
 })

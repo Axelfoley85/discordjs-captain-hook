@@ -42,17 +42,16 @@ describe('../../helper/HooksHandler', () => {
         expect(console.log).to.have.been.calledWith(id)
     })
 
-    it('HooksHandler.getPoll should return string and count', async () => {
+    it('HooksHandler.getHookPollLines should return array with hooks', async () => {
         const MissionHookstub = sinon.stub(MissionHook, 'findAll').resolves(
             missionHookEntry
         )
 
-        const response = await HooksHandler.getPoll()
+        const response = await HooksHandler.getHookPollLines()
 
         sinon.assert.calledOnce(MissionHookstub)
         // eslint-disable-next-line max-len
-        expect(response[0]).to.equal('🇦 **Ask for Dax Winterfield in the Golden Mug**, tier 1, Axel\n')
-        expect(response[1]).to.equal(1)
+        expect(response).to.deep.equal(['**Ask for Dax Winterfield in the Golden Mug**, tier 1, Axel'])
     })
 
     it('HooksHandler.get should return string', async () => {

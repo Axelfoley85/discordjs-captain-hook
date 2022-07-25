@@ -1,6 +1,7 @@
 const Hooks = require('./HooksHandler')
-const { alphabet } = require('../models/valueObjects')
+const { alphabet, scheduledPolls } = require('../models/valueObjects')
 const MessageFormat = require('./MessageFormat')
+const schedule = require('node-schedule')
 
 class Action {
     static async postHooks () {
@@ -24,20 +25,47 @@ class Action {
         channel.send(await Action.postHooks())
     }
 
-    static async sendPollVote (content, hookCount, channel) {
+    static async postHookVote (content, channel) {
+        const title = '**:bar_chart: HOOK! HOOK! HOOK! HOOK! HOOK!**'
+        await Action.sendPollToChannel(
+            channel,
+            title,
+            content
+        )
+    }
+
+    static async sendPollToChannel (channel, title, contentArray) {
+        let contentArr = [].concat(contentArray)
+
+        contentArr = MessageFormat.addAlphabetPrefix(contentArr)
         const message = await channel.send({
-            embeds: [MessageFormat.embedMessageFrom(content)],
-            content: '**:bar_chart: HOOK! HOOK! HOOK! HOOK! HOOK!**',
+            embeds: [MessageFormat.embedMessageFrom(
+                MessageFormat.arrayToText(contentArr)
+            )],
+            content: title,
             fetchReply: true
         })
 
         try {
-            for (let i = 0; i < hookCount; i++) {
+            for (let i = 0; i < contentArr.length; i++) {
                 await message.react(alphabet[i])
             }
         } catch (error) {
             console.error('One of the emojis failed to react:', error)
         }
+    }
+
+    static async postPolls (client, polls = scheduledPolls) {
+        polls.forEach(async (poll) => {
+            schedule.scheduleJob(poll.cron, async () => {
+                console.log('scheduling ', poll.title)
+                await Action.sendPollToChannel(
+                    client.channels.cache.get(poll.channel),
+                    poll.title,
+                    poll.options
+                )
+            })
+        })
     }
 }
 
