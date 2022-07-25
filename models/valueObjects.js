@@ -1,4 +1,4 @@
-const { adminChannel, debugChannel } = require('../config')
+const { adminChannel } = require('../config')
 
 module.exports = {
     alphabet: [
