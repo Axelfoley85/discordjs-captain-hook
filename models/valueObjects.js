@@ -29,10 +29,11 @@ module.exports = {
         '🇾',
         '🇿'
     ],
+    // cron is in UTC !!!
     scheduledPolls: [
         {
             channel: adminChannel,
-            cron: '0 12 * * 1',
+            cron: '10 10 * * 1',
             title: 'Anybody volunteering to',
             options: [
                 'set up the donation glass, for the rent etc., at the door ' +
