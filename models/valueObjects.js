@@ -33,7 +33,7 @@ module.exports = {
     scheduledPolls: [
         {
             channel: adminChannel,
-            cron: '10 10 * * 1',
+            cron: '0 10 * * 1',
             title: 'Anybody volunteering to',
             options: [
                 'set up the donation glass, for the rent etc., at the door ' +
