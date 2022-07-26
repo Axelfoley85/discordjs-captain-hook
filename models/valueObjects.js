@@ -1,4 +1,11 @@
-const { adminChannel, attendanceChannel } = require('../config')
+const {
+    adminChannel,
+    attendanceChannel,
+    wMGeneralChannel,
+    wMCharacterSheetsChannel,
+    wMCharacterIntroductionChannel,
+    wMDiscussionChannel
+} = require('../config')
 
 module.exports = {
     alphabet: [
@@ -57,5 +64,15 @@ module.exports = {
                 'I won\'t be there '
             ]
         }
-    ]
+    ],
+    westmarchChannels: [
+        wMGeneralChannel,
+        wMCharacterSheetsChannel,
+        wMCharacterIntroductionChannel,
+        wMDiscussionChannel
+    ],
+    westMarchesRole: {
+        id: '989556269247508562',
+        name: 'WestMarches'
+    }
 }

@@ -9,7 +9,8 @@ const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, scheduledPolls } = require('../config')
+const { message, channel, client, scheduledPolls, member, author } = require('../config')
+const { westMarchesRole } = require('../../models/valueObjects')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -20,6 +21,7 @@ describe('../../helper/Action', function () {
 
     beforeEach( function () {
         sinon.spy(console, 'error')
+        sinon.spy(console, 'log')
         clock = sinon.useFakeTimers()
     })
 
@@ -115,7 +117,7 @@ describe('../../helper/Action', function () {
 
     describe('Action.postPolls', async function () {
         it(
-            ' should run ' +
+            'should run ' +
             'cron + Action.sendPollToChannel',
         async function () {
             const sendStub = sinon.stub(Action, 'sendPollToChannel')
@@ -124,6 +126,41 @@ describe('../../helper/Action', function () {
             await clock.tickAsync(2150)
 
             sinon.assert.calledWith(sendStub)
+        })
+    })
+
+    describe('Action.assignRole', async function () {
+        it(
+            'should run ' +
+            'Action.assignRole',
+        async function () {
+            const role = { id: 10, name: 'foobar'}
+            const hasStub = sinon.stub(member.roles.cache, 'has')
+                .returns(false)
+            const addStub = sinon.stub(member.roles, 'add').resolves()
+
+            await Action.assignRole(member, author, role)
+
+            sinon.assert.calledOnceWithExactly(addStub, role.id)
+            expect(console.log).to.have.been.calledWith(
+                `The role ${role.name} ` +
+                `has been added to ${author.tag}.`
+            )
+        })
+
+        it(
+            'should run ' +
+            'log that role exists already',
+        async function () {
+            const role = { id: 10, name: 'foobar'}
+            const hasStub = sinon.stub(member.roles.cache, 'has')
+                .returns(true)
+
+            await Action.assignRole(member, author, role)
+            
+            expect(console.log).to.have.been.calledWith(
+                'authorName, already has this role!'
+            )
         })
     })
 })

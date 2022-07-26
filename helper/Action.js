@@ -67,6 +67,23 @@ class Action {
             })
         })
     }
+
+    static async assignRole (member, author, role) {
+        if (member.roles.cache.has(role.id)) {
+            console.log(
+                `${author.tag}, ` +
+                'already has this role!'
+            )
+        } else {
+            await member.roles.add(role.id)
+                .catch((e) => console.log(e))
+
+            console.log(
+                `The role ${role.name} ` +
+                `has been added to ${author.tag}.`
+            )
+        }
+    }
 }
 
 module.exports = Action

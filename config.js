@@ -8,5 +8,10 @@ module.exports = {
     voteChannel: process.env.voteChannel || '000',
     adminChannel: process.env.adminChannel || '1234',
     debugChannel: process.env.debugChannel || '5678',
-    attendanceChannel: process.env.attendanceChannel || '0000'
+    attendanceChannel: process.env.attendanceChannel || '0000',
+    wMGeneralChannel: process.env.wMGeneralChannel || '0000',
+    wMCharacterSheetsChannel: process.env.wMCharacterSheetsChannel || '0000',
+    wMCharacterIntroductionChannel: process
+        .env.wMCharacterIntroductionChannel || '0000',
+    wMDiscussionChannel: process.env.wMDiscussionChannel || '0000'
 }

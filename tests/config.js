@@ -42,5 +42,12 @@ module.exports = {
             'One',
             'Two'
         ]
-    }]
+    }],
+    member: {
+        roles: {
+            cache: { has () {} },
+            add () {}
+        }
+    },
+    author: { tag: 'authorName' }
 }
