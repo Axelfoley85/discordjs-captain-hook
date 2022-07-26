@@ -68,10 +68,10 @@ class Action {
         })
     }
 
-    static async assignRole (member, author, role) {
+    static async assignRole (member, user, role) {
         if (member.roles.cache.has(role.id)) {
             console.log(
-                `${author.tag}, ` +
+                `${user.tag}, ` +
                 'already has this role!'
             )
         } else {
@@ -80,7 +80,7 @@ class Action {
 
             console.log(
                 `The role ${role.name} ` +
-                `has been added to ${author.tag}.`
+                `has been added to ${user.tag}.`
             )
         }
     }
