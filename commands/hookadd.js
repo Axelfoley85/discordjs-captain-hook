@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders')
+const { SlashCommandBuilder } = require('discord.js')
 const MissionHook = require('../models/missionHook.js')
 const { hookChannel } = require('../config.js')
 const Action = require('../helper/Action.js')
