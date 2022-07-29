@@ -1,6 +1,7 @@
 const Action = require('../helper/Action')
-const { westMarchesRole } = require('../valueObjects/roles')
+const { westMarchesRole } = require('../valueObjects/roles').westMarchesRole
 const westmarchChannels = require('../valueObjects/westmarchChannels')
+    .westmarchChannels
 
 module.exports = {
     name: 'messageCreate',
