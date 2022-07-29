@@ -28,8 +28,7 @@ module.exports = {
             title: 'Who is coming next Wednesday, 7pm',
             options: [
                 'I want to play',
-                'I want to DM/facilitate',
-                'I won\'t be there '
+                'I want to DM/facilitate'
             ]
         }
     ]
