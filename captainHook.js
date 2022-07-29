@@ -3,9 +3,7 @@ const path = require('node:path')
 const { Client, Collection, GatewayIntentBits } = require('discord.js')
 require('log-timestamp')
 /* eslint-disable no-unused-vars */
-const { clientId, guildId, token } = require('./config.js')
-const MissionHooks = require('./models/MissionHooks.js')
-const sequelize = require('./models/ORM')
+const { token } = require('./config.js')
 const Action = require('./helper/Action.js')
 
 const client = new Client({

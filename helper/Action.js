@@ -1,8 +1,8 @@
 const Hooks = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
-const alphabet = require('../valueObjects/alphabet')
-const scheduledPolls = require('../valueObjects/scheduledPolls')
+const alphabet = require('../valueObjects/alphabet').alphabet
+const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
     static async postHooks () {
