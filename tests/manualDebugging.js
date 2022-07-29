@@ -31,7 +31,6 @@ class FakeClient {
         //     dm: "Tam",
         //     tier: 1,
         //     checkpoints: 4,
-        //     treasurePoints: 2,
         // });
 
         // await db.missionHooks.create({

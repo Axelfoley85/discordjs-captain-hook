@@ -14,7 +14,6 @@ class Hooks {
                         item.dm,
                         item.tier,
                         item.checkpoints,
-                        item.treasurePoints,
                         item.description
                     )
             }
