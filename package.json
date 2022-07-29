@@ -8,6 +8,7 @@
     "fix": "eslint --fix .",
     "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
     "coverage": "nyc report --reporter=text-lcov --coverage-exclude=./test/* > coverage.lcov && codecov",
+    "migrate-db": "npx sequelize-cli db:migrate --env 'production'",
     "custom-run": "mocha tests/mocha/Action.js",
     "manual-debug": "mocha tests/manualDebugging.js"
   },
