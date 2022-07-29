@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js')
 require('log-timestamp')
 /* eslint-disable no-unused-vars */
 const { clientId, guildId, token } = require('./config.js')
-const MissionHook = require('./models/missionHook.js')
+const MissionHooks = require('./models/MissionHooks.js')
 const sequelize = require('./models/ORM')
 const Action = require('./helper/Action.js')
 

@@ -1,41 +1,9 @@
 const {
-    adminChannel,
     attendanceChannel,
-    wMGeneralChannel,
-    wMCharacterSheetsChannel,
-    wMCharacterIntroductionChannel,
-    wMDiscussionChannel
+    adminChannel
 } = require('../config')
 
 module.exports = {
-    alphabet: [
-        '🇦',
-        '🇧',
-        '🇨',
-        '🇩',
-        '🇪',
-        '🇫',
-        '🇬',
-        '🇭',
-        '🇮',
-        '🇯',
-        '🇰',
-        '🇱',
-        '🇲',
-        '🇳',
-        '🇴',
-        '🇵',
-        '🇶',
-        '🇷',
-        '🇸',
-        '🇹',
-        '🇺',
-        '🇻',
-        '🇼',
-        '🇽',
-        '🇾',
-        '🇿'
-    ],
     // cron is in UTC !!!
     scheduledPolls: [
         {
@@ -64,15 +32,5 @@ module.exports = {
                 'I won\'t be there '
             ]
         }
-    ],
-    westmarchChannels: [
-        wMGeneralChannel,
-        wMCharacterSheetsChannel,
-        wMCharacterIntroductionChannel,
-        wMDiscussionChannel
-    ],
-    westMarchesRole: {
-        id: '989556269247508562',
-        name: 'WestMarches'
-    }
+    ]
 }

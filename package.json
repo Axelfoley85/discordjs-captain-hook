@@ -8,7 +8,8 @@
     "fix": "eslint --fix .",
     "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
     "coverage": "nyc report --reporter=text-lcov --coverage-exclude=./test/* > coverage.lcov && codecov",
-    "custom-run": "mocha tests/mocha/Action.js"
+    "custom-run": "mocha tests/mocha/Action.js",
+    "manual-debug": "mocha tests/manualDebugging.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "log-timestamp": "^0.3.0",
     "node-schedule": "^2.1.0",
     "sequelize": "^6.21.3",
+    "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.10"
   },
   "devDependencies": {

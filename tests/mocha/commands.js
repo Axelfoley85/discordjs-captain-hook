@@ -11,7 +11,8 @@ const Action = require('../../helper/Action')
 const Hooks = require('../../helper/HooksHandler')
 const { interaction, client, channel, missionHookEntry } = require('../config')
 const { hookChannel } = require('../../config')
-const MissionHook = require('../../models/missionHook')
+const db = require('../../models')
+
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -162,7 +163,7 @@ describe('../../commands', function () {
 
     describe('hookadd', function () {
         it(
-            'should call MissionHook.create + ' + 
+            'should call MissionHooks.create + ' + 
             'Action.updateHookChannel + ' +
             'interaction.reply + ',
         async function () {
@@ -181,7 +182,7 @@ describe('../../commands', function () {
                 .returns(2)
                 .onCall(2)
                 .returns(3)
-            const createStub = sinon.stub(MissionHook, 'create')
+            const createStub = sinon.stub(db.missionHooks, 'create')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -194,8 +195,7 @@ describe('../../commands', function () {
                     description: 'descr',
                     dm: 'dm',
                     tier: 1,
-                    checkpoints: 2,
-                    treasurePoints: 3
+                    checkpoints: 2
                 }
             )
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
@@ -204,7 +204,7 @@ describe('../../commands', function () {
                 {
                     content: 'Mission hook created: \n' +
                         '**title**\n' +
-                        '*dm, tier 1 - 2 checkpoints, 3 treasure points*\n' +
+                        '*dm, tier 1 - 2 checkpoints*\n' +
                         'descr',
                     ephemeral: true
                     }
@@ -224,7 +224,7 @@ describe('../../commands', function () {
             const command = require(path.join(commandPath, 'hookadd'))
             sinon.stub(interaction.options, 'getString')
             sinon.stub(interaction.options, 'getInteger')
-            const createStub = sinon.stub(MissionHook, 'create')
+            const createStub = sinon.stub(db.missionHooks, 'create')
                 .throws(new SequelizeUniqueConstraintError())
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -249,7 +249,7 @@ describe('../../commands', function () {
             const command = require(path.join(commandPath, 'hookadd'))
             sinon.stub(interaction.options, 'getString')
             sinon.stub(interaction.options, 'getInteger')
-            const createStub = sinon.stub(MissionHook, 'create')
+            const createStub = sinon.stub(db.missionHooks, 'create')
                 .throws(Error())
             const replyStub = sinon.stub(interaction, 'reply')
 

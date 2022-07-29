@@ -1,9 +1,9 @@
-const MissionHook = require('../models/missionHook.js')
+const db = require('../models')
 const { hookToString, hookToPoll } = require('./MessageFormat')
 
 class Hooks {
     static async get () {
-        const hooklist = await MissionHook.findAll()
+        const hooklist = await db.missionHooks.findAll()
         let string = ''
         hooklist.forEach(
             (hook) => {
@@ -24,7 +24,7 @@ class Hooks {
     }
 
     static async getHookPollLines () {
-        const hooklist = await MissionHook.findAll()
+        const hooklist = await db.missionHooks.findAll()
         console.log(hooklist)
         const string = []
         hooklist.forEach(
@@ -44,7 +44,7 @@ class Hooks {
     }
 
     static async delete (id) {
-        const response = await MissionHook.destroy({
+        const response = await db.missionHooks.destroy({
             where: {
                 id
             }
@@ -53,7 +53,7 @@ class Hooks {
     }
 
     static async getOne (id) {
-        const idEntry = await MissionHook.findAll({
+        const idEntry = await db.missionHooks.findAll({
             where: {
                 id
             }

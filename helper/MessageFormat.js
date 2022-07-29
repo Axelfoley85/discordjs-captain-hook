@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { alphabet } = require('../models/valueObjects')
+const { alphabet } = require('../valueObjects/alphabet')
 
 class MessageFormat {
     static hookToString (
@@ -7,14 +7,12 @@ class MessageFormat {
         dm,
         tier,
         checkpoints,
-        treasurePoints,
         description
     ) {
         let string = '**' + title + '**\n*' +
             dm + ', ' +
             'tier ' + tier + ' - ' +
-            checkpoints + ' checkpoints, ' +
-            treasurePoints + ' treasure points*'
+            checkpoints + ' checkpoints*'
         if (typeof description !== 'undefined') {
             string += '\n' + description
         }

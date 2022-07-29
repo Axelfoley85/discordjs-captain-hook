@@ -8,7 +8,7 @@ const { describe } = require('mocha')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
 const HooksHandler = require('../../helper/HooksHandler')
-const MissionHook = require('../../models/missionHook')
+const db = require('../../models')
 const { missionHookEntry } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
@@ -21,7 +21,7 @@ describe('../../helper/HooksHandler', () => {
     })
 
     it('getOne should return id', async () => {
-        sinon.stub(MissionHook, 'findAll').resolves(missionHookEntry)
+        sinon.stub(db.missionHooks, 'findAll').resolves(missionHookEntry)
 
         const response = await HooksHandler.getOne(1)
 
@@ -31,7 +31,7 @@ describe('../../helper/HooksHandler', () => {
     it('HooksHandler.delete should output to console log', async () => {
         sinon.spy(console, 'log')
         const id = 1
-        const MissionHookstub = sinon.stub(MissionHook, 'destroy').resolves(id)
+        const MissionHookstub = sinon.stub(db.missionHooks, 'destroy').resolves(id)
 
         await HooksHandler.delete(id)
 
@@ -43,7 +43,7 @@ describe('../../helper/HooksHandler', () => {
     })
 
     it('HooksHandler.getHookPollLines should return array with hooks', async () => {
-        const MissionHookstub = sinon.stub(MissionHook, 'findAll').resolves(
+        const MissionHookstub = sinon.stub(db.missionHooks, 'findAll').resolves(
             missionHookEntry
         )
 
@@ -55,7 +55,7 @@ describe('../../helper/HooksHandler', () => {
     })
 
     it('HooksHandler.get should return string', async () => {
-        const MissionHookstub = sinon.stub(MissionHook, 'findAll').resolves(
+        const MissionHookstub = sinon.stub(db.missionHooks, 'findAll').resolves(
             missionHookEntry
         )
 

@@ -13,5 +13,12 @@ module.exports = {
     wMCharacterSheetsChannel: process.env.wMCharacterSheetsChannel || '0000',
     wMCharacterIntroductionChannel: process
         .env.wMCharacterIntroductionChannel || '0000',
-    wMDiscussionChannel: process.env.wMDiscussionChannel || '0000'
+    wMDiscussionChannel: process.env.wMDiscussionChannel || '0000',
+    production: {
+        username: process.env.username || null,
+        password: process.env.password || null,
+        database: process.env.database || 'database.sqlite',
+        host: process.env.host || 'database.sqlite',
+        dialect: process.env.dialect || 'sqlite'
+    }
 }

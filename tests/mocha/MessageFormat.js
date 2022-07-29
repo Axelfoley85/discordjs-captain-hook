@@ -12,8 +12,13 @@ const expect = chai.expect
 describe('../../helper/MessageFormat', () => {
     describe('# hookToString', () => {
         it('will return expected values', () => {
-            return expect(MessageFormat.hookToString('myTitle', 'myDM', 1, 1, 1, 'myDescr')).to.equal(
-                '**myTitle**\n*myDM, tier 1 - 1 checkpoints, 1 treasure points*\nmyDescr'
+            return expect(MessageFormat.hookToString(
+                'myTitle',
+                'myDM',
+                1,
+                1,
+                'myDescr')).to.equal(
+                '**myTitle**\n*myDM, tier 1 - 1 checkpoints*\nmyDescr'
             )
         })
     })

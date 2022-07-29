@@ -1,8 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
-const MissionHook = require('../models/missionHook.js')
+// const MissionHooks = require('../models/MissionHooks.js')
 const { hookChannel } = require('../config.js')
 const Action = require('../helper/Action.js')
 const MessageFormat = require('../helper/MessageFormat')
+const db = require('../models/index.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,11 +31,6 @@ module.exports = {
             option => option
                 .setName('checkpoints')
                 .setDescription('checkpoints')
-                .setRequired(true))
-        .addIntegerOption(
-            option => option
-                .setName('treasurepoints')
-                .setDescription('treasure points')
                 .setRequired(true)),
     async execute (interaction, client) {
         const title = interaction.options.getString('title')
@@ -42,16 +38,14 @@ module.exports = {
         const dm = interaction.options.getString('dm')
         const tier = interaction.options.getInteger('tier')
         const checkpoints = interaction.options.getInteger('checkpoints')
-        const treasurePoints = interaction.options.getInteger('treasurepoints')
 
         try {
-            await MissionHook.create({
+            await db.missionHooks.create({
                 title,
                 description,
                 dm,
                 tier,
-                checkpoints,
-                treasurePoints
+                checkpoints
             })
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
@@ -75,7 +69,6 @@ module.exports = {
                 dm,
                 tier,
                 checkpoints,
-                treasurePoints,
                 description
             ),
             ephemeral: true

@@ -10,7 +10,6 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
 const { message, channel, client, scheduledPolls, member, author } = require('../config')
-const { westMarchesRole } = require('../../models/valueObjects')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
