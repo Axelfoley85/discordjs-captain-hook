@@ -4,7 +4,7 @@
 
 const sinon = require('sinon')
 const Action = require('../../helper/Action')
-const Hooks = require('../../helper/HooksHandler')
+const HooksHandler = require('../../helper/HooksHandler')
 const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
@@ -31,7 +31,7 @@ describe('../../helper/Action', function () {
 
     describe('Action.postHooks', function () {
         it('should return embeddedMessage', async function () {
-            const HooksStub = sinon.stub(Hooks, 'get').resolves('foo')
+            const HooksStub = sinon.stub(HooksHandler, 'get').resolves('foo')
             const embedMessageStub = sinon
                 .stub(MessageFormat, 'embedMessageFrom')
                 .returns('Bar1\nBar2')

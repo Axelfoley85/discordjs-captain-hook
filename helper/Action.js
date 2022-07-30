@@ -1,4 +1,4 @@
-const Hooks = require('./HooksHandler')
+const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
 const alphabet = require('../valueObjects/alphabet').alphabet
@@ -6,7 +6,7 @@ const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
     static async postHooks () {
-        const allHooks = await Hooks.get()
+        const allHooks = await HooksHandler.get()
 
         const embeddedMessage = {
             embeds: [MessageFormat.embedMessageFrom(allHooks)],

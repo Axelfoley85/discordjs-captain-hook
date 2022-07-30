@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-const Hooks = require('../helper/HooksHandler')
+const HooksHandler = require('../helper/HooksHandler')
 const db = require('../models')
 // const MissionHooks = require('../models/MissionHooks.js')
 
 async function testOne (id) {
-    const response = await Hooks.getOne(id)
+    const response = await HooksHandler.getOne(id)
     if (typeof response[0] === 'undefined') {
         console.log(id + ' does not exist')
     } else {
@@ -40,16 +40,16 @@ class FakeClient {
         //     tier: 2,
         //     checkpoints: 4
         // })
-        // await Hooks.delete(16)
+        // await HooksHandler.delete(16)
 
-        const response = await Hooks.get()
+        const response = await HooksHandler.get()
         console.log(response)
 
         // await testOne(3)
         // await testOne(9999)
 
-        // console.log(await Hooks.get())
-        // console.log(typeof (await Hooks.getOne(1)))
+        // console.log(await HooksHandler.get())
+        // console.log(typeof (await HooksHandler.getOne(1)))
 
         // console.log(channel)
 

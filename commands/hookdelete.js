@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const Hooks = require('../helper/HooksHandler')
+const HooksHandler = require('../helper/HooksHandler')
 const { hookChannel } = require('../config.js')
 const Action = require('../helper/Action')
 
@@ -15,7 +15,7 @@ module.exports = {
     async execute (interaction, client) {
         const id = interaction.options.getInteger('id')
         try {
-            const response = await Hooks.getOne(id)
+            const response = await HooksHandler.getOne(id)
             if (typeof response[0] === 'undefined') {
                 console.log('User requested delete for non-existent', {
                     id
@@ -25,7 +25,7 @@ module.exports = {
                     ephemeral: true
                 })
             }
-            await Hooks.delete(id)
+            await HooksHandler.delete(id)
         } catch (error) {
             console.error('Something went wrong:', error)
             return interaction.reply({

@@ -1,7 +1,7 @@
 const db = require('../models')
 const { hookToString, hookToPoll } = require('./MessageFormat')
 
-class Hooks {
+class HooksHandler {
     static async get () {
         const hooklist = await db.missionHooks.findAll()
         let string = ''
@@ -62,4 +62,4 @@ class Hooks {
     }
 };
 
-module.exports = Hooks
+module.exports = HooksHandler

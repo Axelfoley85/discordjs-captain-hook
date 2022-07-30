@@ -8,7 +8,7 @@ const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
 const path = require('node:path')
 const Action = require('../../helper/Action')
-const Hooks = require('../../helper/HooksHandler')
+const HooksHandler = require('../../helper/HooksHandler')
 const { interaction, client, channel, missionHookEntry } = require('../config')
 const { hookChannel } = require('../../config')
 const db = require('../../models')
@@ -50,14 +50,14 @@ describe('../../commands', function () {
 
     describe('hookpoll', function () {
         it(
-            'should call Hooks.getHookPollLines + ' + 
+            'should call HooksHandler.getHookPollLines + ' + 
             'interaction.reply' + 
             'postHookVote',
         async function () {
             const command = require(path.join(commandPath, 'hookpoll'))
             sinon.stub(client.channels.cache, 'get')
                 .returns(channel)
-            const pollStub = sinon.stub(Hooks, 'getHookPollLines')
+            const pollStub = sinon.stub(HooksHandler, 'getHookPollLines')
                 .resolves(['foo'])
             const replyStub = sinon.stub(interaction, 'reply')
             const sendVoteStub = sinon.stub(Action, 'postHookVote')
@@ -80,7 +80,7 @@ describe('../../commands', function () {
     describe('hookdelete', function () {
         it(
             'should call interaction.options.getInteger() + ' + 
-            'Hooks.getOne + ' + 
+            'HooksHandler.getOne + ' + 
             'Action.updateHookChannel + ' +
             'interaction.reply + ',
         async function () {
@@ -88,9 +88,9 @@ describe('../../commands', function () {
             const command = require(path.join(commandPath, 'hookdelete'))
             sinon.stub(interaction.options, 'getInteger')
                 .returns(id)
-            const getStub = sinon.stub(Hooks, 'getOne')
+            const getStub = sinon.stub(HooksHandler, 'getOne')
                 .resolves(missionHookEntry)
-            const deleteStub = sinon.stub(Hooks, 'delete')
+            const deleteStub = sinon.stub(HooksHandler, 'delete')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -116,7 +116,7 @@ describe('../../commands', function () {
             const command = require(path.join(commandPath, 'hookdelete'))
             sinon.stub(interaction.options, 'getInteger')
                 .returns(id)
-            sinon.stub(Hooks, 'getOne')
+            sinon.stub(HooksHandler, 'getOne')
                 .resolves([])
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -143,7 +143,7 @@ describe('../../commands', function () {
             const command = require(path.join(commandPath, 'hookdelete'))
             sinon.stub(interaction.options, 'getInteger')
                 .returns(id)
-            sinon.stub(Hooks, 'getOne').throws(error)
+            sinon.stub(HooksHandler, 'getOne').throws(error)
             const replyStub = sinon.stub(interaction, 'reply')
 
             await command.execute(interaction, client)
