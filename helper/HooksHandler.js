@@ -35,7 +35,7 @@ class HooksHandler {
                     hookItem.dataValues.checkpoints,
                     hookItem.dataValues.description
                 )
-                string.push(hook.toPoll())
+                string.push(hook.toPollString())
             }
         )
 

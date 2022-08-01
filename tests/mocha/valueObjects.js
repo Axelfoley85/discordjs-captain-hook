@@ -17,9 +17,9 @@ describe('../../valueObjects/hook.js', () => {
         })
     })
 
-    describe('# toPoll', () => {
+    describe('# toPollString', () => {
         it('will return expected values', () => {
-            return expect(hook.toPoll()).to.equal(
+            return expect(hook.toPollString()).to.equal(
                 '**myTitle**, tier 1, myDM'
             )
         })

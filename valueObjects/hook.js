@@ -28,7 +28,7 @@ class Hook {
         return string
     }
 
-    toPoll () {
+    toPollString () {
         const string = '**' + this.title + '**, ' +
             'tier ' + this.tier + ', ' +
             this.dm
