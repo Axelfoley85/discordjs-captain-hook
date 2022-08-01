@@ -169,19 +169,12 @@ describe('../../commands', function () {
         async function () {
             const command = require(path.join(commandPath, 'hookadd'))
             sinon.stub(interaction.options, 'getString')
-                .onCall(0)
-                .returns('title')
-                .onCall(1)
-                .returns('descr')
-                .onCall(2)
-                .returns('dm')
+                .withArgs('title').returns('title')
+                .withArgs('description').returns('descr')
+                .withArgs('dm').returns('dm')
             sinon.stub(interaction.options, 'getInteger')
-                .onCall(0)
-                .returns(1)
-                .onCall(1)
-                .returns(2)
-                .onCall(2)
-                .returns(3)
+                .withArgs('tier').returns(1)
+                .withArgs('checkpoints').returns(2)
             const createStub = sinon.stub(db.missionHooks, 'create')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'reply')
@@ -192,10 +185,10 @@ describe('../../commands', function () {
                 createStub,
                 {
                     title: 'title',
-                    description: 'descr',
                     dm: 'dm',
                     tier: 1,
-                    checkpoints: 2
+                    checkpoints: 2,
+                    description: 'descr'
                 }
             )
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)

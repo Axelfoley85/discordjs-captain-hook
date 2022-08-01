@@ -1,3 +1,5 @@
+const Hook = require('../valueObjects/hook')
+
 module.exports = {
     client: {
         channels: {
@@ -48,5 +50,11 @@ module.exports = {
             add () {}
         }
     },
-    author: { tag: 'authorName' }
+    author: { tag: 'authorName' },
+    hook: new Hook(
+        'myTitle',
+        'myDM',
+        1,
+        1,
+        'myDescr')
 }

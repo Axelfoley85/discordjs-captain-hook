@@ -60,14 +60,14 @@ describe('../../helper/HooksHandler', () => {
         )
 
         const response = await HooksHandler.get()
+        const cleanedResponse = response.replace(/(\n\n|\n)/gm, '')
+        console.log(cleanedResponse)
 
         sinon.assert.calledOnce(MissionHookstub)
         // eslint-disable-next-line max-len
-        expect(response[0]).to.deep.equal(
-            // This should return several lines of string, but isn't fetched
-            // here in the test
-            '\n'
+        sinon.assert.match(
+            cleanedResponse,
+            '**#1****Ask for Dax Winterfield in the Golden Mug***Axel, tier 1 - 4 checkpoints*'
         )
-        expect(response[1]).to.equal('\n')
     })
 })

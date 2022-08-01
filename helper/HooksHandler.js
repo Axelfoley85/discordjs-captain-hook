@@ -1,21 +1,21 @@
 const db = require('../models')
-const { hookToString, hookToPoll } = require('./MessageFormat')
+const Hook = require('../valueObjects/hook')
 
 class HooksHandler {
     static async get () {
         const hooklist = await db.missionHooks.findAll()
         let string = ''
         hooklist.forEach(
-            (hook) => {
-                const item = hook.dataValues
-                string += '\n\n**#' + item.id + '**\n' +
-                    hookToString(
-                        item.title,
-                        item.dm,
-                        item.tier,
-                        item.checkpoints,
-                        item.description
-                    )
+            (hookItem) => {
+                const hook = new Hook(
+                    hookItem.dataValues.title,
+                    hookItem.dataValues.dm,
+                    hookItem.dataValues.tier,
+                    hookItem.dataValues.checkpoints,
+                    hookItem.dataValues.description
+                )
+                string += '\n\n**#' + hookItem.dataValues.id + '**\n' +
+                    hook.toString()
             }
         )
 
@@ -27,15 +27,15 @@ class HooksHandler {
         console.log(hooklist)
         const string = []
         hooklist.forEach(
-            (hook) => {
-                const item = hook.dataValues
-                string.push(
-                    hookToPoll(
-                        item.title,
-                        item.dm,
-                        item.tier
-                    )
+            (hookItem) => {
+                const hook = new Hook(
+                    hookItem.dataValues.title,
+                    hookItem.dataValues.dm,
+                    hookItem.dataValues.tier,
+                    hookItem.dataValues.checkpoints,
+                    hookItem.dataValues.description
                 )
+                string.push(hook.toPoll())
             }
         )
 

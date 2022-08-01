@@ -2,31 +2,6 @@ const { EmbedBuilder } = require('discord.js')
 const { alphabet } = require('../valueObjects/alphabet')
 
 class MessageFormat {
-    static hookToString (
-        title,
-        dm,
-        tier,
-        checkpoints,
-        description
-    ) {
-        let string = '**' + title + '**\n*' +
-            dm + ', ' +
-            'tier ' + tier + ' - ' +
-            checkpoints + ' checkpoints*'
-        if (typeof description !== 'undefined') {
-            string += '\n' + description
-        }
-        return string
-    }
-
-    static hookToPoll (title, dm, tier) {
-        const string = '**' + title + '**, ' +
-            'tier ' + tier + ', ' +
-            dm
-
-        return string
-    }
-
     static embedMessageFrom (content) {
         return new EmbedBuilder()
             .setColor('#ff0000')

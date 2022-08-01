@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js')
 // const MissionHooks = require('../models/MissionHooks.js')
 const { hookChannel } = require('../config.js')
 const Action = require('../helper/Action.js')
-const MessageFormat = require('../helper/MessageFormat')
 const db = require('../models/index.js')
+const Hook = require('../valueObjects/hook.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -33,20 +33,16 @@ module.exports = {
                 .setDescription('checkpoints')
                 .setRequired(true)),
     async execute (interaction, client) {
-        const title = interaction.options.getString('title')
-        const description = interaction.options.getString('description')
-        const dm = interaction.options.getString('dm')
-        const tier = interaction.options.getInteger('tier')
-        const checkpoints = interaction.options.getInteger('checkpoints')
+        const hook = new Hook(
+            interaction.options.getString('title'),
+            interaction.options.getString('dm'),
+            interaction.options.getInteger('tier'),
+            interaction.options.getInteger('checkpoints'),
+            interaction.options.getString('description')
+        )
 
         try {
-            await db.missionHooks.create({
-                title,
-                description,
-                dm,
-                tier,
-                checkpoints
-            })
+            await db.missionHooks.create(hook.get())
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 console.error('Hook title already exists:', error)
@@ -64,13 +60,7 @@ module.exports = {
         await Action.updateHookChannel(client, hookChannel)
 
         await interaction.reply({
-            content: 'Mission hook created: \n' + MessageFormat.hookToString(
-                title,
-                dm,
-                tier,
-                checkpoints,
-                description
-            ),
+            content: 'Mission hook created: \n' + hook.toString(),
             ephemeral: true
         })
     }
