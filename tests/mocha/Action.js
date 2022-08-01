@@ -148,7 +148,6 @@ describe('../../helper/Action', function () {
         })
 
         it(
-            'should run ' +
             'log that role exists already',
         async function () {
             const role = { id: 10, name: 'foobar'}
@@ -159,6 +158,22 @@ describe('../../helper/Action', function () {
             
             expect(console.log).to.have.been.calledWith(
                 'authorName, already has this role!'
+            )
+        })
+
+        it(
+            'log thrown errors',
+        async function () {
+            const role = { id: 10, name: 'foobar'}
+            const hasStub = sinon.stub(member.roles.cache, 'has')
+                .returns(false)
+            const addStub = sinon.stub(member.roles, 'add')
+                .throws(Error('foo'))
+
+            await Action.assignRole(member, author, role)
+
+            expect(console.error).to.have.been.calledWith(
+                'There has been an error assigning roles!'
             )
         })
     })

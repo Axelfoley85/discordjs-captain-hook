@@ -76,8 +76,11 @@ class Action {
                 'already has this role!'
             )
         } else {
-            await member.roles.add(role.id)
-                .catch((e) => console.log(e))
+            try {
+                await member.roles.add(role.id)
+            } catch (error) {
+                console.error('There has been an error assigning roles!', error)
+            }
 
             console.log(
                 `The role ${role.name} ` +
