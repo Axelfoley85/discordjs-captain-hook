@@ -9,3 +9,7 @@ services:
     command: /captain-hook/entrypoint.sh
     environment:
       - ENVIRONMENT
+    volumes:
+      - ./.nyc:/captain-hook/.nyc
+      - ./coverage:/captain-hook/coverage
+      - ./data:/captain-hook/data
