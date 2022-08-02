@@ -1,6 +1,6 @@
- **/node_modules
- data
- .vscode
- captain_hook.png
- database.sqlite.hook_backup
- 
+**/node_modules
+data
+.vscode
+captain_hook.png
+database.sqlite.hook_backup
+test.sqlite
