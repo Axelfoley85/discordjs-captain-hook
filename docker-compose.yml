@@ -13,3 +13,4 @@ services:
       - ./.nyc:/captain-hook/.nyc
       - ./coverage:/captain-hook/coverage
       - ./data:/captain-hook/data
+      - ./.nyc_output:/captain-hook/.nyc_output
