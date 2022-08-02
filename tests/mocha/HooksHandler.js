@@ -9,65 +9,82 @@ const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
 const HooksHandler = require('../../helper/HooksHandler')
 const db = require('../../models')
-const { missionHookEntry } = require('../config')
+const Hook = require('../../valueObjects/hook')
+const { missionHookEntry, hook } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
 
 describe('../../helper/HooksHandler', () => {
-    // eslint-disable-next-line no-undef
+
+    beforeEach( async function () {
+        await db.missionHooks.sync({
+            force: true
+        })
+        await db.missionHooks.create(hook.get())
+    })
+
     afterEach(() => {
         sinon.restore()
     })
 
     it('getOne should return id', async () => {
-        sinon.stub(db.missionHooks, 'findAll').resolves(missionHookEntry)
-
-        const response = await HooksHandler.getOne(1)
-
-        expect(response).to.equal(missionHookEntry)
+        it('getOne should return db entry', async () => {
+            const expectedHook = new Hook(
+                'myTitle',
+                'myDM',
+                1,
+                1,
+                'myDescr'
+            )
+            const response = await HooksHandler.getOne(1)
+            let responseHook
+            response.forEach(
+                (hookItem) => {
+                    responseHook = new Hook(
+                        hookItem.dataValues.title,
+                        hookItem.dataValues.dm,
+                        hookItem.dataValues.tier,
+                        hookItem.dataValues.checkpoints,
+                        hookItem.dataValues.description
+                    )
+                }
+            )
+    
+            expect(responseHook).to.deep.equal(expectedHook)
+        })
     })
 
     it('HooksHandler.delete should output to console log', async () => {
+        const deleteStub = sinon.spy(db.missionHooks, 'destroy')
         sinon.spy(console, 'log')
         const id = 1
-        const MissionHookstub = sinon.stub(db.missionHooks, 'destroy').resolves(id)
 
         await HooksHandler.delete(id)
 
         sinon.assert.calledOnceWithExactly(
-            MissionHookstub,
-            { where: { id: 1 } }
+            deleteStub,
+            { where: { id: id } }
         )
         expect(console.log).to.have.been.calledWith(id)
     })
 
     it('HooksHandler.getHookPollLines should return array with hooks', async () => {
-        const MissionHookstub = sinon.stub(db.missionHooks, 'findAll').resolves(
-            missionHookEntry
-        )
-
         const response = await HooksHandler.getHookPollLines()
 
-        sinon.assert.calledOnce(MissionHookstub)
-        // eslint-disable-next-line max-len
-        expect(response).to.deep.equal(['**Ask for Dax Winterfield in the Golden Mug**, tier 1, Axel'])
+        expect(response).to.deep.equal(['**myTitle**, tier 1, myDM'])
     })
 
     it('HooksHandler.get should return string', async () => {
-        const MissionHookstub = sinon.stub(db.missionHooks, 'findAll').resolves(
-            missionHookEntry
-        )
+        const MissionHookstub = sinon.spy(db.missionHooks, 'findAll')
 
         const response = await HooksHandler.get()
         const cleanedResponse = response.replace(/(\n\n|\n)/gm, '')
-        console.log(cleanedResponse)
 
         sinon.assert.calledOnce(MissionHookstub)
-        // eslint-disable-next-line max-len
         sinon.assert.match(
             cleanedResponse,
-            '**#1****Ask for Dax Winterfield in the Golden Mug***Axel, tier 1 - 4 checkpoints*'
+            '**#1****myTitle***myDM, tier 1 - 1 checkpoints*myDescr'
         )
     })
 })
