@@ -32,5 +32,6 @@ USER captain-hook
 RUN cd /captain-hook \
     && npm install
 
+ENV ENVIRONMENT=${ENVIRONMENT}
 
 CMD ["/usr/bin/node", "/captain-hook/captainHook.js"]
