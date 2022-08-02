@@ -4,3 +4,4 @@ node_modules/
 docker-commands.sh
 data/
 database.sqlite.hook_backup
+test.sqlite
