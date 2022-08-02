@@ -56,5 +56,6 @@ module.exports = {
         'myDM',
         1,
         1,
-        'myDescr')
+        'myDescr'
+    )
 }
