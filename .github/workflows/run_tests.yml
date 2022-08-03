@@ -23,5 +23,10 @@ jobs:
     - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
     - run: npm run coverage
 
-    - name: Codecov
-      uses: codecov/codecov-action@v3.1.0
+    - name: Upload coverage reports to Codecov
+      run: |
+        # Replace `linux` below with the appropriate OS
+        # Options are `alpine`, `linux`, `macos`, `windows`
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov
