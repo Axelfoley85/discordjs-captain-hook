@@ -19,9 +19,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: npm ci
-    - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
+    - run: npm install --save-dev
+    - run: npm test
     - run: npm run coverage
+    - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
 
-    - name: Codecov
-      uses: codecov/codecov-action@v3.1.0
+    - name: Upload coverage reports to Codecov
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov
