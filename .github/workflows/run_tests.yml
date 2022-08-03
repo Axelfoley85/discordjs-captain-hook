@@ -20,9 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: npm install --save-dev
-    - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
     - run: nyc npm test
     - run: npm run coverage
+    - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
 
     - name: Upload coverage reports to Codecov
       run: |
