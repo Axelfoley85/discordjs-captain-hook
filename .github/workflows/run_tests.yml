@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: npm ci
+    - run: npm install --save-dev
     - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook
     - run: nyc npm test
     - run: npm run coverage
