@@ -13,6 +13,7 @@ RUN apt-get update \
         dirmngr \
         git \
         less \
+        sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r captain-hook
