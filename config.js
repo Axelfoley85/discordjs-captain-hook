@@ -14,11 +14,12 @@ module.exports = {
     wMCharacterIntroductionChannel: process
         .env.wMCharacterIntroductionChannel || '0000',
     wMDiscussionChannel: process.env.wMDiscussionChannel || '0000',
-    production: {
+    default: {
         username: process.env.username || null,
         password: process.env.password || null,
         database: process.env.database || 'test.sqlite',
         host: process.env.host || 'test.sqlite',
         dialect: process.env.dialect || 'sqlite'
-    }
+    },
+    timezone: process.env.timezone || 'Europe/Berlin'
 }

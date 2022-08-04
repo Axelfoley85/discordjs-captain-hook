@@ -1,6 +1,7 @@
 const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
+const { timezone } = require('../config')
 const alphabet = require('../valueObjects/alphabet').alphabet
 const scheduledMessages = require('../valueObjects/scheduledMessages')
     .scheduledMessages
@@ -61,7 +62,7 @@ class Action {
     static async postPolls (client, polls = scheduledPolls) {
         polls.forEach(async (poll) => {
             const rule = new schedule.RecurrenceRule()
-            rule.tz = 'Europe/Berlin'
+            rule.tz = timezone
 
             schedule.scheduleJob(poll.cron, async () => {
                 console.log('scheduling ', poll.title)
@@ -79,7 +80,7 @@ class Action {
         messages.forEach(async (message) => {
             channel = client.channels.cache.get(message.channel)
             const rule = new schedule.RecurrenceRule()
-            rule.tz = 'Europe/Berlin'
+            rule.tz = timezone
 
             schedule.scheduleJob(message.cron, async () => {
                 console.log('sending scheduled message!')
