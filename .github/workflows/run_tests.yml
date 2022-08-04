@@ -22,7 +22,7 @@ jobs:
     - run: npm install --save-dev
     - run: npm test
     - run: npm run coverage
-    - run: ENVIRONMENT=testing docker-compose up --build --exit-code-from captain-hook --privileged
+    - run: ENVIRONMENT=testing docker-compose up --build --abort-on-container-exit --exit-code-from captain-hook
 
     - name: Upload coverage reports to Codecov
       run: |

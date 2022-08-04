@@ -4,6 +4,7 @@ services:
   captain-hook:
     hostname: captain-hook
     container_name: captain-hook
+    privileged: true
     build:
       context: ./
       dockerfile: Dockerfile
