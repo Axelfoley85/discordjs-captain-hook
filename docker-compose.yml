@@ -4,7 +4,6 @@ services:
   captain-hook:
     hostname: captain-hook
     container_name: captain-hook
-    privileged: true
     build:
       context: ./
       dockerfile: Dockerfile
@@ -12,4 +11,4 @@ services:
     environment:
       - ENVIRONMENT
     volumes:
-      - ./data:/captain-hook/data:rw
+      - ./data:/captain-hook/data

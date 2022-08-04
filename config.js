@@ -17,8 +17,8 @@ module.exports = {
     production: {
         username: process.env.username || null,
         password: process.env.password || null,
-        database: process.env.database || 'data/test.sqlite',
-        host: process.env.host || 'data/test.sqlite',
+        database: process.env.database || 'test.sqlite',
+        host: process.env.host || 'test.sqlite',
         dialect: process.env.dialect || 'sqlite'
     }
 }
