@@ -44,6 +44,11 @@ module.exports = {
             'Two'
         ]
     }],
+    scheduledMessages: [{
+        channel: '980524586028400670',
+        cron: '* * * * * *',
+        content: 'message'
+    }],
     member: {
         roles: {
             cache: { has () {} },
