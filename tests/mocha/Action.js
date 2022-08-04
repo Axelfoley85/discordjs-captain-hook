@@ -9,7 +9,7 @@ const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, scheduledPolls, member, author } = require('../config')
+const { message, channel, client, scheduledPolls, scheduledMessages, member, author } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -119,12 +119,29 @@ describe('../../helper/Action', function () {
             'should run ' +
             'cron + Action.sendPollToChannel',
         async function () {
-            const sendStub = sinon.stub(Action, 'sendPollToChannel')
+            const sendStub = sinon.stub(Action, 'sendPollToChannel').resolves()
 
             await Action.postPolls(client, scheduledPolls)
             await clock.tickAsync(2150)
 
             sinon.assert.calledWith(sendStub)
+        })
+    })
+
+    describe('Action.postMessages', async function () {
+        it(
+            'should run ' +
+            'cron + channel.send',
+        async function () {
+            sinon.stub(client.channels.cache, 'get').returns(channel)
+            const sendStub = sinon.stub(channel, 'send').resolves()
+
+            await Action.postMessages(client, scheduledMessages)
+            await clock.tickAsync(2150)
+
+            sinon.assert.calledWith(sendStub, {
+                content: 'message'
+            })
         })
     })
 

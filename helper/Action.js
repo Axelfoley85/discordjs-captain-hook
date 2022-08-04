@@ -2,6 +2,8 @@ const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
 const alphabet = require('../valueObjects/alphabet').alphabet
+const scheduledMessages = require('../valueObjects/scheduledMessages')
+    .scheduledMessages
 const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
@@ -23,7 +25,7 @@ class Action {
             deleted = await channel.bulkDelete(100)
         } while (deleted.size !== 0)
 
-        channel.send(await Action.postHooks())
+        await channel.send(await Action.postHooks())
     }
 
     static async postHookVote (content, channel) {
@@ -58,6 +60,9 @@ class Action {
 
     static async postPolls (client, polls = scheduledPolls) {
         polls.forEach(async (poll) => {
+            const rule = new schedule.RecurrenceRule()
+            rule.tz = 'Europe/Berlin'
+
             schedule.scheduleJob(poll.cron, async () => {
                 console.log('scheduling ', poll.title)
                 await Action.sendPollToChannel(
@@ -65,6 +70,22 @@ class Action {
                     poll.title,
                     poll.options
                 )
+            })
+        })
+    }
+
+    static async postMessages (client, messages = scheduledMessages) {
+        let channel
+        messages.forEach(async (message) => {
+            channel = client.channels.cache.get(message.channel)
+            const rule = new schedule.RecurrenceRule()
+            rule.tz = 'Europe/Berlin'
+
+            schedule.scheduleJob(message.cron, async () => {
+                console.log('sending scheduled message!')
+                await channel.send({
+                    content: message.content
+                })
             })
         })
     }

@@ -19,8 +19,19 @@ const client = new Client({
     ]
 })
 
-client.once('ready', () => {
-    client.user.setPresence({ activities: [{ name: 'treasure hunt' }] })
+client.once('ready', async () => {
+    client.user.setPresence(
+        {
+            activities: [{ name: 'treasure hunt' }]
+        }
+    )
+
+    try {
+        await Action.postPolls(client)
+        await Action.postMessages(client)
+    } catch (e) {
+        console.error(e)
+    }
 })
 
 client.commands = new Collection()
@@ -68,8 +79,6 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(client, ...args))
     }
 }
-
-Action.postPolls(client)
 
 // Login to Discord with your client's token
 client.login(token)

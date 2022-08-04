@@ -32,14 +32,6 @@ class FakeClient {
         //     tier: 1,
         //     checkpoints: 4,
         // });
-
-        // await db.missionHooks.create({
-        //     title: "Attend Duke Oleander's birthday party",
-        //     description: "Attend Duke Oleander's birthday party and help Daleth \"acquire\" a mysterious artefact locked in the Duke's vault.",
-        //     dm: 'Hannah',
-        //     tier: 2,
-        //     checkpoints: 4
-        // })
         // await HooksHandler.delete(16)
 
         const response = await HooksHandler.get()
