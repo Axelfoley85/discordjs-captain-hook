@@ -11,4 +11,4 @@ services:
     environment:
       - ENVIRONMENT
     volumes:
-      - ./data:/captain-hook/data
+      - ./data:/captain-hook/data:rw
