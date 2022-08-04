@@ -16,8 +16,8 @@ RUN apt-get update \
         sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r captain-hook
-RUN useradd --no-log-init -d /captain-hook -g captain-hook -ms /bin/bash captain-hook
+RUN groupadd -r captain-hook -g 1002
+RUN useradd --no-log-init -d /captain-hook -g captain-hook -u 1002 -ms /bin/bash captain-hook
 
 RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash \
