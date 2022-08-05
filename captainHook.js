@@ -70,13 +70,7 @@ client.on('interactionCreate', async interaction => {
         )
 
         if (interaction.customId === 'hookdelete') {
-            const deleteId = await interaction.values
-            await interaction.update({
-                content: `#${deleteId} was selected!`,
-                components: []
-            })
-
-            await Action.deleteHookFromSelect(interaction, client, deleteId)
+            await Action.deleteHookFromSelect(interaction, client)
         }
     }
 })

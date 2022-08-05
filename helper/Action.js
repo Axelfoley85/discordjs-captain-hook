@@ -111,7 +111,14 @@ class Action {
         }
     }
 
-    static async deleteHookFromSelect (interaction, client, deleteId) {
+    static async deleteHookFromSelect (interaction, client) {
+        const deleteId = await interaction.values
+        await interaction.update({
+            content: `#${deleteId} was selected!`,
+            components: [],
+            fetchReply: true
+        })
+
         await HooksHandler.delete(deleteId)
         await Action.updateHookChannel(client, hookChannel)
 

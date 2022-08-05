@@ -203,11 +203,12 @@ describe('../../helper/Action', function () {
             'interaction.followUp',
         async function () {
             const id = 1
+            sinon.stub(interaction, 'update').resolves()
             const deleteStub = sinon.stub(HooksHandler, 'delete')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'followUp')
 
-            await Action.deleteHookFromSelect(interaction, client, id)
+            await Action.deleteHookFromSelect(interaction, client)
 
             sinon.assert.calledOnceWithExactly(deleteStub, id)
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)

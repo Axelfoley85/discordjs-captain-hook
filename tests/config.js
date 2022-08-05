@@ -16,10 +16,12 @@ module.exports = {
     interaction: {
         reply () {},
         followUp () {},
+        update () {},
         options: {
             getInteger () {},
             getString () {}
-        }
+        },
+        values: 1
     },
     scheduledPolls: [{
         channel: '980524586028400670',
