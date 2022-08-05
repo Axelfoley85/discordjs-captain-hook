@@ -81,35 +81,6 @@ describe('../../commands', function () {
         })
     })
 
-    // describe('hookdelete', function () {
-    //     it(
-    //         'should make select menu + ' + 
-    //         'HooksHandler.getHookDeleteOptions + ' +
-    //         'reply message',
-    //     async function () {
-    //         const id = 1
-    //         const command = require(path.join(commandPath, 'hookdelete'))
-    //         sinon.stub(interaction.options, 'getInteger')
-    //             .returns(id)
-    //         const getStub = sinon.stub(HooksHandler, 'getHookDeleteOptions')
-    //             .resolves(deleteOptions)
-    //         sinon.stub(ActionRowBuilder)
-    //         sinon.stub(SelectMenuBuilder)
-    //         const replyStub = sinon.stub(interaction, 'reply')
-
-    //         await command.execute(interaction, client)
-
-    //         sinon.assert.calledOnceWithExactly(getStub, id)
-    //         sinon.assert.calledOnceWithExactly(
-    //             replyStub,
-    //             {
-    //                 content: 'Hook with id: ' + id + ' was deleted',
-    //                 ephemeral: true
-    //             }
-    //         )
-    //     })
-    // })
-
     describe('hookadd', function () {
         it(
             'should call MissionHooks.create + ' + 
