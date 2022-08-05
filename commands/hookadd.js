@@ -42,7 +42,7 @@ module.exports = {
         )
 
         try {
-            await db.missionHooks.create(hook.get())
+            await db.missionHooks.create(hook.postDbEntry())
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 console.error('Hook title already exists:', error)

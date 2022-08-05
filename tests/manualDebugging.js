@@ -34,13 +34,13 @@ class FakeClient {
         // });
         // await HooksHandler.delete(16)
 
-        const response = await HooksHandler.get()
+        const response = await HooksHandler.getFullHookDescriptions()
         console.log(response)
 
         // await testOne(3)
         // await testOne(9999)
 
-        // console.log(await HooksHandler.get())
+        // console.log(await HooksHandler.getFullHookDescriptions())
         // console.log(typeof (await HooksHandler.getOne(1)))
 
         // console.log(channel)

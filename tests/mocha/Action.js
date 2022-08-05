@@ -9,7 +9,8 @@ const MessageFormat = require('../../helper/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, scheduledPolls, scheduledMessages, member, author } = require('../config')
+const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction } = require('../config')
+const { hookChannel } = require('../../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -31,7 +32,7 @@ describe('../../helper/Action', function () {
 
     describe('Action.postHooks', function () {
         it('should return embeddedMessage', async function () {
-            const HooksStub = sinon.stub(HooksHandler, 'get').resolves('foo')
+            const HooksStub = sinon.stub(HooksHandler, 'getFullHookDescriptions').resolves('foo')
             const embedMessageStub = sinon
                 .stub(MessageFormat, 'embedMessageFrom')
                 .returns('Bar1\nBar2')
@@ -191,6 +192,31 @@ describe('../../helper/Action', function () {
 
             expect(console.error).to.have.been.calledWith(
                 'There has been an error assigning roles!'
+            )
+        })
+    })
+
+    describe('Action.hookdelete', function () {
+        it(
+            'should call HooksHandler.delete' +
+            'Action.updateHookChannel + ' +
+            'interaction.followUp',
+        async function () {
+            const id = 1
+            const deleteStub = sinon.stub(HooksHandler, 'delete')
+            const updateStub = sinon.stub(Action, 'updateHookChannel')
+            const replyStub = sinon.stub(interaction, 'followUp')
+
+            await Action.deleteHookFromSelect(interaction, client, id)
+
+            sinon.assert.calledOnceWithExactly(deleteStub, id)
+            sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
+            sinon.assert.calledOnceWithExactly(
+                replyStub,
+                {
+                    content: `Hook with id: ${id} was deleted. See updated list in <#0000>`,
+                    ephemeral: true
+                }
             )
         })
     })

@@ -10,7 +10,7 @@ const sinonChai = require('sinon-chai')
 const HooksHandler = require('../../helper/HooksHandler')
 const db = require('../../models')
 const Hook = require('../../valueObjects/hook')
-const { missionHookEntry, hook } = require('../config')
+const { hook } = require('../config')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -21,38 +21,52 @@ describe('../../helper/HooksHandler', () => {
         await db.missionHooks.sync({
             force: true
         })
-        await db.missionHooks.create(hook.get())
+        await db.missionHooks.create(hook.postDbEntry())
     })
 
     afterEach(() => {
         sinon.restore()
     })
 
-    it('getOne should return id', async () => {
-        it('getOne should return db entry', async () => {
-            const expectedHook = new Hook(
-                'myTitle',
-                'myDM',
-                1,
-                1,
-                'myDescr'
-            )
-            const response = await HooksHandler.getOne(1)
-            let responseHook
-            response.forEach(
-                (hookItem) => {
-                    responseHook = new Hook(
-                        hookItem.dataValues.title,
-                        hookItem.dataValues.dm,
-                        hookItem.dataValues.tier,
-                        hookItem.dataValues.checkpoints,
-                        hookItem.dataValues.description
-                    )
-                }
-            )
-    
-            expect(responseHook).to.deep.equal(expectedHook)
-        })
+    it('getOne should return hook of id', async () => {
+        const expectedHook = new Hook(
+            'myTitle',
+            'myDM',
+            1,
+            1,
+            'myDescr',
+            1
+        )
+        const response = await HooksHandler.getOne(1)
+        let responseHook
+        response.forEach(
+            (hookItem) => {
+                responseHook = new Hook(
+                    hookItem.dataValues.title,
+                    hookItem.dataValues.dm,
+                    hookItem.dataValues.tier,
+                    hookItem.dataValues.checkpoints,
+                    hookItem.dataValues.description,
+                    hookItem.dataValues.id
+                )
+            }
+        )
+
+        expect(responseHook).to.deep.equal(expectedHook)
+    })
+
+    it('getHooks should return all hooks in db', async () => {
+        const expectedHook = new Hook(
+            'myTitle',
+            'myDM',
+            1,
+            1,
+            'myDescr',
+            1
+        )
+        const response = await HooksHandler.getHooks()
+
+        expect(response[0]).to.deep.equal(expectedHook)
     })
 
     it('HooksHandler.delete should output to console log', async () => {
@@ -75,16 +89,34 @@ describe('../../helper/HooksHandler', () => {
         expect(response).to.deep.equal(['**myTitle**, tier 1, myDM'])
     })
 
-    it('HooksHandler.get should return string', async () => {
-        const MissionHookstub = sinon.spy(db.missionHooks, 'findAll')
+    it('HooksHandler.getFullHookDescriptions should return string', async () => {
+        const MissionHookstub = sinon.spy(HooksHandler, 'getHooks')
 
-        const response = await HooksHandler.get()
+        const response = await HooksHandler.getFullHookDescriptions()
         const cleanedResponse = response.replace(/(\n\n|\n)/gm, '')
 
         sinon.assert.calledOnce(MissionHookstub)
         sinon.assert.match(
             cleanedResponse,
             '**#1****myTitle***myDM, tier 1 - 1 checkpoints*myDescr'
+        )
+    })
+
+    it('HooksHandler.getHookDeleteOptions should return array of objects', async () => {
+        const MissionHookstub = sinon.spy(HooksHandler, 'getHooks')
+
+        const response = await HooksHandler.getHookDeleteOptions()
+
+        sinon.assert.calledOnce(MissionHookstub)
+        sinon.assert.match(
+            response,
+            [
+                { 
+                    label: '#1 by myDM',
+                    description: 'myTitle...',
+                    value: '1'
+                } 
+            ]
         )
     })
 })

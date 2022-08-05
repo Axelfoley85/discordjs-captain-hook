@@ -1,7 +1,7 @@
 const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
-const { timezone } = require('../config')
+const { timezone, hookChannel } = require('../config')
 const alphabet = require('../valueObjects/alphabet').alphabet
 const scheduledMessages = require('../valueObjects/scheduledMessages')
     .scheduledMessages
@@ -9,7 +9,7 @@ const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
     static async postHooks () {
-        const allHooks = await HooksHandler.get()
+        const allHooks = await HooksHandler.getFullHookDescriptions()
 
         const embeddedMessage = {
             embeds: [MessageFormat.embedMessageFrom(allHooks)],
@@ -109,6 +109,17 @@ class Action {
                 `has been added to ${user.tag}.`
             )
         }
+    }
+
+    static async deleteHookFromSelect (interaction, client, deleteId) {
+        await HooksHandler.delete(deleteId)
+        await Action.updateHookChannel(client, hookChannel)
+
+        await interaction.followUp({
+            content: `Hook with id: ${deleteId} was deleted.` +
+                ` See updated list in <#${hookChannel}>`,
+            ephemeral: true
+        })
     }
 }
 

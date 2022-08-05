@@ -9,9 +9,10 @@ const sinonChai = require('sinon-chai')
 const path = require('node:path')
 const Action = require('../../helper/Action')
 const HooksHandler = require('../../helper/HooksHandler')
-const { interaction, client, channel, missionHookEntry } = require('../config')
+const { interaction, client, channel, missionHookEntry, deleteOptions } = require('../config')
 const { hookChannel } = require('../../config')
 const db = require('../../models')
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
@@ -43,7 +44,10 @@ describe('../../commands', function () {
             sinon.assert.calledOnce(updateStub)
             sinon.assert.calledOnceWithExactly(
                 replyStub,
-                '**Mission hooks updated successfull** in <#0000>'
+                {
+                    content: '**Mission hooks updated successfull** in <#0000>',
+                    ephemeral: true
+                }
             )
         })
     })
@@ -77,89 +81,34 @@ describe('../../commands', function () {
         })
     })
 
-    describe('hookdelete', function () {
-        it(
-            'should call interaction.options.getInteger() + ' + 
-            'HooksHandler.getOne + ' + 
-            'Action.updateHookChannel + ' +
-            'interaction.reply + ',
-        async function () {
-            const id = 1
-            const command = require(path.join(commandPath, 'hookdelete'))
-            sinon.stub(interaction.options, 'getInteger')
-                .returns(id)
-            const getStub = sinon.stub(HooksHandler, 'getOne')
-                .resolves(missionHookEntry)
-            const deleteStub = sinon.stub(HooksHandler, 'delete')
-            const updateStub = sinon.stub(Action, 'updateHookChannel')
-            const replyStub = sinon.stub(interaction, 'reply')
+    // describe('hookdelete', function () {
+    //     it(
+    //         'should make select menu + ' + 
+    //         'HooksHandler.getHookDeleteOptions + ' +
+    //         'reply message',
+    //     async function () {
+    //         const id = 1
+    //         const command = require(path.join(commandPath, 'hookdelete'))
+    //         sinon.stub(interaction.options, 'getInteger')
+    //             .returns(id)
+    //         const getStub = sinon.stub(HooksHandler, 'getHookDeleteOptions')
+    //             .resolves(deleteOptions)
+    //         sinon.stub(ActionRowBuilder)
+    //         sinon.stub(SelectMenuBuilder)
+    //         const replyStub = sinon.stub(interaction, 'reply')
 
-            await command.execute(interaction, client)
+    //         await command.execute(interaction, client)
 
-            sinon.assert.calledOnceWithExactly(getStub, id)
-            sinon.assert.calledOnceWithExactly(deleteStub, id)
-            sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
-            sinon.assert.calledOnceWithExactly(
-                replyStub,
-                {
-                    content: 'Hook with id: ' + id + ' was deleted',
-                    ephemeral: true
-                }
-            )
-        })
-
-        it(
-            'should log error on missing id + ' + 
-            'interaction.reply error message ',
-        async function () {
-            const id = 1
-            const command = require(path.join(commandPath, 'hookdelete'))
-            sinon.stub(interaction.options, 'getInteger')
-                .returns(id)
-            sinon.stub(HooksHandler, 'getOne')
-                .resolves([])
-            const replyStub = sinon.stub(interaction, 'reply')
-
-            await command.execute(interaction, client)
-
-            expect(console.log).to.have.been.calledWith(
-                'User requested delete for non-existent', {id}
-            )
-            sinon.assert.calledOnceWithExactly(
-                replyStub,
-                {
-                    content: 'Arrrrr, that id doesn\'t exist',
-                    ephemeral: true
-                }
-            )
-        })
-
-        it(
-            'should log error on unknown error + ' + 
-            'interaction.reply error message',
-        async function () {
-            const id = 1
-            const error = Error('test error')
-            const command = require(path.join(commandPath, 'hookdelete'))
-            sinon.stub(interaction.options, 'getInteger')
-                .returns(id)
-            sinon.stub(HooksHandler, 'getOne').throws(error)
-            const replyStub = sinon.stub(interaction, 'reply')
-
-            await command.execute(interaction, client)
-
-            expect(console.error).to.have.been.calledWith(
-                'Something went wrong:'
-            )
-            sinon.assert.calledOnceWithExactly(
-                replyStub,
-                {
-                    content: 'Arrrrr, something went wrong!',
-                    ephemeral: true
-                }
-            )
-        })
-    })
+    //         sinon.assert.calledOnceWithExactly(getStub, id)
+    //         sinon.assert.calledOnceWithExactly(
+    //             replyStub,
+    //             {
+    //                 content: 'Hook with id: ' + id + ' was deleted',
+    //                 ephemeral: true
+    //             }
+    //         )
+    //     })
+    // })
 
     describe('hookadd', function () {
         it(

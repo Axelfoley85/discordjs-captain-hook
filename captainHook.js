@@ -47,21 +47,37 @@ for (const file of commandFiles) {
 }
 
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return
+    if (interaction.isChatInputCommand()) {
+        const command = client.commands.get(interaction.commandName)
 
-    const command = client.commands.get(interaction.commandName)
+        if (!command) return
 
-    if (!command) return
+        try {
+            await command.execute(interaction, client)
+        } catch (error) {
+            console.error(error)
+            await interaction.reply({
+            // eslint-disable-next-line max-len
+                content: 'Arrrrr, there was an error while executing this command!',
+                ephemeral: true
+            })
+        }
+    } else if (interaction.isSelectMenu()) {
+        console.log(
+            `${interaction.user.tag} in ` +
+            `#${interaction.channel.name}` +
+            'triggered a select menu'
+        )
 
-    try {
-        await command.execute(interaction, client)
-    } catch (error) {
-        console.error(error)
-        await interaction.reply({
-        // eslint-disable-next-line max-len
-            content: 'Arrrrr, there was an error while executing this command!',
-            ephemeral: true
-        })
+        if (interaction.customId === 'hookdelete') {
+            const deleteId = await interaction.values
+            await interaction.update({
+                content: `#${deleteId} was selected!`,
+                components: []
+            })
+
+            await Action.deleteHookFromSelect(interaction, client, deleteId)
+        }
     }
 })
 
