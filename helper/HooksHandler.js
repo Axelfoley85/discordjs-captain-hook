@@ -2,20 +2,31 @@ const db = require('../models')
 const Hook = require('../valueObjects/hook')
 
 class HooksHandler {
-    static async get () {
+    static async getHooks () {
+        const hooks = []
         const hooklist = await db.missionHooks.findAll()
-        let string = ''
         hooklist.forEach(
             (hookItem) => {
-                const hook = new Hook(
+                hooks.push(new Hook(
                     hookItem.dataValues.title,
                     hookItem.dataValues.dm,
                     hookItem.dataValues.tier,
                     hookItem.dataValues.checkpoints,
-                    hookItem.dataValues.description
-                )
-                string += '\n\n**#' + hookItem.dataValues.id + '**\n' +
-                    hook.toString()
+                    hookItem.dataValues.description,
+                    hookItem.dataValues.id
+                ))
+            }
+        )
+        return hooks
+    }
+
+    static async getFullHookDescriptions () {
+        let string = ''
+        const hooklist = await HooksHandler.getHooks()
+
+        hooklist.forEach(
+            (hook) => {
+                string += hook.toString()
             }
         )
 
@@ -23,23 +34,33 @@ class HooksHandler {
     }
 
     static async getHookPollLines () {
-        const hooklist = await db.missionHooks.findAll()
-        console.log(hooklist)
+        const hooklist = await HooksHandler.getHooks()
         const string = []
         hooklist.forEach(
-            (hookItem) => {
-                const hook = new Hook(
-                    hookItem.dataValues.title,
-                    hookItem.dataValues.dm,
-                    hookItem.dataValues.tier,
-                    hookItem.dataValues.checkpoints,
-                    hookItem.dataValues.description
-                )
+            (hook) => {
                 string.push(hook.toPollString())
             }
         )
 
         return string
+    }
+
+    static async getHookDeleteOptions () {
+        const hooklist = await HooksHandler.getHooks()
+        const deleteOptions = []
+        hooklist.forEach(
+            (hook) => {
+                deleteOptions.push(
+                    {
+                        label: `#${hook.id} by ${hook.dm}`,
+                        description: `${hook.title.substring(0, 25)}...`,
+                        value: `${hook.id}`
+                    }
+                )
+            }
+        )
+
+        return deleteOptions
     }
 
     static async delete (id) {
@@ -60,6 +81,6 @@ class HooksHandler {
 
         return idEntry
     }
-};
+}
 
 module.exports = HooksHandler

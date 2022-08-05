@@ -8,8 +8,10 @@ module.exports = {
         .setDescription('delete all content and repost mission hooks'),
     async execute (interaction, client) {
         await Action.updateHookChannel(client, hookChannel)
-        await interaction.reply(
-            '**Mission hooks updated successfull** in <#' + hookChannel + '>'
-        )
+        await interaction.reply({
+            content: '**Mission hooks updated successfull** in <#' +
+                hookChannel + '>',
+            ephemeral: true
+        })
     }
 }
