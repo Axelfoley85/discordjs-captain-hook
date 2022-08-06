@@ -2,6 +2,7 @@ const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
 const { timezone, hookChannel } = require('../config')
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 const alphabet = require('../valueObjects/alphabet').alphabet
 const scheduledMessages = require('../valueObjects/scheduledMessages')
     .scheduledMessages
@@ -111,20 +112,35 @@ class Action {
         }
     }
 
-    static async deleteHookFromSelect (interaction, client) {
-        const deleteId = await interaction.values
+    static async selectHookToDelete (interaction, client, deleteId) {
+        const row = new ActionRowBuilder()
+            .addComponents(
+                new SelectMenuBuilder()
+                    .setCustomId('confirmdelete')
+                    .setPlaceholder('Please confirm')
+                    .addOptions(
+                        {
+                            label: 'I confirm',
+                            description: `Confirm delete hook #${deleteId}`,
+                            value: deleteId
+                        }
+                    )
+            )
+
         await interaction.update({
             content: `#${deleteId} was selected!`,
-            components: [],
-            fetchReply: true
+            components: [row]
         })
+    }
 
+    static async deleteHookAfterConfirm (interaction, client, deleteId) {
         await HooksHandler.delete(deleteId)
         await Action.updateHookChannel(client, hookChannel)
 
-        await interaction.followUp({
+        await interaction.update({
             content: `Hook with id: ${deleteId} was deleted.` +
                 ` See updated list in <#${hookChannel}>`,
+            components: [],
             ephemeral: true
         })
     }

@@ -17,6 +17,7 @@ module.exports = {
         reply () {},
         followUp () {},
         update () {},
+        deferUpdate () {},
         options: {
             getInteger () {},
             getString () {}

@@ -62,15 +62,40 @@ client.on('interactionCreate', async interaction => {
                 ephemeral: true
             })
         }
-    } else if (interaction.isSelectMenu()) {
-        console.log(
-            `${interaction.user.tag} in ` +
-            `#${interaction.channel.name}` +
-            'triggered a select menu'
-        )
+    }
 
+    if (interaction.isSelectMenu()) {
         if (interaction.customId === 'hookdelete') {
-            await Action.deleteHookFromSelect(interaction, client)
+            try {
+                await Action.selectHookToDelete(
+                    interaction,
+                    client,
+                    interaction.values[0]
+                )
+            } catch (error) {
+                console.error(error)
+                await interaction.reply({
+                // eslint-disable-next-line max-len
+                    content: 'Arrrrr, there was an error while executing this command!',
+                    ephemeral: true
+                })
+            }
+        }
+        if (interaction.customId === 'confirmdelete') {
+            try {
+                await Action.deleteHookAfterConfirm(
+                    interaction,
+                    client,
+                    interaction.values[0]
+                )
+            } catch (error) {
+                console.error(error)
+                await interaction.reply({
+                // eslint-disable-next-line max-len
+                    content: 'Arrrrr, there was an error while executing this command!',
+                    ephemeral: true
+                })
+            }
         }
     }
 })

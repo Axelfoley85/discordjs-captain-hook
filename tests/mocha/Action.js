@@ -11,6 +11,7 @@ const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
 const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction } = require('../config')
 const { hookChannel } = require('../../config')
+const { ActionRowBuilder, SelectMenuBuilder } = require('@discordjs/builders')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -196,19 +197,18 @@ describe('../../helper/Action', function () {
         })
     })
 
-    describe('Action.hookdelete', function () {
+    describe('Action.deleteHookAfterConfirm', function () {
         it(
             'should call HooksHandler.delete' +
             'Action.updateHookChannel + ' +
-            'interaction.followUp',
+            'interaction.update',
         async function () {
             const id = 1
-            sinon.stub(interaction, 'update').resolves()
             const deleteStub = sinon.stub(HooksHandler, 'delete')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
-            const replyStub = sinon.stub(interaction, 'followUp')
+            const replyStub = sinon.stub(interaction, 'update')
 
-            await Action.deleteHookFromSelect(interaction, client)
+            await Action.deleteHookAfterConfirm(interaction, client, id)
 
             sinon.assert.calledOnceWithExactly(deleteStub, id)
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
@@ -216,6 +216,7 @@ describe('../../helper/Action', function () {
                 replyStub,
                 {
                     content: `Hook with id: ${id} was deleted. See updated list in <#0000>`,
+                    components: [],
                     ephemeral: true
                 }
             )
