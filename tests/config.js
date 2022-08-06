@@ -36,7 +36,10 @@ module.exports = {
     scheduledMessages: [{
         channel: '980524586028400670',
         cron: '* * * * * *',
-        content: 'message'
+        content: 'message',
+        execute: async (interaction, client) => {
+            console.log('This should be logged')
+        }
     }],
     member: {
         roles: {

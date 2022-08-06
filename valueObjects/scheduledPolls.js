@@ -17,7 +17,7 @@ module.exports = {
                 '"arrow sign" on door console outside and check if door ' +
                 'is securely locked by manually trying the door handle ' +
                 'from outside. If it wasn\'t locked properly replace ' +
-                'batteries or call Mr. Nader, 015118088875 from ' +
+                'batteries or call Mr. Nader Can, 015118088875 from ' +
                 'Volkssolidarität'
             ]
         },

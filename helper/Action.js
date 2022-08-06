@@ -3,6 +3,7 @@ const MessageFormat = require('./MessageFormat')
 const schedule = require('node-schedule')
 const { timezone, hookChannel } = require('../config')
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { interaction } = require('../tests/config')
 const alphabet = require('../valueObjects/alphabet').alphabet
 const scheduledMessages = require('../valueObjects/scheduledMessages')
     .scheduledMessages
@@ -84,10 +85,14 @@ class Action {
             rule.tz = timezone
 
             schedule.scheduleJob(message.cron, async () => {
-                console.log('sending scheduled message!')
+                console.log('Scheduling message')
                 await channel.send({
                     content: message.content
                 })
+
+                if ('execute' in message) {
+                    await message.execute(interaction, client)
+                }
             })
         })
     }

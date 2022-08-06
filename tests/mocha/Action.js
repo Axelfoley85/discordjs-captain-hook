@@ -139,7 +139,12 @@ describe('../../helper/Action', function () {
             const sendStub = sinon.stub(channel, 'send').resolves()
 
             await Action.postMessages(client, scheduledMessages)
-            await clock.tickAsync(2150)
+            await clock.tickAsync(1150)
+
+            expect(console.log).to.be.calledWith(
+                'This should be logged'
+            )
+            await clock.tickAsync(1150)
 
             sinon.assert.calledWith(sendStub, {
                 content: 'message'
