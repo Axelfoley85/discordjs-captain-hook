@@ -23,7 +23,8 @@ module.exports = {
         await interaction.reply({
             content: 'Choose the hook to delete',
             components: [row],
-            ephemeral: true
+            ephemeral: true,
+            fetchReply: true
         })
     }
 }
