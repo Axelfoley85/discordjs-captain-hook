@@ -21,7 +21,7 @@ describe('../../helper/HooksHandler', () => {
         await db.missionHooks.sync({
             force: true
         })
-        await db.missionHooks.create(hook.postDbEntry())
+        await db.missionHooks.create(hook.dbEntry())
     })
 
     afterEach(() => {
@@ -33,8 +33,10 @@ describe('../../helper/HooksHandler', () => {
             'myTitle',
             'myDM',
             1,
-            1,
+            2,
             'myDescr',
+            3,
+            4,
             1
         )
         const response = await HooksHandler.getOne(1)
@@ -47,6 +49,8 @@ describe('../../helper/HooksHandler', () => {
                     hookItem.dataValues.tier,
                     hookItem.dataValues.checkpoints,
                     hookItem.dataValues.description,
+                    hookItem.dataValues.userId,
+                    hookItem.dataValues.guildId,
                     hookItem.dataValues.id
                 )
             }
@@ -60,8 +64,10 @@ describe('../../helper/HooksHandler', () => {
             'myTitle',
             'myDM',
             1,
-            1,
+            2,
             'myDescr',
+            3,
+            4,
             1
         )
         const response = await HooksHandler.getHooks()
@@ -98,7 +104,7 @@ describe('../../helper/HooksHandler', () => {
         sinon.assert.calledOnce(MissionHookstub)
         sinon.assert.match(
             cleanedResponse,
-            '**#1****myTitle***myDM, tier 1 - 1 checkpoints*myDescr'
+            '**myTitle***myDM, tier 1 - 2 checkpoints*myDescr'
         )
     })
 
@@ -112,7 +118,7 @@ describe('../../helper/HooksHandler', () => {
             response,
             [
                 { 
-                    label: '#1 by myDM',
+                    label: 'myDM',
                     description: 'myTitle...',
                     value: '1'
                 } 

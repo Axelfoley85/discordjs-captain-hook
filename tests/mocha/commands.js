@@ -9,10 +9,11 @@ const sinonChai = require('sinon-chai')
 const path = require('node:path')
 const Action = require('../../helper/Action')
 const HooksHandler = require('../../helper/HooksHandler')
-const { interaction, client, channel, missionHookEntry, deleteOptions } = require('../config')
+const { interaction, client, channel, missionHookEntry, deleteOptions, info } = require('../config')
 const { hookChannel } = require('../../config')
 const db = require('../../models')
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const Interaction = require('../../helper/Interaction')
 
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
@@ -91,11 +92,10 @@ describe('../../commands', function () {
             sinon.stub(interaction.options, 'getString')
                 .withArgs('title').returns('title')
                 .withArgs('description').returns('descr')
-                .withArgs('dm').returns('dm')
             sinon.stub(interaction.options, 'getInteger')
                 .withArgs('tier').returns(1)
                 .withArgs('checkpoints').returns(2)
-            const createStub = sinon.stub(db.missionHooks, 'create')
+            const createStub = sinon.spy(db.missionHooks, 'create')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -105,10 +105,12 @@ describe('../../commands', function () {
                 createStub,
                 {
                     title: 'title',
-                    dm: 'dm',
+                    dm: 'myUsername',
                     tier: 1,
                     checkpoints: 2,
-                    description: 'descr'
+                    description: 'descr',
+                    userId: 1,
+                    guildId: 2
                 }
             )
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
@@ -117,7 +119,7 @@ describe('../../commands', function () {
                 {
                     content: 'Mission hook created: \n' +
                         '**title**\n' +
-                        '*dm, tier 1 - 2 checkpoints*\n' +
+                        '*myUsername, tier 1 - 2 checkpoints*\n' +
                         'descr',
                     ephemeral: true
                     }

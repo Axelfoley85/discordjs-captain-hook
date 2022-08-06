@@ -13,6 +13,8 @@ class HooksHandler {
                     hookItem.dataValues.tier,
                     hookItem.dataValues.checkpoints,
                     hookItem.dataValues.description,
+                    hookItem.dataValues.userId,
+                    hookItem.dataValues.guildId,
                     hookItem.dataValues.id
                 ))
             }
@@ -26,7 +28,7 @@ class HooksHandler {
 
         hooklist.forEach(
             (hook) => {
-                string += hook.toString()
+                string += '\n\n' + hook.toString()
             }
         )
 
@@ -52,7 +54,7 @@ class HooksHandler {
             (hook) => {
                 deleteOptions.push(
                     {
-                        label: `#${hook.id} by ${hook.dm}`,
+                        label: `${hook.dm}`,
                         description: `${hook.title.substring(0, 25)}...`,
                         value: `${hook.id}`
                     }
