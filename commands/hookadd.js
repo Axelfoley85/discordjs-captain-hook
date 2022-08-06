@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js')
 // const MissionHooks = require('../models/MissionHooks.js')
 const { hookChannel } = require('../config.js')
 const Action = require('../helper/Action.js')
+const Interaction = require('../helper/Interaction.js')
 const db = require('../models/index.js')
 const Hook = require('../valueObjects/hook.js')
 
@@ -17,11 +18,6 @@ module.exports = {
             option.setName('description')
                 .setDescription('The description of the mission hook')
                 .setRequired(true))
-        .addStringOption(
-            option => option
-                .setName('dm')
-                .setDescription('dm of session')
-                .setRequired(true))
         .addIntegerOption(
             option => option
                 .setName('tier')
@@ -33,16 +29,19 @@ module.exports = {
                 .setDescription('checkpoints')
                 .setRequired(true)),
     async execute (interaction, client) {
+        const info = Interaction.getInfos(interaction)
         const hook = new Hook(
             interaction.options.getString('title'),
-            interaction.options.getString('dm'),
+            info.username,
             interaction.options.getInteger('tier'),
             interaction.options.getInteger('checkpoints'),
-            interaction.options.getString('description')
+            interaction.options.getString('description'),
+            info.userId,
+            info.guildId
         )
 
         try {
-            await db.missionHooks.create(hook.postDbEntry())
+            await db.missionHooks.create(hook.dbEntry())
         } catch (error) {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 console.error('Hook title already exists:', error)

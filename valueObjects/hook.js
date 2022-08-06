@@ -1,11 +1,22 @@
 class Hook {
-    constructor (title, dm, tier, checkpoints, description, id = undefined) {
+    constructor (
+        title,
+        dm,
+        tier,
+        checkpoints,
+        description,
+        userId,
+        guildId,
+        id = undefined
+    ) {
         this.id = id
         this.title = title
         this.dm = dm
         this.tier = tier
         this.checkpoints = checkpoints
         this.description = description
+        this.userId = userId
+        this.guildId = guildId
     }
 
     get () {
@@ -15,26 +26,26 @@ class Hook {
             dm: this.dm,
             tier: this.tier,
             checkpoints: this.checkpoints,
-            description: this.description
+            description: this.description,
+            userId: this.userId,
+            guildId: this.guildId
         }
     }
 
-    postDbEntry () {
+    dbEntry () {
         return {
             title: this.title,
             dm: this.dm,
             tier: this.tier,
             checkpoints: this.checkpoints,
-            description: this.description
+            description: this.description,
+            userId: this.userId,
+            guildId: this.guildId
         }
     }
 
     toString () {
-        let string = ''
-        if (typeof this.id !== 'undefined') {
-            string += '\n\n**#' + this.id + '**\n'
-        }
-        string += '**' + this.title + '**\n*' +
+        let string = '**' + this.title + '**\n*' +
             this.dm + ', ' +
             'tier ' + this.tier + ' - ' +
             this.checkpoints + ' checkpoints*'

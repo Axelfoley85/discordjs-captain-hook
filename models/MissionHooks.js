@@ -42,6 +42,22 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0
+        },
+        guildId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        status: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            // pseudo ENUM: active, hidden, deleted, outdated
+            defaultValue: 'active'
         }
     }, {
         sequelize,

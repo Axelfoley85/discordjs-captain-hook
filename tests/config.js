@@ -22,7 +22,15 @@ module.exports = {
             getInteger () {},
             getString () {}
         },
-        values: 1
+        values: 1,
+        user: {
+            username: 'myUsername',
+            id: 1
+        },
+        guildId: 2,
+        channelId: 3,
+        channel: { name: 'myChannelName' },
+        type: 4
     },
     scheduledPolls: [{
         channel: '980524586028400670',
@@ -52,9 +60,11 @@ module.exports = {
         'myTitle',
         'myDM',
         1,
-        1,
+        2,
         'myDescr',
-        1
+        3,
+        4,
+        5
     ),
     deleteOptions: [
         {
