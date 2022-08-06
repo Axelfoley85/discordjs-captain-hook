@@ -9,7 +9,7 @@ const sinonChai = require('sinon-chai')
 const path = require('node:path')
 const Action = require('../../helper/Action')
 const HooksHandler = require('../../helper/HooksHandler')
-const { interaction, client, channel, missionHookEntry, deleteOptions, info } = require('../config')
+const { interaction, client, channel, missionHookEntry, deleteOptions, info, hook } = require('../config')
 const { hookChannel } = require('../../config')
 const db = require('../../models')
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
@@ -22,9 +22,13 @@ const expect = chai.expect
 var commandPath = path.join(__dirname, '../../commands')
 
 describe('../../commands', function () {
-    beforeEach( function () {
+    beforeEach( async function () {
         sinon.spy(console, 'error')
         sinon.spy(console, 'log')
+        await db.missionHooks.sync({
+            force: true
+        })
+        await db.missionHooks.create(hook.dbEntry())
     })
 
     afterEach( function () {
