@@ -128,7 +128,8 @@ class Action {
             )
 
         await interaction.update({
-            content: `#${deleteId} was selected!`,
+            content: `#${deleteId} was selected! Please confirm ` +
+            'by using the select menu again.',
             components: [row]
         })
     }
