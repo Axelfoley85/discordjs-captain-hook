@@ -7,7 +7,7 @@ const chaiAsPromised = require('chai-as-promised')
 const { describe } = require('mocha')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
-const HooksHandler = require('../../helper/HooksHandler')
+const HooksHandler = require('../../app/HooksHandler')
 const db = require('../../models')
 const Hook = require('../../valueObjects/hook')
 const { hook } = require('../config')
@@ -15,7 +15,7 @@ chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
 
-describe('../../helper/HooksHandler', () => {
+describe('../../app/HooksHandler', () => {
 
     beforeEach( async function () {
         await db.missionHooks.sync({

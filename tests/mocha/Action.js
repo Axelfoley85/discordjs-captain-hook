@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 const sinon = require('sinon')
-const Action = require('../../helper/Action')
-const HooksHandler = require('../../helper/HooksHandler')
-const MessageFormat = require('../../helper/MessageFormat')
+const Action = require('../../app/Action')
+const HooksHandler = require('../../app/HooksHandler')
+const MessageFormat = require('../../app/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
@@ -18,7 +18,7 @@ const expect = chai.expect
 
 let clock
 
-describe('../../helper/Action', function () {
+describe('../../app/Action', function () {
 
     beforeEach( function () {
         sinon.spy(console, 'error')

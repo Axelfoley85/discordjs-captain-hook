@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js')
 // const MissionHooks = require('../models/MissionHooks.js')
 const { hookChannel } = require('../config.js')
-const Action = require('../helper/Action.js')
-const Interaction = require('../helper/Interaction.js')
+const Action = require('../app/Action.js')
+const Interaction = require('../app/Interaction.js')
 const db = require('../models/index.js')
 const Hook = require('../valueObjects/hook.js')
 

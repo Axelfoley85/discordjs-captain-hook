@@ -1,4 +1,4 @@
-const Interaction = require('../helper/Interaction')
+const Interaction = require('../app/Interaction')
 
 module.exports = {
     name: 'interactionCreate',

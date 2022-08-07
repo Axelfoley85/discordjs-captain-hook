@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
-const HooksHandler = require('../helper/HooksHandler')
-const Action = require('../helper/Action')
+const HooksHandler = require('../app/HooksHandler')
+const Action = require('../app/Action')
 const { voteChannel } = require('../config.js')
 
 module.exports = {

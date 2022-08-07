@@ -4,12 +4,12 @@
 
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-const MessageFormat = require('../../helper/MessageFormat')
+const MessageFormat = require('../../app/MessageFormat')
 const { EmbedBuilder } = require('discord.js')
 chai.use(chaiAsPromised)
 const expect = chai.expect
 
-describe('../../helper/MessageFormat', () => {
+describe('../../app/MessageFormat', () => {
     describe('# embedMessageFrom', () => {
         it('will return expected object', () => {
             return expect(MessageFormat.embedMessageFrom('Some text')).to.be.

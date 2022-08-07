@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-const HooksHandler = require('../helper/HooksHandler')
+const HooksHandler = require('../app/HooksHandler')
 const db = require('../models')
 // const MissionHooks = require('../models/MissionHooks.js')
 
