@@ -220,7 +220,7 @@ describe('../../helper/Action', function () {
             sinon.assert.calledOnceWithExactly(
                 replyStub,
                 {
-                    content: `Hook with id: ${id} was deleted. See updated list in <#0000>`,
+                    content: 'Hook was deleted. See updated list in <#0000>',
                     components: [],
                     ephemeral: true
                 }
