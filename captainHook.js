@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js')
 require('log-timestamp')
 /* eslint-disable no-unused-vars */
 const { token } = require('./config.js')
-const Action = require('./helper/Action.js')
+const Action = require('./app/Action.js')
 
 const client = new Client({
     intents: [

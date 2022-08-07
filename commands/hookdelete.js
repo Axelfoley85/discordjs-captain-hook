@@ -3,7 +3,7 @@ const {
     ActionRowBuilder,
     SelectMenuBuilder
 } = require('discord.js')
-const HooksHandler = require('../helper/HooksHandler')
+const HooksHandler = require('../app/HooksHandler')
 
 module.exports = {
     data: new SlashCommandBuilder()

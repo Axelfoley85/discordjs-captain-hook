@@ -1,8 +1,8 @@
 const {
     wMGeneralChannel, debugChannel, voteChannel
 } = require('../config')
-const Action = require('../helper/Action')
-const HooksHandler = require('../helper/HooksHandler')
+const Action = require('../app/Action')
+const HooksHandler = require('../app/HooksHandler')
 
 module.exports = {
     scheduledMessages: [

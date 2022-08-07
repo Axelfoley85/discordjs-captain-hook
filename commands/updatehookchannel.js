@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const Action = require('../helper/Action')
+const Action = require('../app/Action')
 const { hookChannel } = require('../config.js')
 
 module.exports = {

@@ -1,4 +1,4 @@
-const Action = require('../helper/Action')
+const Action = require('../app/Action')
 const westMarchesRole = require('../valueObjects/roles').westMarchesRole
 const westmarchChannels = require('../valueObjects/westmarchChannels')
     .westmarchChannels
