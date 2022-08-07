@@ -7,10 +7,10 @@
     "run": "node captainHook.js",
     "fix": "eslint --fix .",
     "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
-    "coverage": "nyc report --reporter=lcov --coverage-exclude=./test/* && ./node_modules/.bin/codecov",
+    "coverage": "nyc report && ./node_modules/.bin/codecov",
     "migrate-db": "npx sequelize-cli db:migrate --env 'default'",
     "custom-run": "mocha --timeout 10000 tests/mocha/Action.js",
-    "manual-debug": "mocha tests/manualDebugging.js"
+    "manual-debug": "mocha --timeout 10000 tests/manualDebugging.js"
   },
   "author": "",
   "license": "ISC",

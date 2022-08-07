@@ -5,3 +5,5 @@ docker-commands.sh
 data/
 database.sqlite.hook_backup
 test.sqlite
+.nyc_output/
+coverage/lcov-report
