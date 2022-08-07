@@ -1,0 +1,6 @@
+{
+  "all": true,
+  "extension": [".js"],
+  "exclude": ["test"],
+  "reporter": ["lcov"]
+}
