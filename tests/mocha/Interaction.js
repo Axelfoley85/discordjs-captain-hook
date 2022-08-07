@@ -4,12 +4,12 @@
 
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-const Interaction = require('../../appteraction')
+const Interaction = require('../../app/Interaction')
 const { interaction } = require('../config')
 chai.use(chaiAsPromised)
 const expect = chai.expect
 
-describe('appteraction.js', () => {
+describe('app/Interaction.js', () => {
     describe('# getInfos', () => {
         it('will return expected values', () => {
             return expect(Interaction.getInfos(interaction)).to.deep.equal(
