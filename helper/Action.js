@@ -133,7 +133,7 @@ class Action {
             )
 
         await interaction.update({
-            content: `#${deleteId} was selected! Please confirm ` +
+            content: 'Hook to delete was selected! Please confirm ' +
             'by using the select menu again.',
             components: [row]
         })
@@ -144,7 +144,7 @@ class Action {
         await Action.updateHookChannel(client, hookChannel)
 
         await interaction.update({
-            content: `Hook with id: ${deleteId} was deleted.` +
+            content: 'Hook was deleted.' +
                 ` See updated list in <#${hookChannel}>`,
             components: [],
             ephemeral: true
