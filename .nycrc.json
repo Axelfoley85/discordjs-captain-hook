@@ -4,9 +4,7 @@
   "exclude": [
     "tests",
     "node_modules",
-    ".nyc_output",
     "coverage",
-    ".git",
     "deploy-commands.js",
     "migrations"
   ]
