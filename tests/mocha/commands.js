@@ -113,8 +113,8 @@ describe('../../commands', function () {
                     tier: 1,
                     checkpoints: 2,
                     description: 'descr',
-                    userId: 1,
-                    guildId: 2
+                    userId: 3,
+                    guildId: 4
                 }
             )
             sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)

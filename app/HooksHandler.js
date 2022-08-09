@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const db = require('../models')
 const Hook = require('../valueObjects/hook')
 
@@ -47,8 +48,17 @@ class HooksHandler {
         return string
     }
 
-    static async getHookDeleteOptions (filter = {}) {
-        const hooklist = await HooksHandler.getHooks(filter)
+    static async getHookDeleteOptions (info) {
+        const hooklist = await HooksHandler.getHooks({
+            where: {
+                userId: {
+                    [Op.or]: [info.userId, 0]
+                },
+                guildId: {
+                    [Op.or]: [info.guildId, 0]
+                }
+            }
+        })
         const deleteOptions = []
         hooklist.forEach(
             (hook) => {

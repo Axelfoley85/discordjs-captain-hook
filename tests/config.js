@@ -25,12 +25,12 @@ module.exports = {
         values: 1,
         user: {
             username: 'myUsername',
-            id: 1
+            id: 3
         },
-        guildId: 2,
-        channelId: 3,
+        guildId: 4,
+        channelId: 5,
         channel: { name: 'myChannelName' },
-        type: 4
+        type: 6
     },
     scheduledPolls: [{
         channel: '980524586028400670',

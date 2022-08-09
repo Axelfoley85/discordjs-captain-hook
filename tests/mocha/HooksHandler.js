@@ -177,7 +177,9 @@ describe('../../app/HooksHandler', () => {
     it('HooksHandler.getHookDeleteOptions should return array of objects', async () => {
         const MissionHookstub = sinon.spy(HooksHandler, 'getHooks')
 
-        const response = await HooksHandler.getHookDeleteOptions()
+        const response = await HooksHandler.getHookDeleteOptions(
+            Interaction.getInfos(interaction)
+        )
 
         sinon.assert.calledOnce(MissionHookstub)
         sinon.assert.match(
