@@ -15,11 +15,11 @@ describe('app/Interaction.js', () => {
             return expect(Interaction.getInfos(interaction)).to.deep.equal(
                 {
                     username: 'myUsername',
-                    userId: 1,
-                    guildId: 2,
-                    channelId: 3,
+                    userId: 3,
+                    guildId: 4,
+                    channelId: 5,
                     channelName: 'myChannelName',
-                    type: 4
+                    type: 6
                 }
             )
         })

@@ -3,7 +3,6 @@ const {
     ActionRowBuilder,
     SelectMenuBuilder
 } = require('discord.js')
-const { Op } = require('sequelize')
 const HooksHandler = require('../app/HooksHandler')
 const Interaction = require('../app/Interaction')
 
@@ -13,16 +12,7 @@ module.exports = {
         .setDescription('delete hook via select menu'),
     async execute (interaction, client) {
         const info = Interaction.getInfos(interaction)
-        const deleteOptions = await HooksHandler.getHookDeleteOptions({
-            where: {
-                userId: {
-                    [Op.or]: [info.userId, 0]
-                },
-                guildId: {
-                    [Op.or]: [info.guildId, 0]
-                }
-            }
-        })
+        const deleteOptions = await HooksHandler.getHookDeleteOptions(info)
 
         const row = new ActionRowBuilder()
             .addComponents(
