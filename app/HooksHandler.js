@@ -55,9 +55,7 @@ class HooksHandler {
     static async getHookDeleteOptions (info) {
         const hooklist = await HooksHandler.getHooks({
             where: {
-                userId: {
-                    [Op.or]: [info.userId, 0]
-                },
+                userId: info.userId,
                 guildId: info.guildId
             }
         })
