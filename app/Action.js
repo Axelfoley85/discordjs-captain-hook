@@ -4,6 +4,7 @@ const schedule = require('node-schedule')
 const { timezone, hookChannel } = require('../config')
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 const { interaction } = require('../tests/config')
+const Interaction = require('./Interaction')
 const alphabet = require('../valueObjects/alphabet').alphabet
 const scheduledMessages = require('../valueObjects/scheduledMessages')
     .scheduledMessages
@@ -11,11 +12,12 @@ const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
     static async postHooks (info) {
-        const allHooks = await HooksHandler.getFullHookDescriptions({
+        let allHooks = await HooksHandler.getFullHookDescriptions({
             where: {
                 guildId: info.guildId
             }
         })
+        if (allHooks === '') { allHooks = 'Nothing here' }
 
         const embeddedMessage = {
             embeds: [MessageFormat.embedMessageFrom(allHooks)],
@@ -48,14 +50,28 @@ class Action {
         let contentArr = [].concat(contentArray)
 
         contentArr = MessageFormat.addAlphabetPrefix(contentArr)
-        const message = await channel.send({
-            embeds: [MessageFormat.embedMessageFrom(
-                MessageFormat.arrayToText(contentArr)
-            )],
-            content: title,
-            fetchReply: true
-        })
 
+        if (contentArr.length === 0) {
+            await channel.send({
+                embeds: [MessageFormat.embedMessageFrom(
+                    'Nothing here'
+                )],
+                content: title
+            })
+        } else {
+            const message = await channel.send({
+                embeds: [MessageFormat.embedMessageFrom(
+                    MessageFormat.arrayToText(contentArr)
+                )],
+                content: title,
+                fetchReply: true
+            })
+
+            await Action.attachPollEmojis(contentArr, message)
+        }
+    }
+
+    static async attachPollEmojis (contentArr, message) {
         try {
             for (let i = 0; i < contentArr.length; i++) {
                 await message.react(alphabet[i])
@@ -144,8 +160,9 @@ class Action {
     }
 
     static async deleteHookAfterConfirm (interaction, client, deleteId) {
+        const info = Interaction.getInfos(interaction)
         await HooksHandler.delete(deleteId)
-        await Action.updateHookChannel(client, hookChannel)
+        await Action.updateHookChannel(client, hookChannel, info)
 
         await interaction.update({
             content: 'Hook was deleted.' +

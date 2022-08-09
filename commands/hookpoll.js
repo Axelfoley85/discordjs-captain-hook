@@ -11,13 +11,13 @@ module.exports = {
     async execute (interaction, client) {
         const info = Interaction.getInfos(interaction)
         const channel = client.channels.cache.get(voteChannel)
-        const response = await HooksHandler.getHookPollLines(info)
+        const pollLines = await HooksHandler.getHookPollLines(info)
 
         await interaction.reply({
             content: 'Vote has been posted in <#' + channel + '>',
             ephemeral: true
         })
 
-        await Action.postHookVote(response, channel)
+        await Action.postHookVote(pollLines, channel)
     }
 }

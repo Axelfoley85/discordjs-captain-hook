@@ -11,7 +11,6 @@ const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
 const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction, info } = require('../config')
 const { hookChannel } = require('../../config')
-const { ActionRowBuilder, SelectMenuBuilder } = require('@discordjs/builders')
 const { westMarchesRole } = require('../../valueObjects/roles')
 const Interaction = require('../../app/Interaction')
 chai.use(chaiAsPromised)
@@ -99,20 +98,46 @@ describe('../../app/Action', function () {
         async function () {
             const sendStub = sinon.stub(channel, 'send')
                 .resolves(message)
-            const reactions = sinon.stub(message, 'react')
+            const reactions = sinon.stub(Action, 'attachPollEmojis')
 
             await Action.sendPollToChannel(channel, 'this is a title', ['foo', 'bar'])
 
             sinon.assert.calledOnce(sendStub)
+            sinon.assert.calledOnce(reactions)
+        })
+
+        it(
+            ' should run ' +
+            'channel.send when array empty',
+        async function () {
+            const sendStub = sinon.stub(channel, 'send')
+                .resolves(message)
+            const reactions = sinon.stub(Action, 'attachPollEmojis')
+
+            await Action.sendPollToChannel(channel, 'this is a title', [])
+
+            sinon.assert.calledOnce(sendStub)
+            sinon.assert.notCalled(reactions)
+        })
+    })
+
+    describe('Action.attachPollEmojis', async function () {
+        it(
+            ' should run ' +
+            'channel.send + message.react',
+        async function () {
+            const reactions = sinon.stub(message, 'react')
+
+            await Action.attachPollEmojis(['foo', 'bar'], message)
+
             sinon.assert.callCount(reactions, 2)
         })
 
         it('should run log error', async function () {
-            sinon.stub(channel, 'send').resolves(message)
             const reactStub = sinon.stub(message, 'react')
                 .throws(Error('fooError'))
 
-            await Action.sendPollToChannel(channel, 'this is a title', ['foo', 'bar'])
+            await Action.attachPollEmojis(['foo', 'bar'], message)
 
             expect(console.error).to.have.been.calledWith(
                 'One of the emojis failed to react:'
@@ -217,7 +242,12 @@ describe('../../app/Action', function () {
             await Action.deleteHookAfterConfirm(interaction, client, id)
 
             sinon.assert.calledOnceWithExactly(deleteStub, id)
-            sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
+            sinon.assert.calledOnceWithExactly(
+                updateStub,
+                client,
+                hookChannel,
+                Interaction.getInfos(interaction)
+            )
             sinon.assert.calledOnceWithExactly(
                 replyStub,
                 {

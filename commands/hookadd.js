@@ -56,7 +56,7 @@ module.exports = {
                 ephemeral: true
             })
         }
-        await Action.updateHookChannel(client, hookChannel)
+        await Action.updateHookChannel(client, hookChannel, info)
 
         await interaction.reply({
             content: 'Mission hook created: \n' + hook.toString(),

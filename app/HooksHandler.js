@@ -1,4 +1,3 @@
-const { Op } = require('sequelize')
 const db = require('../models')
 const Hook = require('../valueObjects/hook')
 
@@ -42,14 +41,14 @@ class HooksHandler {
                 guildId: info.guildId
             }
         })
-        const string = []
+        const pollLines = []
         hooklist.forEach(
             (hook) => {
-                string.push(hook.toPollString())
+                pollLines.push(hook.toPollString())
             }
         )
 
-        return string
+        return pollLines
     }
 
     static async getHookDeleteOptions (info) {
