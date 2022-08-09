@@ -10,8 +10,8 @@ const scheduledMessages = require('../valueObjects/scheduledMessages')
 const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
-    static async postHooks () {
-        const allHooks = await HooksHandler.getFullHookDescriptions()
+    static async postHooks (filter = {}) {
+        const allHooks = await HooksHandler.getFullHookDescriptions(filter)
 
         const embeddedMessage = {
             embeds: [MessageFormat.embedMessageFrom(allHooks)],
