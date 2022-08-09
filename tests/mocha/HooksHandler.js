@@ -156,7 +156,9 @@ describe('../../app/HooksHandler', () => {
     })
 
     it('HooksHandler.getHookPollLines should return array with hooks', async () => {
-        const response = await HooksHandler.getHookPollLines()
+        const info = Interaction.getInfos(interaction)
+
+        const response = await HooksHandler.getHookPollLines(info)
 
         expect(response).to.deep.equal(['**myTitle**, tier 1, myDM'])
     })

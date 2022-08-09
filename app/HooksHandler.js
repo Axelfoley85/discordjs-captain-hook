@@ -1,4 +1,3 @@
-const { Op } = require('sequelize')
 const db = require('../models')
 const Hook = require('../valueObjects/hook')
 
@@ -36,27 +35,27 @@ class HooksHandler {
         return string
     }
 
-    static async getHookPollLines (filter = {}) {
-        const hooklist = await HooksHandler.getHooks(filter)
-        const string = []
+    static async getHookPollLines (info) {
+        const hooklist = await HooksHandler.getHooks({
+            where: {
+                guildId: info.guildId
+            }
+        })
+        const pollLines = []
         hooklist.forEach(
             (hook) => {
-                string.push(hook.toPollString())
+                pollLines.push(hook.toPollString())
             }
         )
 
-        return string
+        return pollLines
     }
 
     static async getHookDeleteOptions (info) {
         const hooklist = await HooksHandler.getHooks({
             where: {
-                userId: {
-                    [Op.or]: [info.userId, 0]
-                },
-                guildId: {
-                    [Op.or]: [info.guildId, 0]
-                }
+                userId: info.userId,
+                guildId: info.guildId
             }
         })
         const deleteOptions = []

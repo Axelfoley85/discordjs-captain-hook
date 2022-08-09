@@ -117,7 +117,12 @@ describe('../../commands', function () {
                     guildId: 4
                 }
             )
-            sinon.assert.calledOnceWithExactly(updateStub, client, hookChannel)
+            sinon.assert.calledOnceWithExactly(
+                updateStub,
+                client,
+                hookChannel,
+                Interaction.getInfos(interaction)
+            )
             sinon.assert.calledOnceWithExactly(
                 replyStub,
                 {
