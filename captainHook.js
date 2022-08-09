@@ -65,12 +65,13 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.isSelectMenu()) {
+        const id = interaction.values[0]
         if (interaction.customId === 'hookdelete') {
             try {
                 await Action.selectHookToDelete(
                     interaction,
                     client,
-                    interaction.values[0]
+                    id
                 )
             } catch (error) {
                 console.error(error)
@@ -86,7 +87,7 @@ client.on('interactionCreate', async interaction => {
                 await Action.deleteHookAfterConfirm(
                     interaction,
                     client,
-                    interaction.values[0]
+                    id
                 )
             } catch (error) {
                 console.error(error)

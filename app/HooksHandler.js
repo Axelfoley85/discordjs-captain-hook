@@ -2,9 +2,9 @@ const db = require('../models')
 const Hook = require('../valueObjects/hook')
 
 class HooksHandler {
-    static async getHooks () {
+    static async getHooks (filter = {}) {
         const hooks = []
-        const hooklist = await db.missionHooks.findAll()
+        const hooklist = await db.missionHooks.findAll(filter)
         hooklist.forEach(
             (hookItem) => {
                 hooks.push(new Hook(
@@ -22,9 +22,9 @@ class HooksHandler {
         return hooks
     }
 
-    static async getFullHookDescriptions () {
+    static async getFullHookDescriptions (filter = {}) {
         let string = ''
-        const hooklist = await HooksHandler.getHooks()
+        const hooklist = await HooksHandler.getHooks(filter)
 
         hooklist.forEach(
             (hook) => {
@@ -35,8 +35,8 @@ class HooksHandler {
         return string
     }
 
-    static async getHookPollLines () {
-        const hooklist = await HooksHandler.getHooks()
+    static async getHookPollLines (filter = {}) {
+        const hooklist = await HooksHandler.getHooks(filter)
         const string = []
         hooklist.forEach(
             (hook) => {
@@ -47,8 +47,8 @@ class HooksHandler {
         return string
     }
 
-    static async getHookDeleteOptions () {
-        const hooklist = await HooksHandler.getHooks()
+    static async getHookDeleteOptions (filter = {}) {
+        const hooklist = await HooksHandler.getHooks(filter)
         const deleteOptions = []
         hooklist.forEach(
             (hook) => {
