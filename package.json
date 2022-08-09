@@ -9,7 +9,7 @@
     "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
     "coverage": "nyc report && ./node_modules/.bin/codecov",
     "migrate-db": "npx sequelize-cli db:migrate --env 'default'",
-    "custom-run": "mocha -g 'getHooks' --timeout 120000 tests/mocha/HooksHandler.js"
+    "custom-run": "mocha --timeout 120000 tests/mocha/Action.js"
   },
   "author": "",
   "license": "ISC",

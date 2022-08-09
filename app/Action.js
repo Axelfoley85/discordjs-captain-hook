@@ -10,8 +10,12 @@ const scheduledMessages = require('../valueObjects/scheduledMessages')
 const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
-    static async postHooks (filter = {}) {
-        const allHooks = await HooksHandler.getFullHookDescriptions(filter)
+    static async postHooks (info) {
+        const allHooks = await HooksHandler.getFullHookDescriptions({
+            where: {
+                guildId: info.guildId
+            }
+        })
 
         const embeddedMessage = {
             embeds: [MessageFormat.embedMessageFrom(allHooks)],
@@ -20,7 +24,7 @@ class Action {
         return embeddedMessage
     }
 
-    static async updateHookChannel (client, channelID) {
+    static async updateHookChannel (client, channelID, info) {
         const channel = client.channels.cache.get(channelID)
 
         let deleted
@@ -28,7 +32,7 @@ class Action {
             deleted = await channel.bulkDelete(100)
         } while (deleted.size !== 0)
 
-        await channel.send(await Action.postHooks())
+        await channel.send(await Action.postHooks(info))
     }
 
     static async postHookVote (content, channel) {

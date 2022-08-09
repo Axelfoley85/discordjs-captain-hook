@@ -36,8 +36,12 @@ class HooksHandler {
         return string
     }
 
-    static async getHookPollLines (filter = {}) {
-        const hooklist = await HooksHandler.getHooks(filter)
+    static async getHookPollLines (info) {
+        const hooklist = await HooksHandler.getHooks({
+            where: {
+                guildId: info.guildId
+            }
+        })
         const string = []
         hooklist.forEach(
             (hook) => {
@@ -54,9 +58,7 @@ class HooksHandler {
                 userId: {
                     [Op.or]: [info.userId, 0]
                 },
-                guildId: {
-                    [Op.or]: [info.guildId, 0]
-                }
+                guildId: info.guildId
             }
         })
         const deleteOptions = []

@@ -9,10 +9,11 @@ const MessageFormat = require('../../app/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction } = require('../config')
+const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction, info } = require('../config')
 const { hookChannel } = require('../../config')
 const { ActionRowBuilder, SelectMenuBuilder } = require('@discordjs/builders')
 const { westMarchesRole } = require('../../valueObjects/roles')
+const Interaction = require('../../app/Interaction')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -34,6 +35,7 @@ describe('../../app/Action', function () {
 
     describe('Action.postHooks', function () {
         it('should return embeddedMessage', async function () {
+            const info = Interaction.getInfos(interaction)
             const HooksStub = sinon.stub(HooksHandler, 'getFullHookDescriptions').resolves('foo')
             const embedMessageStub = sinon
                 .stub(MessageFormat, 'embedMessageFrom')
@@ -43,7 +45,7 @@ describe('../../app/Action', function () {
                 content: '**Available mission hooks**'
             }
 
-            const embeddedMessage = await Action.postHooks()
+            const embeddedMessage = await Action.postHooks(info)
 
             sinon.assert.calledOnce(HooksStub)
             sinon.assert.calledOnce(embedMessageStub)
@@ -56,6 +58,7 @@ describe('../../app/Action', function () {
             'should run ' +
             'channel.bulkDelete + channel.send',
         async function () {
+            const info = Interaction.getInfos(interaction)
             const postHooksStub = sinon.stub(Action, 'postHooks')
             sinon.stub(client.channels.cache, 'get')
                 .returns(channel)
@@ -64,7 +67,7 @@ describe('../../app/Action', function () {
             deleted.onCall(1).resolves({ size: 0})
             const channelSendStubd = sinon.stub(channel, 'send')
 
-            await Action.updateHookChannel(client, '1234')
+            await Action.updateHookChannel(client, '1234', info)
 
             sinon.assert.calledTwice(deleted)
             sinon.assert.calledOnce(channelSendStubd)
