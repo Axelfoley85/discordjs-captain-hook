@@ -1,15 +1,16 @@
 const {
-    wMGeneralChannel, debugChannel, voteChannel
+    wMGeneralChannel, voteChannel
 } = require('../config')
 const Action = require('../app/Action')
 const HooksHandler = require('../app/HooksHandler')
+const { westMarchesRole } = require('./roles')
 
 module.exports = {
     scheduledMessages: [
         {
             channel: wMGeneralChannel,
-            cron: '0 10 * * 4',
-            content: '@West Marchers\n' +
+            cron: '*/10 * 12 * * 4',
+            content: `<@&${westMarchesRole.id}>\n` +
                 'It\'s **HOOK POST** time. Add via `/hookadd` and ' +
                 'remove via `/hookdelete`. Please finish within ' +
                 '24 hours.'
@@ -17,7 +18,7 @@ module.exports = {
         {
             channel: wMGeneralChannel,
             cron: '0 10 * * 5',
-            content: '@West Marchers\n' +
+            content: `<@&${westMarchesRole.id}>\n` +
                 'It\'s **HOOK VOTE** time. Please vote for the ' +
                 'mission hooks you want to play within 24 hours.',
             execute: async (interaction, client) => {
@@ -26,11 +27,11 @@ module.exports = {
                     client.channels.cache.get(voteChannel)
                 )
             }
-        },
-        {
-            channel: debugChannel,
-            cron: new Date(2022, 7, 4, 21, 43, 10),
-            content: 'this specific message comes only once'
+        // },
+        // {
+        //     channel: debugChannel,
+        //     cron: new Date(2022, 7, 4, 21, 43, 10),
+        //     content: 'this specific message comes only once'
         }
     ]
 }

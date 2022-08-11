@@ -16,7 +16,8 @@ const client = new Client({
         GatewayIntentBits.DirectMessages,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.DirectMessageTyping
-    ]
+    ],
+    allowedMentions: { parse: ['users', 'roles'] }
 })
 
 client.once('ready', async () => {

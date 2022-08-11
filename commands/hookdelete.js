@@ -16,7 +16,8 @@ module.exports = {
 
         if (deleteOptions[0] === undefined) {
             await interaction.reply({
-                content: 'No hooks found to delete',
+                content: 'Seems you have no hooks posted. You can ' +
+                    'only delete your own hooks.',
                 ephemeral: true
             })
         } else {
