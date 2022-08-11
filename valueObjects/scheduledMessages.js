@@ -9,7 +9,7 @@ module.exports = {
     scheduledMessages: [
         {
             channel: wMGeneralChannel,
-            cron: '*/10 * 12 * * 4',
+            cron: '2 12 * * 4',
             content: `<@&${westMarchesRole.id}>\n` +
                 'It\'s **HOOK POST** time. Add via `/hookadd` and ' +
                 'remove via `/hookdelete`. Please finish within ' +
