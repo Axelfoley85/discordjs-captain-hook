@@ -5,6 +5,7 @@ require('log-timestamp')
 /* eslint-disable no-unused-vars */
 const { token } = require('./config.js')
 const Action = require('./app/Action.js')
+const Scheduled = require('./app/Scheduled.js')
 
 const client = new Client({
     intents: [
@@ -28,8 +29,8 @@ client.once('ready', async () => {
     )
 
     try {
-        await Action.postPolls(client)
-        await Action.postMessages(client)
+        await Scheduled.postPolls(client)
+        await Scheduled.postMessages(client)
     } catch (e) {
         console.error(e)
     }
