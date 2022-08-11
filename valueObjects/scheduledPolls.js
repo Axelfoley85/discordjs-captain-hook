@@ -23,7 +23,7 @@ module.exports = {
         },
         {
             channel: attendanceChannel,
-            cron: '0 12 * * 4',
+            cron: '1 12 * * 4',
             title: 'Who is coming next Wednesday, 7pm',
             options: [
                 'I want to play',
