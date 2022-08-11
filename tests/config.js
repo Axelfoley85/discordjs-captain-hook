@@ -45,9 +45,7 @@ module.exports = {
         channel: '980524586028400670',
         cron: '* * * * * *',
         content: 'message',
-        execute: async (interaction, client) => {
-            console.log('This should be logged')
-        }
+        postPoll: true
     }],
     member: {
         roles: {

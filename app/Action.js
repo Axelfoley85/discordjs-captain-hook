@@ -1,14 +1,9 @@
 const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
-const schedule = require('node-schedule')
-const { timezone, hookChannel } = require('../config')
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const { interaction } = require('../tests/config')
 const Interaction = require('./Interaction')
+const { hookChannel } = require('../config')
 const alphabet = require('../valueObjects/alphabet').alphabet
-const scheduledMessages = require('../valueObjects/scheduledMessages')
-    .scheduledMessages
-const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
 
 class Action {
     static async postHooks (info) {
@@ -79,42 +74,6 @@ class Action {
         } catch (error) {
             console.error('One of the emojis failed to react:', error)
         }
-    }
-
-    static async postPolls (client, polls = scheduledPolls) {
-        polls.forEach(async (poll) => {
-            const rule = new schedule.RecurrenceRule()
-            rule.tz = timezone
-
-            schedule.scheduleJob(poll.cron, async () => {
-                console.log('scheduling ', poll.title)
-                await Action.sendPollToChannel(
-                    client.channels.cache.get(poll.channel),
-                    poll.title,
-                    poll.options
-                )
-            })
-        })
-    }
-
-    static async postMessages (client, messages = scheduledMessages) {
-        let channel
-        messages.forEach(async (message) => {
-            channel = client.channels.cache.get(message.channel)
-            const rule = new schedule.RecurrenceRule()
-            rule.tz = timezone
-
-            schedule.scheduleJob(message.cron, async () => {
-                console.log('Scheduling message')
-                await channel.send({
-                    content: message.content
-                })
-
-                if ('execute' in message) {
-                    await message.execute(client)
-                }
-            })
-        })
     }
 
     static async assignRole (member, user, role) {

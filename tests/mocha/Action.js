@@ -9,7 +9,7 @@ const MessageFormat = require('../../app/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, scheduledPolls, scheduledMessages, member, author, interaction, info } = require('../config')
+const { message, channel, client, member, author, interaction } = require('../config')
 const { hookChannel } = require('../../config')
 const { westMarchesRole } = require('../../valueObjects/roles')
 const Interaction = require('../../app/Interaction')
@@ -142,42 +142,6 @@ describe('../../app/Action', function () {
             expect(console.error).to.have.been.calledWith(
                 'One of the emojis failed to react:'
             )
-        })
-    })
-
-    describe('Action.postPolls', async function () {
-        it(
-            'should run ' +
-            'cron + Action.sendPollToChannel',
-        async function () {
-            const sendStub = sinon.stub(Action, 'sendPollToChannel').resolves()
-
-            await Action.postPolls(client, scheduledPolls)
-            await clock.tickAsync(2150)
-
-            sinon.assert.calledWith(sendStub)
-        })
-    })
-
-    describe('Action.postMessages', async function () {
-        it(
-            'should run ' +
-            'cron + channel.send',
-        async function () {
-            sinon.stub(client.channels.cache, 'get').returns(channel)
-            const sendStub = sinon.stub(channel, 'send').resolves()
-
-            await Action.postMessages(client, scheduledMessages)
-            await clock.tickAsync(1150)
-
-            expect(console.log).to.be.calledWith(
-                'This should be logged'
-            )
-            await clock.tickAsync(1150)
-
-            sinon.assert.calledWith(sendStub, {
-                content: 'message'
-            })
         })
     })
 
