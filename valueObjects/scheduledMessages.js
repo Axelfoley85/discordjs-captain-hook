@@ -23,7 +23,9 @@ module.exports = {
                 'mission hooks you want to play within 24 hours.',
             execute: async (client) => {
                 await Action.postHookVote(
-                    await HooksHandler.getHookPollLines(),
+                    await HooksHandler.getHookPollLines({
+                        guildId: '966698643572809800'
+                    }),
                     client.channels.cache.get(voteChannel)
                 )
             }
@@ -39,7 +41,9 @@ module.exports = {
             content: 'It\'s **HOOK VOTE** time.',
             execute: async (client) => {
                 await Action.postHookVote(
-                    await HooksHandler.getHookPollLines(),
+                    await HooksHandler.getHookPollLines({
+                        guildId: '966698643572809800'
+                    }),
                     client.channels.cache.get('1006624625716895865')
                 )
             }
