@@ -111,7 +111,7 @@ class Action {
                 })
 
                 if ('execute' in message) {
-                    await message.execute(interaction, client)
+                    await message.execute(client)
                 }
             })
         })

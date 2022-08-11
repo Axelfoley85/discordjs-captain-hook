@@ -21,7 +21,7 @@ module.exports = {
             content: `<@&${westMarchesRole.id}>\n` +
                 'It\'s **HOOK VOTE** time. Please vote for the ' +
                 'mission hooks you want to play within 24 hours.',
-            execute: async (interaction, client) => {
+            execute: async (client) => {
                 await Action.postHookVote(
                     await HooksHandler.getHookPollLines(),
                     client.channels.cache.get(voteChannel)
@@ -37,7 +37,7 @@ module.exports = {
             channel: '1006624625716895865',
             cron: '* * * * *',
             content: 'It\'s **HOOK VOTE** time.',
-            execute: async (interaction, client) => {
+            execute: async (client) => {
                 await Action.postHookVote(
                     await HooksHandler.getHookPollLines(),
                     client.channels.cache.get('1006624625716895865')
