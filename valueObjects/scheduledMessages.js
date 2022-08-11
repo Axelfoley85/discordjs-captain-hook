@@ -27,11 +27,22 @@ module.exports = {
                     client.channels.cache.get(voteChannel)
                 )
             }
-        // },
+        },
         // {
         //     channel: debugChannel,
         //     cron: new Date(2022, 7, 4, 21, 43, 10),
         //     content: 'this specific message comes only once'
+        // },
+        {
+            channel: '1006624625716895865',
+            cron: '* * * * *',
+            content: 'It\'s **HOOK VOTE** time.',
+            execute: async (interaction, client) => {
+                await Action.postHookVote(
+                    await HooksHandler.getHookPollLines(),
+                    client.channels.cache.get('1006624625716895865')
+                )
+            }
         }
     ]
 }
