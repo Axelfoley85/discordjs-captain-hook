@@ -19,15 +19,19 @@ module.exports = {
             content: `<@&${westMarchesRole.id}>\n` +
                 'It\'s **HOOK VOTE** time. Please vote for the ' +
                 'mission hooks you want to play within 24 hours.',
-            postPoll: true
+            postPoll: true,
+            guildId: '966698643572809800',
+            voteChannel: '1006624625716895865'
         // },
         // {
         //     channel: '1006624625716895865',
-        //     cron: '* * * * * *',
+        //     cron: '*/5 * * * * *',
         //     content: `<@&${westMarchesRole.id}>\n` +
         //         'It\'s **HOOK VOTE** time. Please vote for the ' +
         //         'mission hooks you want to play within 24 hours.',
-        //     postPoll: true
+        //     postPoll: true,
+        //     guildId: '966698643572809800',
+        //     voteChannel: '1006624625716895865'
         }
         // {
         //     channel: debugChannel,

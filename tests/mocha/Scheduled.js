@@ -63,7 +63,7 @@ describe('../../app/Scheduled', function () {
 
             sinon.assert.calledTwice(postStub)
             sinon.assert.calledWithExactly(pollLinesStub, {
-                guildId: '7565'
+                guildId: '966698643572809800'
             })
             sinon.assert.calledWithExactly(sendStub, {
                 content: 'message'

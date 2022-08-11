@@ -45,7 +45,9 @@ module.exports = {
         channel: '980524586028400670',
         cron: '* * * * * *',
         content: 'message',
-        postPoll: true
+        postPoll: true,
+        guildId: '966698643572809800',
+        voteChannel: '1006624625716895865'
     }],
     member: {
         roles: {

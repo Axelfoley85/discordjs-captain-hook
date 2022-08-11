@@ -1,5 +1,5 @@
 const schedule = require('node-schedule')
-const { timezone, voteChannel, guildId } = require('../config')
+const { timezone } = require('../config')
 const Action = require('./Action')
 const HooksHandler = require('./HooksHandler')
 const scheduledMessages = require('../valueObjects/scheduledMessages')
@@ -36,16 +36,18 @@ class Scheduled {
                     content: message.content
                 })
 
-                if ('postPoll' in message && message.postPoll === true) {
+                if ('postPoll' in message &&
+                    message.postPoll === true &&
+                    'guildId' in message &&
+                    'voteChannel' in message
+                ) {
                     console.log('Posting custom scheduled poll')
                     await Action.postHookVote(
                         await HooksHandler.getHookPollLines({
-                            guildId
+                            guildId: message.guildId
                         }),
-                        client.channels.cache.get(voteChannel)
+                        client.channels.cache.get(message.voteChannel)
                     )
-                    // voteChannel
-                    // 1006624625716895865
                 }
             })
         })
