@@ -21,7 +21,7 @@ module.exports = {
                 'mission hooks you want to play within 24 hours.',
             postPoll: true,
             guildId: '966698643572809800',
-            voteChannel: '1006624625716895865'
+            voteChannel: '992389239612387328'
         // },
         // {
         //     channel: '1006624625716895865',
