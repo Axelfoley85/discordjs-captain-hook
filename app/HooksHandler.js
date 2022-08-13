@@ -38,7 +38,8 @@ class HooksHandler {
     static async getHookPollLines (info) {
         const hooklist = await HooksHandler.getHooks({
             where: {
-                guildId: info.guildId
+                guildId: info.guildId,
+                status: 'active'
             }
         })
         const pollLines = []
@@ -51,13 +52,16 @@ class HooksHandler {
         return pollLines
     }
 
-    static async getHookDeleteOptions (info) {
-        const hooklist = await HooksHandler.getHooks({
+    static async getHookSelectOptions (
+        info,
+        type,
+        filter = {
             where: {
                 userId: info.userId,
                 guildId: info.guildId
             }
-        })
+        }) {
+        const hooklist = await HooksHandler.getHooks(filter)
         const deleteOptions = []
         hooklist.forEach(
             (hook) => {
@@ -65,7 +69,7 @@ class HooksHandler {
                     {
                         label: `${hook.dm}`,
                         description: `${hook.title.substring(0, 25)}...`,
-                        value: `${hook.id}`
+                        value: `${hook.id},${type}`
                     }
                 )
             }
@@ -91,6 +95,28 @@ class HooksHandler {
         })
 
         return idEntry
+    }
+
+    static async hide (id) {
+        const response = await db.missionHooks.update({
+            status: 'hidden'
+        }, {
+            where: {
+                id
+            }
+        })
+        console.log(response)
+    }
+
+    static async unhide (id) {
+        const response = await db.missionHooks.update({
+            status: 'active'
+        }, {
+            where: {
+                id
+            }
+        })
+        console.log(response)
     }
 }
 

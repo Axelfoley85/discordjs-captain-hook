@@ -192,18 +192,19 @@ describe('../../app/Action', function () {
         })
     })
 
-    describe('Action.deleteHookAfterConfirm', function () {
+    describe('Action.procedeAfterConfirm', function () {
         it(
             'should call HooksHandler.delete' +
             'Action.updateHookChannel + ' +
             'interaction.update',
         async function () {
             const id = 1
-            const deleteStub = sinon.stub(HooksHandler, 'delete')
+            const value = `${id},delete`
+            const deleteStub = sinon.spy(HooksHandler, 'delete')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'update')
 
-            await Action.deleteHookAfterConfirm(interaction, client, id)
+            await Action.procedeAfterConfirm(interaction, client, value)
 
             sinon.assert.calledOnceWithExactly(deleteStub, id)
             sinon.assert.calledOnceWithExactly(
@@ -215,7 +216,7 @@ describe('../../app/Action', function () {
             sinon.assert.calledOnceWithExactly(
                 replyStub,
                 {
-                    content: 'Hook was deleted. See updated list in <#0000>',
+                    content: 'Done! See updated list in <#0000>',
                     components: [],
                     ephemeral: true
                 }

@@ -102,7 +102,8 @@ describe('../../app/HooksHandler', () => {
             let filter = {}
             filter = { where: {
                 userId: info.userId,
-                guildId: info.guildId
+                guildId: info.guildId,
+                status: 'active'
             }}
             const response = await HooksHandler.getHooks(filter)
     
@@ -133,7 +134,8 @@ describe('../../app/HooksHandler', () => {
             let filter = {}
             filter = { where: {
                 userId: -9999,
-                guildId: info.guildId
+                guildId: info.guildId,
+                status: 'active'
             }}
             const response = await HooksHandler.getHooks(filter)
     
@@ -176,11 +178,12 @@ describe('../../app/HooksHandler', () => {
         )
     })
 
-    it('HooksHandler.getHookDeleteOptions should return array of objects', async () => {
+    it('HooksHandler.getHookSelectOptions should return array of objects', async () => {
         const MissionHookstub = sinon.spy(HooksHandler, 'getHooks')
 
-        const response = await HooksHandler.getHookDeleteOptions(
-            Interaction.getInfos(interaction)
+        const response = await HooksHandler.getHookSelectOptions(
+            Interaction.getInfos(interaction),
+            'delete'
         )
 
         sinon.assert.calledOnce(MissionHookstub)
@@ -190,7 +193,7 @@ describe('../../app/HooksHandler', () => {
                 { 
                     label: 'myDM',
                     description: 'myTitle...',
-                    value: '1'
+                    value: '1,delete'
                 } 
             ]
         )

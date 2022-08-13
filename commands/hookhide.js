@@ -8,19 +8,26 @@ const Interaction = require('../app/Interaction')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('hookdelete')
-        .setDescription('delete hook via select menu'),
+        .setName('hookhide')
+        .setDescription('hide hook via select menu'),
     async execute (interaction, client) {
         const info = Interaction.getInfos(interaction)
         const deleteOptions = await HooksHandler.getHookSelectOptions(
             info,
-            'delete'
+            'hide',
+            {
+                where: {
+                    userId: info.userId,
+                    guildId: info.guildId,
+                    status: 'active'
+                }
+            }
         )
 
         if (deleteOptions[0] === undefined) {
             await interaction.reply({
                 content: 'Seems you have no hooks posted. You can ' +
-                    'only delete your own hooks.',
+                    'only hide your own hooks.',
                 ephemeral: true
             })
         } else {
@@ -33,7 +40,7 @@ module.exports = {
                 )
 
             await interaction.reply({
-                content: 'Choose the hook to delete',
+                content: 'Choose the hook to hide',
                 components: [row],
                 ephemeral: true,
                 fetchReply: true

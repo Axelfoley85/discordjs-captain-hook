@@ -9,7 +9,8 @@ class Action {
     static async postHooks (info) {
         let allHooks = await HooksHandler.getFullHookDescriptions({
             where: {
-                guildId: info.guildId
+                guildId: info.guildId,
+                status: 'active'
             }
         })
         if (allHooks === '') { allHooks = 'Nothing here' }
@@ -96,35 +97,42 @@ class Action {
         }
     }
 
-    static async selectHookToDelete (interaction, client, deleteId) {
+    static async selectHook (interaction, client, deleteId) {
         const row = new ActionRowBuilder()
             .addComponents(
                 new SelectMenuBuilder()
-                    .setCustomId('confirmdelete')
+                    .setCustomId('confirmselect')
                     .setPlaceholder('Please confirm')
                     .addOptions(
                         {
                             label: 'I confirm',
-                            description: `Confirm delete hook #${deleteId}`,
+                            description: `Confirm hook #${deleteId}`,
                             value: deleteId
                         }
                     )
             )
 
         await interaction.update({
-            content: 'Hook to delete was selected! Please confirm ' +
+            content: 'Hook was selected! Please confirm ' +
             'by using the select menu again.',
             components: [row]
         })
     }
 
-    static async deleteHookAfterConfirm (interaction, client, deleteId) {
+    static async procedeAfterConfirm (interaction, client, value) {
         const info = Interaction.getInfos(interaction)
-        await HooksHandler.delete(deleteId)
+        const [id, type] = value.split(',')
+        if (type === 'delete') {
+            await HooksHandler.delete(parseInt(id))
+        } else if (type === 'hide') {
+            HooksHandler.hide(parseInt(id))
+        } else if (type === 'unhide') {
+            HooksHandler.unhide(parseInt(id))
+        }
         await Action.updateHookChannel(client, hookChannel, info)
 
         await interaction.update({
-            content: 'Hook was deleted.' +
+            content: 'Done!' +
                 ` See updated list in <#${hookChannel}>`,
             components: [],
             ephemeral: true
