@@ -192,4 +192,174 @@ describe('../../commands', function () {
             )
         })
     })
+    
+    describe('hookdelete', function () {
+        it(
+            'should succede',
+        async function () {
+            const command = require(path.join(commandPath, 'hookdelete'))
+            const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(ActionRowBuilder);
+            });
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(SelectMenuBuilder);
+            });
+
+            await command.execute(interaction, client)
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithMatch(
+                replyStub,
+                { content: 'Choose the hook to delete' }
+            )
+        })
+
+        it(
+            'should succede on empty DB',
+        async function () {
+            const command = require(path.join(commandPath, 'hookdelete'))
+            const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
+                .resolves([])
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(ActionRowBuilder);
+            });
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(SelectMenuBuilder);
+            });
+
+
+            await command.execute(interaction, client)
+
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithExactly(
+                replyStub,
+                {
+                    content: 'Seems you have no hooks posted. You can ' +
+                        'only delete your own hooks.',
+                    ephemeral: true
+                }
+            )
+        })
+    })
+    
+    describe('hookhide', function () {
+        it(
+            'should succede',
+        async function () {
+            const command = require(path.join(commandPath, 'hookhide'))
+            const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(ActionRowBuilder);
+            });
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(SelectMenuBuilder);
+            });
+
+            await command.execute(interaction, client)
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithMatch(
+                replyStub,
+                { content: 'Choose the hook to hide' }
+            )
+        })
+
+        it(
+            'should succede on empty DB',
+        async function () {
+            const command = require(path.join(commandPath, 'hookhide'))
+            const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
+                .resolves([])
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(ActionRowBuilder);
+            });
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(SelectMenuBuilder);
+            });
+
+
+            await command.execute(interaction, client)
+
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithExactly(
+                replyStub,
+                {
+                    content: 'Seems you have no hooks posted. You can ' +
+                        'only hide your own hooks.',
+                    ephemeral: true
+                }
+            )
+        })
+    })
+    
+    describe('hookunhide', function () {
+        it('should succede', async function () {
+            await HooksHandler.hide(1)
+            const command = require(path.join(commandPath, 'hookunhide'))
+            const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.stub(function() {
+                return sinon.createStubInstance(ActionRowBuilder)
+            })
+
+            sinon.stub(function() {
+                return sinon.createStubInstance(SelectMenuBuilder)
+            })
+
+            await command.execute(interaction, client)
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithMatch(
+                replyStub,
+                { content: 'Choose the hook to unhide' }
+            )
+        })
+
+        it(
+            'should succede on empty DB',
+        async function () {
+            const command = require(path.join(commandPath, 'hookunhide'))
+            const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
+                .resolves([])
+            const replyStub = sinon.stub(interaction, 'reply')
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(ActionRowBuilder);
+            });
+
+            sinon.spy(function() {
+                return sinon.createStubInstance(SelectMenuBuilder);
+            });
+
+
+            await command.execute(interaction, client)
+
+
+            sinon.assert.calledOnce(getStub)
+            sinon.assert.calledOnceWithExactly(
+                replyStub,
+                {
+                    content: 'Seems you have no hooks hidden. You can ' +
+                        'only unhide your own hooks.',
+                    ephemeral: true
+                }
+            )
+        })
+    })
 })
