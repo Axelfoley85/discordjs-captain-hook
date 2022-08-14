@@ -9,10 +9,11 @@ const MessageFormat = require('../../app/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, member, author, interaction } = require('../config')
+const { message, channel, client, member, author, interaction, hook } = require('../config')
 const { hookChannel } = require('../../config')
 const { westMarchesRole } = require('../../valueObjects/roles')
 const Interaction = require('../../app/Interaction')
+const db = require('../../models')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -21,10 +22,14 @@ let clock
 
 describe('../../app/Action', function () {
 
-    beforeEach( function () {
+    beforeEach( async function () {
         sinon.spy(console, 'error')
         sinon.spy(console, 'log')
         clock = sinon.useFakeTimers()
+        await db.missionHooks.sync({
+            force: true
+        })
+        await db.missionHooks.create(hook.dbEntry())
     })
 
     afterEach( function () {
@@ -192,18 +197,19 @@ describe('../../app/Action', function () {
         })
     })
 
-    describe('Action.deleteHookAfterConfirm', function () {
+    describe('Action.procedeAfterConfirm', function () {
         it(
             'should call HooksHandler.delete' +
             'Action.updateHookChannel + ' +
             'interaction.update',
         async function () {
             const id = 1
-            const deleteStub = sinon.stub(HooksHandler, 'delete')
+            const value = `${id},delete`
+            const deleteStub = sinon.spy(HooksHandler, 'delete')
             const updateStub = sinon.stub(Action, 'updateHookChannel')
             const replyStub = sinon.stub(interaction, 'update')
 
-            await Action.deleteHookAfterConfirm(interaction, client, id)
+            await Action.procedeAfterConfirm(interaction, client, value)
 
             sinon.assert.calledOnceWithExactly(deleteStub, id)
             sinon.assert.calledOnceWithExactly(
@@ -215,7 +221,7 @@ describe('../../app/Action', function () {
             sinon.assert.calledOnceWithExactly(
                 replyStub,
                 {
-                    content: 'Hook was deleted. See updated list in <#0000>',
+                    content: 'Done! See updated list in <#0000>',
                     components: [],
                     ephemeral: true
                 }

@@ -67,13 +67,13 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.isSelectMenu()) {
-        const id = interaction.values[0]
-        if (interaction.customId === 'hookdelete') {
+        const value = interaction.values[0]
+        if (interaction.customId === 'hookselect') {
             try {
-                await Action.selectHookToDelete(
+                await Action.selectHook(
                     interaction,
                     client,
-                    id
+                    value
                 )
             } catch (error) {
                 console.error(error)
@@ -84,12 +84,12 @@ client.on('interactionCreate', async interaction => {
                 })
             }
         }
-        if (interaction.customId === 'confirmdelete') {
+        if (interaction.customId === 'confirmselect') {
             try {
-                await Action.deleteHookAfterConfirm(
+                await Action.procedeAfterConfirm(
                     interaction,
                     client,
-                    id
+                    value
                 )
             } catch (error) {
                 console.error(error)
