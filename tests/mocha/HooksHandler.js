@@ -198,4 +198,44 @@ describe('../../app/HooksHandler', () => {
             ]
         )
     })
+
+    it('HooksHandler.hide should change DB entry', async () => {
+        const hideStub = sinon.spy(db.missionHooks, 'update')
+        sinon.spy(console, 'log')
+        const id = 1
+
+        await HooksHandler.hide(id)
+        const result = await HooksHandler.getOne(id)
+
+        sinon.assert.calledOnceWithExactly(
+            hideStub,
+            {
+                status: 'hidden'
+            }, {
+                where: {
+                    id: id
+                }
+            }
+        )
+        expect(console.log).to.have.been.calledWith([id])
+        sinon.assert.match(result[0].dataValues.status, 'hidden')
+    })
+
+    it('HooksHandler.unhide should change DB entry', async () => {
+        const unhideStub = sinon.spy(db.missionHooks, 'update')
+        sinon.spy(console, 'log')
+        const id = 1
+        await HooksHandler.hide(id)
+        const intermediateResult = await HooksHandler.getOne(id)
+        sinon.assert.match(
+            intermediateResult[0].dataValues.status,
+            'hidden'
+        )
+
+        await HooksHandler.unhide(id)
+        const result = await HooksHandler.getOne(id)
+
+        expect(console.log).to.have.been.calledWith([id])
+        sinon.assert.match(result[0].dataValues.status, 'active')
+    })
 })
