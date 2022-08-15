@@ -26,7 +26,7 @@ describe('../../app/Scheduled', function () {
 
     afterEach( function () {
         sinon.restore()
-        clock.restore();
+        clock.restore()
     })
 
     describe('Scheduled.postPolls', async function () {

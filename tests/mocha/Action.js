@@ -34,7 +34,7 @@ describe('../../app/Action', function () {
 
     afterEach( function () {
         sinon.restore()
-        clock.restore();
+        clock.restore()
     })
 
     describe('Action.postHooks', function () {

@@ -9,6 +9,14 @@ class Interaction {
             type: interaction.type
         }
     }
+
+    static async postError (interaction) {
+        return await interaction.reply({
+            content: 'Arrrrr, there was an error while ' +
+                'executing this command!',
+            ephemeral: true
+        })
+    }
 }
 
 module.exports = Interaction
