@@ -6,7 +6,15 @@ module.exports = {
             cache: {
                 get () {}
             }
-        }
+        },
+        user: { setPresence () {} },
+        once () {},
+        on () {},
+        commands: {
+            set () {},
+            get () {}
+        },
+        login () {}
     },
     channel: {
         bulkDelete () {},
@@ -22,7 +30,7 @@ module.exports = {
             getInteger () {},
             getString () {}
         },
-        values: 1,
+        values: [1],
         user: {
             username: 'myUsername',
             id: 3
@@ -30,7 +38,10 @@ module.exports = {
         guildId: 4,
         channelId: 5,
         channel: { name: 'myChannelName' },
-        type: 6
+        type: 6,
+        isChatInputCommand () { return true },
+        isSelectMenu () { return true },
+        customId: 'hookselect'
     },
     scheduledPolls: [{
         channel: '980524586028400670',
@@ -72,5 +83,6 @@ module.exports = {
             description: 'myDescr',
             value: 1
         }
-    ]
+    ],
+    command: { execute () {} }
 }

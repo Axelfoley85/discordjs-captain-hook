@@ -51,10 +51,7 @@ module.exports = {
                 })
             }
             console.error('Something went wrong!', error)
-            return interaction.reply({
-                content: 'Arrrr, something went wrong!',
-                ephemeral: true
-            })
+            return await Interaction.postError(interaction)
         }
         await Action.updateHookChannel(client, hookChannel, info)
 

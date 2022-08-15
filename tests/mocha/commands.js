@@ -186,7 +186,7 @@ describe('../../commands', function () {
                 sinon.assert.calledOnceWithExactly(
                     replyStub,
                     {
-                        content: 'Arrrr, something went wrong!',
+                        content: 'Arrrrr, there was an error while executing this command!',
                         ephemeral: true
                     }
                 )
