@@ -24,10 +24,13 @@ module.exports = {
         {
             channel: attendanceChannel,
             cron: '1 12 * * 4',
-            title: 'Who is coming next Wednesday, 7pm',
+            title: 'Are you coming next Wednesday, 7pm? What would ' +
+                'you like to to do?',
             options: [
-                'I want to play',
-                'I want to DM/facilitate'
+                'DM/facilitate',
+                'play anything',
+                'play DnD West Marches only',
+                'play anything but DnD West Marches'
             ]
         }
     ]
