@@ -1,6 +1,8 @@
+'use strict'
+
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 const HooksHandler = require('./HooksHandler')
 const MessageFormat = require('./MessageFormat')
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 const Interaction = require('./Interaction')
 const { hookChannel } = require('../config')
 const alphabet = require('../valueObjects/alphabet').alphabet
@@ -115,7 +117,8 @@ class Action {
         await interaction.update({
             content: 'Hook was selected! Please confirm ' +
             'by using the select menu again.',
-            components: [row]
+            components: [row],
+            ephemeral: true
         })
     }
 
@@ -125,9 +128,9 @@ class Action {
         if (type === 'delete') {
             await HooksHandler.delete(parseInt(id))
         } else if (type === 'hide') {
-            HooksHandler.hide(parseInt(id))
+            await HooksHandler.hide(parseInt(id))
         } else if (type === 'unhide') {
-            HooksHandler.unhide(parseInt(id))
+            await HooksHandler.unhide(parseInt(id))
         }
         await Action.updateHookChannel(client, hookChannel, info)
 

@@ -6,18 +6,17 @@ const sinon = require('sinon')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const path = require('node:path')
-const Action = require('../../app/Action')
-const HooksHandler = require('../../app/HooksHandler')
-const { interaction, client, channel, hook } = require('../config')
-const { hookChannel } = require('../../config')
-const db = require('../../models')
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const Interaction = require('../../app/Interaction')
-
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
+const path = require('node:path')
+const Action = require('../../app/Action')
+const HooksHandler = require('../../app/HooksHandler')
+const Interaction = require('../../app/Interaction')
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { interaction, client, channel, hook } = require('../config')
+const { hookChannel } = require('../../config')
+const db = require('../../models')
 
 const commandPath = path.join(__dirname, '../../commands')
 
@@ -194,17 +193,13 @@ describe('../../commands', function () {
     })
 
     describe('hookdelete', function () {
-        it(
-            'should succede',
-            async function () {
+        it('should succede', async function () {
                 const command = require(path.join(commandPath, 'hookdelete'))
                 const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
                 const replyStub = sinon.stub(interaction, 'reply')
-
                 sinon.spy(function () {
                     return sinon.createStubInstance(ActionRowBuilder)
                 })
-
                 sinon.spy(function () {
                     return sinon.createStubInstance(SelectMenuBuilder)
                 })
@@ -218,9 +213,7 @@ describe('../../commands', function () {
                 )
             })
 
-        it(
-            'should succede on empty DB',
-            async function () {
+        it('should succede on empty DB', async function () {
                 const command = require(path.join(commandPath, 'hookdelete'))
                 const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
                     .resolves([])

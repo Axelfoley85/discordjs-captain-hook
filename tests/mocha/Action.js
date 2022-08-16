@@ -3,29 +3,27 @@
 /* eslint-disable */
 
 const sinon = require('sinon')
-const Action = require('../../app/Action')
-const HooksHandler = require('../../app/HooksHandler')
-const MessageFormat = require('../../app/MessageFormat')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-const { message, channel, client, member, author, interaction, hook } = require('../config')
-const { hookChannel } = require('../../config')
-const { westMarchesRole } = require('../../valueObjects/roles')
-const Interaction = require('../../app/Interaction')
-const db = require('../../models')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
+const Action = require('../../app/Action')
+const HooksHandler = require('../../app/HooksHandler')
+const MessageFormat = require('../../app/MessageFormat')
+const Interaction = require('../../app/Interaction')
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { message, channel, client, member, author, interaction, hook } = require('../config')
+const { hookChannel } = require('../../config')
+const { westMarchesRole } = require('../../valueObjects/roles')
+const db = require('../../models')
 
-let clock
-
-describe('../../app/Action', function () {
+describe('app/Action', function () {
 
     beforeEach( async function () {
         sinon.spy(console, 'error')
         sinon.spy(console, 'log')
-        clock = sinon.useFakeTimers()
         await db.missionHooks.sync({
             force: true
         })
@@ -34,7 +32,6 @@ describe('../../app/Action', function () {
 
     afterEach( function () {
         sinon.restore()
-        clock.restore()
     })
 
     describe('Action.postHooks', function () {
@@ -227,5 +224,53 @@ describe('../../app/Action', function () {
                 }
             )
         })
+
+        it('should call HooksHandler.hide', async function () {
+            const id = 1
+            const value = `${id},hide`
+            const hideStub = sinon.stub(HooksHandler, 'hide')
+            sinon.stub(Action, 'updateHookChannel')
+            sinon.stub(interaction, 'update')
+
+            await Action.procedeAfterConfirm(interaction, client, value)
+
+            sinon.assert.calledOnceWithExactly(hideStub, id)
+        })
+
+        it('should call HooksHandler.unhide', async function () {
+            const id = 1
+            const value = `${id},unhide`
+            const unhideStub = sinon.stub(HooksHandler, 'unhide')
+            sinon.stub(Action, 'updateHookChannel')
+            sinon.stub(interaction, 'update')
+
+            await Action.procedeAfterConfirm(interaction, client, value)
+
+            sinon.assert.calledOnceWithExactly(unhideStub, id)
+        })
     })
+
+    // // // THIS REALLY SHOULD WORK BUT DOESNT
+    // describe('Action.selectHook', function () {
+    //     it(' should run interaction.update', async function () {
+    //         const updateStub = sinon.stub(interaction, 'update')
+    //             .resolves()
+    //         sinon.spy(function () {
+    //             return sinon.createStubInstance(ActionRowBuilder)
+    //         })
+    //         sinon.spy(function () {
+    //             return sinon.createStubInstance(SelectMenuBuilder)
+    //         })
+
+    //         await Action.selectHook(interaction, client, 1)
+
+    //         sinon.assert.calledOnceWithMatch(
+    //             updateStub,
+    //             {
+    //                 content: 'Hook was selected! Please confirm ' +
+    //                     'by using the select menu again.'
+    //             }
+    //         )
+    //     })
+    // })
 })
