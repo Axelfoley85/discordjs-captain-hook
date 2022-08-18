@@ -7,7 +7,7 @@ module.exports = {
     scheduledPolls: [
         {
             channel: adminChannel,
-            cron: '0 12 * * 1',
+            cron: '0 8 * * 1',
             title: 'Anybody volunteering to',
             options: [
                 'set up the donation glass, for the rent etc., at the door ' +
@@ -23,7 +23,7 @@ module.exports = {
         },
         {
             channel: attendanceChannel,
-            cron: '1 12 * * 4',
+            cron: '1 8 * * 4',
             title: 'Are you coming next Wednesday, 7pm? What would ' +
                 'you like to to do?',
             options: [
