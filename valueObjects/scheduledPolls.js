@@ -9,7 +9,7 @@ module.exports = {
         {
             channel: adminChannel,
             cron: '0 8 * * 1',
-            title: `<&${everyone.id}> Anybody volunteering to`,
+            title: `<@&${everyone.id}> Anybody volunteering to`,
             options: [
                 'set up the donation glass, for the rent etc., at the door ' +
                 'next Wednesday and putting it onto the kitchen table at ' +
