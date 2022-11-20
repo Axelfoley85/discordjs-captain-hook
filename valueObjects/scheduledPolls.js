@@ -1,7 +1,4 @@
-const {
-    attendanceChannel,
-    adminChannel
-} = require('../config')
+const { adminChannel } = require('../config')
 const { everyone } = require('./roles')
 
 module.exports = {
