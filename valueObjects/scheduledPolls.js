@@ -21,18 +21,6 @@ module.exports = {
                 'batteries or call Mr. Nader Can, 015118088875 from ' +
                 'Volkssolidarität'
             ]
-        },
-        {
-            channel: attendanceChannel,
-            cron: '1 8 * * 4',
-            title: 'Are you coming next Wednesday, 7pm? What would ' +
-                'you like to to do?',
-            options: [
-                'DM/facilitate',
-                'play anything',
-                'play DnD West Marches only',
-                'play anything but DnD West Marches'
-            ]
         }
     ]
 }
