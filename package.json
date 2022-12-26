@@ -21,7 +21,7 @@
     "node-cron": "^3.0.2",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2",
-    "sqlite3": "^5.1.2"
+    "sqlite3": "^5.1.4"
   },
   "devDependencies": {
     "chai": "^4.3.7",
