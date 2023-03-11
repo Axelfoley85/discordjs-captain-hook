@@ -11,6 +11,7 @@ const { client, interaction, command } = require('../config')
 const Scheduled = require('../../app/Scheduled')
 const Interaction = require('../../app/Interaction')
 const Action = require('../../app/Action')
+const { before } = require('mocha')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
@@ -84,10 +85,17 @@ describe('app/ClientInstance.js', function () {
     })
 
     describe('ClientInstance.handleInteraction', function () {
+        before(function () {
+            // set interaction.componentType to ComponentType.Button (2)
+            interaction.componentType = 2
+            // type 3 = button
+            interaction.type = 3
+        })
+
         it('should call handlers', async function () {
             sinon.stub(interaction, 'isChatInputCommand').returns(true)
-            sinon.stub(interaction, 'isSelectMenu').returns(true)
-            sinon.stub(interaction, 'isButton').returns(true)
+            sinon.stub(interaction, 'isSelectMenu').returns(true)            
+
             const chatInputStub = sinon.stub(ClientInstance, 'handleChatInputCommand')
             const selectMenuStub = sinon.stub(ClientInstance, 'handleSelectMenuType')
             const ButtonStub = sinon.stub(ClientInstance, 'logButtonInteraction')
@@ -97,6 +105,11 @@ describe('app/ClientInstance.js', function () {
             sinon.assert.calledOnce(chatInputStub)
             sinon.assert.calledOnce(selectMenuStub)
             sinon.assert.calledOnce(ButtonStub)
+        })
+
+        after(function () {
+            // reset interaction.type to 6
+            interaction.type = 6
         })
     })
 
