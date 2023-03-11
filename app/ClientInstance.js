@@ -145,8 +145,8 @@ class ClientInstance {
             content: message.content,
             components: message.components,
             channel_id: message.channel_id,
-            author: message.author,
-        });
+            author: message.author
+        })
     }
 
     static async callAction (client, interaction, value, actionFunction) {
