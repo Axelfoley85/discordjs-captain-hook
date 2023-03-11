@@ -1,6 +1,12 @@
 const fs = require('node:fs')
 const path = require('node:path')
-const { Client, GatewayIntentBits, Collection } = require('discord.js')
+const {
+    Client,
+    GatewayIntentBits,
+    Collection,
+    InteractionType,
+    ComponentType
+} = require('discord.js')
 const Scheduled = require('./Scheduled')
 const Action = require('./Action')
 const { token } = require('../config')
@@ -106,7 +112,10 @@ class ClientInstance {
             await ClientInstance.handleSelectMenuType(client, interaction)
         }
 
-        if (interaction.isButton()) {
+        if (
+            interaction.type === InteractionType.MessageComponent &&
+            interaction.componentType === ComponentType.Button
+        ) {
             await ClientInstance.logButtonInteraction(client, interaction)
         }
     }
