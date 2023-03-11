@@ -105,6 +105,10 @@ class ClientInstance {
         if (interaction.isSelectMenu()) {
             await ClientInstance.handleSelectMenuType(client, interaction)
         }
+
+        if (interaction.isButton()) {
+            await ClientInstance.logButtonInteraction(client, interaction)
+        }
     }
 
     static async handleChatInputCommand (client, interaction) {
@@ -121,17 +125,30 @@ class ClientInstance {
     }
 
     static async handleSelectMenuType (client, interaction) {
-        const value = interaction.values[0]
-        if (interaction.customId === 'hookselect') {
+        const { customId, values } = interaction
+
+        const action = customId === 'hookselect'
+            ? Action.selectHook
+            : customId === 'confirmselect'
+                ? Action.procedeAfterConfirm
+                : null
+
+        if (action) {
             ClientInstance.callAction(
-                client, interaction, value, Action.selectHook
+                client, interaction, values[0], action
             )
         }
-        if (interaction.customId === 'confirmselect') {
-            ClientInstance.callAction(
-                client, interaction, value, Action.procedeAfterConfirm
-            )
-        }
+    }
+
+    static async logButtonInteraction (client, interaction) {
+        const message = interaction.message
+
+        console.log({
+            content: message.content,
+            label: message.components[0].components[0].label,
+            channelId: message.channel_id,
+            authorName: message.author.username
+        })
     }
 
     static async callAction (client, interaction, value, actionFunction) {
