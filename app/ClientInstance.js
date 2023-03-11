@@ -125,15 +125,17 @@ class ClientInstance {
     }
 
     static async handleSelectMenuType (client, interaction) {
-        const value = interaction.values[0]
-        if (interaction.customId === 'hookselect') {
+        const { customId, values } = interaction
+
+        const action = customId === 'hookselect'
+            ? Action.selectHook
+            : customId === 'confirmselect'
+                ? Action.procedeAfterConfirm
+                : null
+
+        if (action) {
             ClientInstance.callAction(
-                client, interaction, value, Action.selectHook
-            )
-        }
-        if (interaction.customId === 'confirmselect') {
-            ClientInstance.callAction(
-                client, interaction, value, Action.procedeAfterConfirm
+                client, interaction, values[0], action
             )
         }
     }
@@ -143,9 +145,9 @@ class ClientInstance {
 
         console.log({
             content: message.content,
-            components: message.components,
-            channel_id: message.channel_id,
-            author: message.author
+            label: message.components[0].components[0].label,
+            channelId: message.channel_id,
+            authorName: message.author.username
         })
     }
 
