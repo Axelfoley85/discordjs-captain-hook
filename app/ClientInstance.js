@@ -112,11 +112,12 @@ class ClientInstance {
             await ClientInstance.handleSelectMenuType(client, interaction)
         }
 
-        if (
-            interaction.type === InteractionType.MessageComponent &&
-            interaction.componentType === ComponentType.Button
-        ) {
-            await ClientInstance.logButtonInteraction(client, interaction)
+        if (interaction.type === InteractionType.MessageComponent) {
+            console.log('Somebody used a message component!')
+            if (interaction.componentType === ComponentType.Button) {
+                console.log('Somebody used a button!')
+                await ClientInstance.logButtonInteraction(client, interaction)
+            }
         }
     }
 
