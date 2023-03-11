@@ -105,6 +105,10 @@ class ClientInstance {
         if (interaction.isSelectMenu()) {
             await ClientInstance.handleSelectMenuType(client, interaction)
         }
+
+        if (interaction.isButton()) {
+            await ClientInstance.logButtonInteraction(client, interaction)
+        }
     }
 
     static async handleChatInputCommand (client, interaction) {
@@ -132,6 +136,17 @@ class ClientInstance {
                 client, interaction, value, Action.procedeAfterConfirm
             )
         }
+    }
+
+    static async logButtonInteraction (client, interaction) {
+        const message = interaction.message
+
+        console.log({
+            content: message.content,
+            components: message.components,
+            channel_id: message.channel_id,
+            author: message.author,
+        });
     }
 
     static async callAction (client, interaction, value, actionFunction) {
