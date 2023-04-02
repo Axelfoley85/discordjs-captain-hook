@@ -1,4 +1,5 @@
-FROM ubuntu:22.04
+FROM debian:latest
+#FROM ubuntu:22.04
 
 ENV LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
