@@ -17,7 +17,7 @@
     "@discordjs/rest": "^1.7.0",
     "discord-api-types": "^0.37.42",
     "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.1.4",
     "node-cron": "^3.0.2",
     "sequelize": "^6.31.1",
     "sequelize-cli": "^6.6.0",
