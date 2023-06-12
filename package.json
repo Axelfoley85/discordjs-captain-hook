@@ -20,7 +20,7 @@
     "dotenv": "^16.1.4",
     "node-cron": "^3.0.2",
     "sequelize": "^6.32.0",
-    "sequelize-cli": "^6.6.0",
+    "sequelize-cli": "^6.6.1",
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
