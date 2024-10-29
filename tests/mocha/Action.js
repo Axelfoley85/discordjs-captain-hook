@@ -4,11 +4,14 @@
 
 const sinon = require('sinon')
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
-chai.use(chaiAsPromised)
+const chaiAsPromised = import('chai-as-promised'); // Dynamic import
+chaiAsPromised.then(module => {
+    chai.use(module.default);
+});
 chai.use(sinonChai)
 const expect = chai.expect
+
 const Action = require('../../app/Action')
 const HooksHandler = require('../../app/HooksHandler')
 const MessageFormat = require('../../app/MessageFormat')

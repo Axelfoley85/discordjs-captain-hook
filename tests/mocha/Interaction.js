@@ -4,13 +4,16 @@
 
 const sinon = require('sinon')
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
+const chaiAsPromised = import('chai-as-promised'); // Dynamic import
+const sinonChai = require('sinon-chai')
+chaiAsPromised.then(module => {
+    chai.use(module.default);
+});
+chai.use(sinonChai)
+const expect = chai.expect
+
 const Interaction = require('../../app/Interaction')
 const { interaction } = require('../config')
-chai.use(chaiAsPromised)
-const expect = chai.expect
-const sinonChai = require('sinon-chai')
-chai.use(sinonChai)
 
 describe('app/Interaction.js', function () {
     describe('# getInfos', function () {

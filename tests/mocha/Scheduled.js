@@ -4,15 +4,18 @@
 
 const sinon = require('sinon')
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
+const chaiAsPromised = import('chai-as-promised'); // Dynamic import
+chaiAsPromised.then(module => {
+    chai.use(module.default);
+});
+chai.use(sinonChai)
+const expect = chai.expect
+
 const { channel, client, scheduledPolls, scheduledMessages } = require('../config')
 const Scheduled = require('../../app/Scheduled')
 const Action = require('../../app/Action')
 const HooksHandler = require('../../app/HooksHandler')
-chai.use(chaiAsPromised)
-chai.use(sinonChai)
-const expect = chai.expect
 
 let clock
 
