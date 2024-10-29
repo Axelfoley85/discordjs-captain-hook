@@ -7,7 +7,7 @@
     "run": "node captainHook.js",
     "fix": "eslint --fix .",
     "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
-    "coverage": "nyc report --reporter=lcov --coverage-exclude=./test/* && ./node_modules/.bin/codecov",
+    "coverage": "nyc report --reporter=lcov --coverage-exclude=./test/*",
     "migrate-db": "npx sequelize-cli db:migrate --env 'default'",
     "custom-run": "nyc mocha --timeout 120000 tests/mocha/Action.js"
   },
@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
-    "discord-api-types": "^0.37.93",
+    "discord-api-types": "^0.37.103",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
     "node-cron": "^3.0.3",
@@ -26,11 +26,10 @@
   "devDependencies": {
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
-    "codecov": "^3.8.3",
     "delay": "^6.0.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
     "mocha": "^10.7.3",
