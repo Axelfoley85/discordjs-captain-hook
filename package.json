@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "captainHook.js",
+  "type": "module",
   "scripts": {
     "run": "node captainHook.js",
     "fix": "eslint --fix .",
