@@ -4,17 +4,19 @@
 
 const sinon = require('sinon')
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
 const sinonChai = require('sinon-chai')
+const chaiAsPromised = import('chai-as-promised'); // Dynamic import
+chaiAsPromised.then(module => {
+  chai.use(module.default);
+});
+chai.use(sinonChai)
+const expect = chai.expect
 const ClientInstance = require('../../app/ClientInstance')
 const { client, interaction, command } = require('../config')
 const Scheduled = require('../../app/Scheduled')
 const Interaction = require('../../app/Interaction')
 const Action = require('../../app/Action')
 const { before } = require('mocha')
-chai.use(chaiAsPromised)
-chai.use(sinonChai)
-const expect = chai.expect
 
 describe('app/ClientInstance.js', function () {
     beforeEach(async function () {

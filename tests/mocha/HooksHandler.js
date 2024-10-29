@@ -3,19 +3,22 @@
 /* eslint-disable */
 
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
 const { describe, it } = require('mocha')
 const { Op } = require('sequelize')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
+const chaiAsPromised = import('chai-as-promised'); // Dynamic import
+chaiAsPromised.then(module => {
+    chai.use(module.default);
+});
+chai.use(sinonChai)
+const expect = chai.expect
+
 const HooksHandler = require('../../app/HooksHandler')
 const Interaction = require('../../app/Interaction')
 const db = require('../../models')
 const Hook = require('../../valueObjects/hook')
 const { hook, interaction } = require('../config')
-chai.use(chaiAsPromised)
-chai.use(sinonChai)
-const expect = chai.expect
 
 describe('../../app/HooksHandler', () => {
 
