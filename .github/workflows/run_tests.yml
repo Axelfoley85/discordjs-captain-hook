@@ -22,7 +22,10 @@ jobs:
     - run: ENVIRONMENT=testing docker compose up --build --abort-on-container-exit --exit-code-from captain-hook
 
     - name: Upload coverage reports to Codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
+        set -e
         curl -Os https://uploader.codecov.io/latest/linux/codecov
         chmod +x codecov
-        ./codecov
+        ./codecov -Z
