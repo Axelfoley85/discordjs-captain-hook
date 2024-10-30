@@ -19,4 +19,4 @@ class Interaction {
     }
 }
 
-module.exports = Interaction
+export default Interaction

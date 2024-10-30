@@ -1,16 +1,17 @@
-const fs = require('node:fs')
-const path = require('node:path')
-const {
+import fs from 'node:fs'
+import path from 'node:path'
+import {
     Client,
     GatewayIntentBits,
     Collection,
     InteractionType,
     ComponentType
-} = require('discord.js')
-const Scheduled = require('./Scheduled')
-const Action = require('./Action')
-const { token } = require('../config')
-const Interaction = require('./Interaction')
+} from 'discord.js'
+import Scheduled from './Scheduled.js'
+import Action from './Action.js'
+import { config } from '../config.js'
+import Interaction from './Interaction.js'
+const { token } = config
 
 class ClientInstance {
     static init () {
@@ -53,14 +54,18 @@ class ClientInstance {
     }
 
     static getFolder (folderName) {
-        const folderPath = path.join(__dirname, '../', folderName)
+        const folderPath = path.join(
+            path.dirname(
+                new URL(import.meta.url).pathname
+            ), '../', folderName
+        )
         const folderFiles = fs
             .readdirSync(folderPath)
             .filter(file => file.endsWith('.js'))
         return [folderFiles, folderPath]
     }
 
-    static setCommands (client) {
+    static async setCommands (client) {
         client.commands = new Collection()
         const [
             commandFiles,
@@ -69,12 +74,12 @@ class ClientInstance {
 
         for (const file of commandFiles) {
             const filePath = path.join(commandsPath, file)
-            const command = require(filePath)
+            const command = await import(filePath)
             client.commands.set(command.data.name, command)
         }
     }
 
-    static parseEvents (client) {
+    static async parseEvents (client) {
         const [
             eventFiles,
             eventsPath
@@ -82,7 +87,7 @@ class ClientInstance {
 
         for (const file of eventFiles) {
             const filePath = path.join(eventsPath, file)
-            const event = require(filePath)
+            const event = await import(filePath)
             if (event.once) {
                 client.once(event.name, (...args) => event.execute(
                     client,
@@ -190,4 +195,4 @@ class ClientInstance {
     }
 }
 
-module.exports = ClientInstance
+export default ClientInstance

@@ -2,15 +2,14 @@
 
 /* eslint-disable */
 
-const chai = require('chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
-const expect = chai.expect
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 
-const Hook = require('../../valueObjects/hook')
-const { hook } = require('../config')
+import { mock } from '../config.js'  // Test config
+const { hook } = mock
+
+chai.use(chaiAsPromised)
+const expect = chai.expect
 
 describe('../../valueObjects/hook.js', () => {
     describe('# toString', () => {

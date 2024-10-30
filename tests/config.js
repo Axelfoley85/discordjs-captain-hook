@@ -1,6 +1,6 @@
-const Hook = require('../valueObjects/hook')
+import Hook from '../valueObjects/hook.js'
 
-module.exports = {
+export const mock = {
     client: {
         channels: {
             cache: {
@@ -16,6 +16,9 @@ module.exports = {
         },
         login () {}
     },
+    hook: new Hook(
+        'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4
+    ),
     channel: {
         bulkDelete () {},
         send () {}
@@ -135,16 +138,6 @@ module.exports = {
         }
     },
     author: { tag: 'authorName' },
-    hook: new Hook(
-        'myTitle',
-        'myDM',
-        1,
-        2,
-        'myDescr',
-        3,
-        4,
-        5
-    ),
     deleteOptions: [
         {
             label: '1, myDM',
@@ -154,3 +147,7 @@ module.exports = {
     ],
     command: { execute () {} }
 }
+
+export const hook = new Hook(
+    'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4
+)

@@ -1,12 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js')
-// const MissionHooks = require('../models/MissionHooks.js')
-const { hookChannel } = require('../config.js')
-const Action = require('../app/Action.js')
-const Interaction = require('../app/Interaction.js')
-const db = require('../models/index.js')
-const Hook = require('../valueObjects/hook.js')
+import { SlashCommandBuilder } from 'discord.js'
+import { hookChannel } from '../config.js'
+import Action from '../app/Action.js'
+import Interaction from '../app/Interaction.js'
+import db from '../models/index.js'
+import Hook from '../valueObjects/hook.js'
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('hookadd')
         .setDescription('add a mission hook')

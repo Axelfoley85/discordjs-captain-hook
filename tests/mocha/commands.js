@@ -2,24 +2,31 @@
 
 /* eslint-disable */
 
-const sinon = require('sinon')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
+import sinon from 'sinon'
+import chai from 'chai'
+import sinonChai from 'sinon-chai'
+import chaiAsPromised from 'chai-as-promised'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import Action from '../../app/Action.js'
+import HooksHandler from '../../app/HooksHandler.js'
+import Interaction from '../../app/Interaction.js'
+import { ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js'
+
+import { config } from '../../config.js'
+const { hookChannel } = config
+
+import { mock } from '../config.js'
+const { interaction, client, channel, hook } = mock
+
+import db from '../../models/index.js'
+
+chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-const path = require('node:path')
-const Action = require('../../app/Action')
-const HooksHandler = require('../../app/HooksHandler')
-const Interaction = require('../../app/Interaction')
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const { interaction, client, channel, hook } = require('../config')
-const { hookChannel } = require('../../config')
-const db = require('../../models')
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 const commandPath = path.join(__dirname, '../../commands')
 
 describe('../../commands', function () {
@@ -203,7 +210,7 @@ describe('../../commands', function () {
                     return sinon.createStubInstance(ActionRowBuilder)
                 })
                 sinon.spy(function () {
-                    return sinon.createStubInstance(SelectMenuBuilder)
+                    return sinon.createStubInstance(StringSelectMenuBuilder)
                 })
 
                 await command.execute(interaction, client)
@@ -226,7 +233,7 @@ describe('../../commands', function () {
                 })
 
                 sinon.spy(function () {
-                    return sinon.createStubInstance(SelectMenuBuilder)
+                    return sinon.createStubInstance(StringSelectMenuBuilder)
                 })
 
                 await command.execute(interaction, client)
@@ -256,7 +263,7 @@ describe('../../commands', function () {
                 })
 
                 sinon.spy(function () {
-                    return sinon.createStubInstance(SelectMenuBuilder)
+                    return sinon.createStubInstance(StringSelectMenuBuilder)
                 })
 
                 await command.execute(interaction, client)
@@ -281,7 +288,7 @@ describe('../../commands', function () {
                 })
 
                 sinon.spy(function () {
-                    return sinon.createStubInstance(SelectMenuBuilder)
+                    return sinon.createStubInstance(StringSelectMenuBuilder)
                 })
 
                 await command.execute(interaction, client)
@@ -310,7 +317,7 @@ describe('../../commands', function () {
             })
 
             sinon.stub(function () {
-                return sinon.createStubInstance(SelectMenuBuilder)
+                return sinon.createStubInstance(StringSelectMenuBuilder)
             })
 
             await command.execute(interaction, client)
@@ -335,7 +342,7 @@ describe('../../commands', function () {
                 })
 
                 sinon.spy(function () {
-                    return sinon.createStubInstance(SelectMenuBuilder)
+                    return sinon.createStubInstance(StringSelectMenuBuilder)
                 })
 
                 await command.execute(interaction, client)

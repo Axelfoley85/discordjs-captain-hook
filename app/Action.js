@@ -1,11 +1,12 @@
 'use strict'
 
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const HooksHandler = require('./HooksHandler')
-const MessageFormat = require('./MessageFormat')
-const Interaction = require('./Interaction')
-const { hookChannel } = require('../config')
-const alphabet = require('../valueObjects/alphabet').alphabet
+import { ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js'
+import HooksHandler from './HooksHandler.js'
+import MessageFormat from './MessageFormat.js'
+import Interaction from './Interaction.js'
+import { config } from '../config.js'
+import { alphabet } from '../valueObjects/alphabet.js'
+const { hookChannel } = config
 
 class Action {
     static async postHooks (info) {
@@ -102,7 +103,7 @@ class Action {
     static async selectHook (interaction, client, deleteId) {
         const row = new ActionRowBuilder()
             .addComponents(
-                new SelectMenuBuilder()
+                new StringSelectMenuBuilder()
                     .setCustomId('confirmselect')
                     .setPlaceholder('Please confirm')
                     .addOptions(
@@ -143,4 +144,4 @@ class Action {
     }
 }
 
-module.exports = Action
+export default Action

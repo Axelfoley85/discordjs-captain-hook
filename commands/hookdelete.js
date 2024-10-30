@@ -1,7 +1,7 @@
 const {
     SlashCommandBuilder,
     ActionRowBuilder,
-    SelectMenuBuilder
+    StringSelectMenuBuilder
 } = require('discord.js')
 const HooksHandler = require('../app/HooksHandler')
 const Interaction = require('../app/Interaction')
@@ -26,7 +26,7 @@ module.exports = {
         } else {
             const row = new ActionRowBuilder()
                 .addComponents(
-                    new SelectMenuBuilder()
+                    new StringSelectMenuBuilder()
                         .setCustomId('hookselect')
                         .setPlaceholder('Nothing selected')
                         .addOptions(deleteOptions)

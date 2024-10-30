@@ -1,5 +1,5 @@
-const { EmbedBuilder } = require('discord.js')
-const { alphabet } = require('../valueObjects/alphabet')
+import { EmbedBuilder } from 'discord.js'
+import { alphabet } from '../valueObjects/alphabet.js'
 
 class MessageFormat {
     static embedMessageFrom (content) {
@@ -25,4 +25,4 @@ class MessageFormat {
     }
 }
 
-module.exports = MessageFormat
+export default MessageFormat
