@@ -16,9 +16,6 @@ export const mock = {
         },
         login () {}
     },
-    hook: new Hook(
-        'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4, 5
-    ),
     channel: {
         bulkDelete () {},
         send () {}
@@ -138,6 +135,16 @@ export const mock = {
         }
     },
     author: { tag: 'authorName' },
+    hook: new Hook(
+        'myTitle',
+        'myDM',
+        1,
+        2,
+        'myDescr',
+        3,
+        4,
+        5
+    ),
     deleteOptions: [
         {
             label: '1, myDM',
@@ -147,7 +154,3 @@ export const mock = {
     ],
     command: { execute () {} }
 }
-
-export const hook = new Hook(
-    'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4
-)
