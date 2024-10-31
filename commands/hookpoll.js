@@ -1,8 +1,9 @@
 import { SlashCommandBuilder } from 'discord.js'
 import HooksHandler from '../app/HooksHandler.js'
 import Action from '../app/Action.js'
-import { voteChannel } from '../config.js'
 import Interaction from '../app/Interaction.js'
+import { config } from '../config.js'
+const { voteChannel } = config
 
 export default {
     data: new SlashCommandBuilder()

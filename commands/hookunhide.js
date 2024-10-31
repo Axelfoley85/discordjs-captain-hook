@@ -1,12 +1,12 @@
-const {
+import {
     SlashCommandBuilder,
     ActionRowBuilder,
     StringSelectMenuBuilder
-} = require('discord.js')
-const HooksHandler = require('../app/HooksHandler')
-const Interaction = require('../app/Interaction')
+} from 'discord.js'
+import HooksHandler from '../app/HooksHandler.js'
+import Interaction from '../app/Interaction.js'
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('hookunhide')
         .setDescription('reveal hidden hook via select menu'),

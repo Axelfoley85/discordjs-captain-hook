@@ -74,7 +74,8 @@ class ClientInstance {
 
         for (const file of commandFiles) {
             const filePath = path.join(commandsPath, file)
-            const command = await import(filePath)
+            const commandModule = await import(filePath)
+            const command = commandModule.default
             client.commands.set(command.data.name, command)
         }
     }
@@ -87,7 +88,8 @@ class ClientInstance {
 
         for (const file of eventFiles) {
             const filePath = path.join(eventsPath, file)
-            const event = await import(filePath)
+            const eventModule = await import(filePath)
+            const event = eventModule.default
             if (event.once) {
                 client.once(event.name, (...args) => event.execute(
                     client,

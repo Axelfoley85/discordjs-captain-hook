@@ -17,7 +17,7 @@ export const mock = {
         login () {}
     },
     hook: new Hook(
-        'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4
+        'myTitle', 'myDM', 1, 2, 'myDescr', 3, 4, 5
     ),
     channel: {
         bulkDelete () {},

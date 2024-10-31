@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js'
-import Action from '../app/Action'
-import Interaction from '../app/Interaction'
-import config from '../config.js'
+import Action from '../app/Action.js'
+import Interaction from '../app/Interaction.js'
+import { config } from '../config.js'
 const { hookChannel } = config
 
 export default {

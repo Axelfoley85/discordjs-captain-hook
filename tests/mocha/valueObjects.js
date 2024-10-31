@@ -5,7 +5,7 @@
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
-import { mock } from '../config.js'  // Test config
+import { mock } from '../config.js'
 const { hook } = mock
 
 chai.use(chaiAsPromised)

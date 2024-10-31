@@ -48,7 +48,8 @@ describe('../../commands', function () {
             'should call updateHookChannel' +
             'post reply',
             async function () {
-                const command = require(path.join(commandPath, 'updatehookchannel'))
+                const commandModule = await import(path.join(commandPath, 'updatehookchannel.js'))
+                const command = commandModule.default
                 const updateStub = sinon.stub(Action, 'updateHookChannel')
                 const replyStub = sinon.stub(interaction, 'reply')
 
@@ -71,7 +72,8 @@ describe('../../commands', function () {
             'interaction.reply' +
             'postHookVote',
             async function () {
-                const command = require(path.join(commandPath, 'hookpoll'))
+                const commandModule = await import(path.join(commandPath, 'hookpoll.js'))
+                const command = commandModule.default
                 sinon.stub(client.channels.cache, 'get')
                     .returns(channel)
                 const pollStub = sinon.stub(HooksHandler, 'getHookPollLines')
@@ -100,7 +102,9 @@ describe('../../commands', function () {
             'Action.updateHookChannel + ' +
             'interaction.reply + ',
             async function () {
-                const command = require(path.join(commandPath, 'hookadd'))
+                const commandModule = await import(path.join(commandPath, 'hookadd.js'))
+                const command = commandModule.default
+
                 sinon.stub(interaction.options, 'getString')
                     .withArgs('title').returns('title')
                     .withArgs('description').returns('descr')
@@ -153,7 +157,9 @@ describe('../../commands', function () {
                         this.name = this.constructor.name
                     }
                 }
-                const command = require(path.join(commandPath, 'hookadd'))
+                const commandModule = await import(path.join(commandPath, 'hookadd.js'))
+                const command = commandModule.default
+
                 sinon.stub(interaction.options, 'getString')
                 sinon.stub(interaction.options, 'getInteger')
                 const createStub = sinon.stub(db.missionHooks, 'create')
@@ -178,7 +184,8 @@ describe('../../commands', function () {
         it(
             'should log and reply error on error',
             async function () {
-                const command = require(path.join(commandPath, 'hookadd'))
+                const commandModule = await import(path.join(commandPath, 'hookadd.js'))
+                const command = commandModule.default
                 sinon.stub(interaction.options, 'getString')
                 sinon.stub(interaction.options, 'getInteger')
                 const createStub = sinon.stub(db.missionHooks, 'create')
@@ -203,7 +210,8 @@ describe('../../commands', function () {
 
     describe('hookdelete', function () {
         it('should succede', async function () {
-                const command = require(path.join(commandPath, 'hookdelete'))
+                const commandModule = await import(path.join(commandPath, 'hookdelete.js'))
+                const command = commandModule.default
                 const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
                 const replyStub = sinon.stub(interaction, 'reply')
                 sinon.spy(function () {
@@ -223,7 +231,9 @@ describe('../../commands', function () {
             })
 
         it('should succede on empty DB', async function () {
-                const command = require(path.join(commandPath, 'hookdelete'))
+                const commandModule = await import(path.join(commandPath, 'hookdelete.js'))
+                const command = commandModule.default
+                
                 const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
                     .resolves([])
                 const replyStub = sinon.stub(interaction, 'reply')
@@ -254,7 +264,8 @@ describe('../../commands', function () {
         it(
             'should succede',
             async function () {
-                const command = require(path.join(commandPath, 'hookhide'))
+                const commandModule = await import(path.join(commandPath, 'hookhide.js'))
+                const command = commandModule.default
                 const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
                 const replyStub = sinon.stub(interaction, 'reply')
 
@@ -278,7 +289,8 @@ describe('../../commands', function () {
         it(
             'should succede on empty DB',
             async function () {
-                const command = require(path.join(commandPath, 'hookhide'))
+                const commandModule = await import(path.join(commandPath, 'hookhide.js'))
+                const command = commandModule.default
                 const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
                     .resolves([])
                 const replyStub = sinon.stub(interaction, 'reply')
@@ -308,7 +320,8 @@ describe('../../commands', function () {
     describe('hookunhide', function () {
         it('should succede', async function () {
             await HooksHandler.hide(1)
-            const command = require(path.join(commandPath, 'hookunhide'))
+            const commandModule = await import(path.join(commandPath, 'hookunhide.js'))
+            const command = commandModule.default
             const getStub = sinon.spy(HooksHandler, 'getHookSelectOptions')
             const replyStub = sinon.stub(interaction, 'reply')
 
@@ -332,7 +345,8 @@ describe('../../commands', function () {
         it(
             'should succede on empty DB',
             async function () {
-                const command = require(path.join(commandPath, 'hookunhide'))
+                const commandModule = await import(path.join(commandPath, 'hookunhide.js'))
+                const command = commandModule.default
                 const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
                     .resolves([])
                 const replyStub = sinon.stub(interaction, 'reply')
