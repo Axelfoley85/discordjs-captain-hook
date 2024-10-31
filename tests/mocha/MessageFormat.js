@@ -2,15 +2,13 @@
 
 /* eslint-disable */
 
-const chai = require('chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
-const expect = chai.expect
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+import MessageFormat from '../../app/MessageFormat.js'
+import { EmbedBuilder } from 'discord.js'
 
-const MessageFormat = require('../../app/MessageFormat')
-const { EmbedBuilder } = require('discord.js')
+chai.use(chaiAsPromised)
+const expect = chai.expect
 
 describe('../../app/MessageFormat', () => {
     describe('# embedMessageFrom', () => {

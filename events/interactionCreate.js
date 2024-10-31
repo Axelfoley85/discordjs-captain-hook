@@ -1,6 +1,6 @@
-const Interaction = require('../app/Interaction')
+import Interaction from '../app/Interaction.js'
 
-module.exports = {
+export default {
     name: 'interactionCreate',
     execute (client, interaction) {
         console.log(

@@ -2,25 +2,29 @@
 
 /* eslint-disable */
 
-const sinon = require('sinon')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
+import sinon from 'sinon'
+import chai from 'chai'
+import sinonChai from 'sinon-chai'
+import chaiAsPromised from 'chai-as-promised' // Direct import
+
+import Action from '../../app/Action.js'
+import HooksHandler from '../../app/HooksHandler.js'
+import MessageFormat from '../../app/MessageFormat.js'
+import Interaction from '../../app/Interaction.js'
+// import { ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js'
+
+import { config } from '../../config.js'
+const { hookChannel } = config
+
+import { mock } from '../config.js'
+const { message, channel, client, member, author, interaction, hook } = mock
+
+import { westMarchesRole } from '../../valueObjects/roles.js'
+import db from '../../models/index.js'
+
+chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-
-const Action = require('../../app/Action')
-const HooksHandler = require('../../app/HooksHandler')
-const MessageFormat = require('../../app/MessageFormat')
-const Interaction = require('../../app/Interaction')
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const { message, channel, client, member, author, interaction, hook } = require('../config')
-const { hookChannel } = require('../../config')
-const { westMarchesRole } = require('../../valueObjects/roles')
-const db = require('../../models')
 
 describe('app/Action', function () {
 
@@ -262,7 +266,7 @@ describe('app/Action', function () {
     //             return sinon.createStubInstance(ActionRowBuilder)
     //         })
     //         sinon.spy(function () {
-    //             return sinon.createStubInstance(SelectMenuBuilder)
+    //             return sinon.createStubInstance(StringSelectMenuBuilder)
     //         })
 
     //         await Action.selectHook(interaction, client, 1)

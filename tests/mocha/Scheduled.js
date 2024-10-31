@@ -2,20 +2,21 @@
 
 /* eslint-disable */
 
-const sinon = require('sinon')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
+import sinon from 'sinon'
+import chai from 'chai'
+import sinonChai from 'sinon-chai'
+import chaiAsPromised from 'chai-as-promised'
+import Scheduled from '../../app/Scheduled.js'
+import Action from '../../app/Action.js'
+import HooksHandler from '../../app/HooksHandler.js'
+
+import { mock } from '../config.js'
+const { client, channel, scheduledPolls, scheduledMessages } = mock
+
+chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
 
-const { channel, client, scheduledPolls, scheduledMessages } = require('../config')
-const Scheduled = require('../../app/Scheduled')
-const Action = require('../../app/Action')
-const HooksHandler = require('../../app/HooksHandler')
 
 let clock
 

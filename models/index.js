@@ -1,22 +1,26 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
-const Sequelize = require('sequelize')
+import fs from 'fs'
+import path from 'path'
+import { Sequelize } from 'sequelize'
+import { config } from '../config.js'
+
+const __filename = new URL(import.meta.url).pathname
+const __dirname = path.dirname(__filename)
 const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'default'
-const config = require('../config.js')[env]
+const CONFIG = config[env]
 const db = {}
 
 let sequelize
-if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env[config.use_env_variable], config)
+if (CONFIG.use_env_variable) {
+    sequelize = new Sequelize(process.env[CONFIG.use_env_variable], CONFIG)
 } else {
     sequelize = new Sequelize(
-        config.database,
-        config.username,
-        config.password,
-        config
+        CONFIG.database,
+        CONFIG.username,
+        CONFIG.password,
+        CONFIG
     )
 }
 
@@ -27,10 +31,10 @@ fs
         ) && (file !== basename
         ) && (file.slice(-3) === '.js')
     })
-    .forEach(file => {
-        const model = require(
-            path.join(__dirname, file))(sequelize, Sequelize.DataTypes
-        )
+    .forEach(async file => {
+        const model = (await import(
+            path.join(__dirname, file)
+        )).default(sequelize, Sequelize.DataTypes)
         db[model.name] = model
     })
 
@@ -43,4 +47,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
-module.exports = db
+export default db

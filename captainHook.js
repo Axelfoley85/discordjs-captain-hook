@@ -1,3 +1,3 @@
-const ClientInstance = require('./app/ClientInstance.js')
+import ClientInstance from './app/ClientInstance.js'
 
 ClientInstance.runApp()

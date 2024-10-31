@@ -1,12 +1,12 @@
-const {
+import {
     SlashCommandBuilder,
     ActionRowBuilder,
-    SelectMenuBuilder
-} = require('discord.js')
-const HooksHandler = require('../app/HooksHandler')
-const Interaction = require('../app/Interaction')
+    StringSelectMenuBuilder
+} from 'discord.js'
+import HooksHandler from '../app/HooksHandler.js'
+import Interaction from '../app/Interaction.js'
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('hookhide')
         .setDescription('hide hook via select menu'),
@@ -33,7 +33,7 @@ module.exports = {
         } else {
             const row = new ActionRowBuilder()
                 .addComponents(
-                    new SelectMenuBuilder()
+                    new StringSelectMenuBuilder()
                         .setCustomId('hookselect')
                         .setPlaceholder('Nothing selected')
                         .addOptions(deleteOptions)

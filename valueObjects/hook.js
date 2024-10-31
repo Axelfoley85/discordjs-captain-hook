@@ -64,4 +64,4 @@ class Hook {
     }
 }
 
-module.exports = Hook
+export default Hook

@@ -2,18 +2,19 @@
 
 /* eslint-disable */
 
-const sinon = require('sinon')
-const chai = require('chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-const sinonChai = require('sinon-chai')
-chaiAsPromised.then(module => {
-    chai.use(module.default);
-});
+import chai from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import chaiAsPromised from 'chai-as-promised'
+import Interaction from '../../app/Interaction.js'
+
+import { mock } from '../config.js'
+const { interaction } = mock
+
+chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
 
-const Interaction = require('../../app/Interaction')
-const { interaction } = require('../config')
 
 describe('app/Interaction.js', function () {
     describe('# getInfos', function () {

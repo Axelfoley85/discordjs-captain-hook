@@ -1,15 +1,14 @@
+import { config } from '../config.js'
 const {
     wMGeneralChannel,
     wMCharacterSheetsChannel,
     wMCharacterIntroductionChannel,
     wMDiscussionChannel
-} = require('../config')
+} = config
 
-module.exports = {
-    westmarchChannels: [
-        wMGeneralChannel,
-        wMCharacterSheetsChannel,
-        wMCharacterIntroductionChannel,
-        wMDiscussionChannel
-    ]
-}
+export const westmarchChannels = [
+    wMGeneralChannel,
+    wMCharacterSheetsChannel,
+    wMCharacterIntroductionChannel,
+    wMDiscussionChannel
+]

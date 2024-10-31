@@ -1,5 +1,5 @@
-const db = require('../models')
-const Hook = require('../valueObjects/hook')
+import db from '../models/index.js'
+import Hook from '../valueObjects/hook.js'
 
 class HooksHandler {
     static async getHooks (filter = {}) {
@@ -120,4 +120,4 @@ class HooksHandler {
     }
 }
 
-module.exports = HooksHandler
+export default HooksHandler

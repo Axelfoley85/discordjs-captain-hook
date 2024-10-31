@@ -2,21 +2,22 @@
 
 /* eslint-disable */
 
-const sinon = require('sinon')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-const chaiAsPromised = import('chai-as-promised'); // Dynamic import
-chaiAsPromised.then(module => {
-  chai.use(module.default);
-});
+import sinon from 'sinon'
+import chai from 'chai'
+import sinonChai from 'sinon-chai'
+import chaiAsPromised from 'chai-as-promised'
+import ClientInstance from '../../app/ClientInstance.js'
+import { mock } from '../config.js'
+const { client, interaction, command } = mock
+import Scheduled from '../../app/Scheduled.js'
+import Interaction from '../../app/Interaction.js'
+import Action from '../../app/Action.js'
+import { before } from 'mocha'
+
+chai.use(chaiAsPromised)
 chai.use(sinonChai)
 const expect = chai.expect
-const ClientInstance = require('../../app/ClientInstance')
-const { client, interaction, command } = require('../config')
-const Scheduled = require('../../app/Scheduled')
-const Interaction = require('../../app/Interaction')
-const Action = require('../../app/Action')
-const { before } = require('mocha')
+
 
 describe('app/ClientInstance.js', function () {
     beforeEach(async function () {

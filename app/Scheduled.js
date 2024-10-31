@@ -1,10 +1,10 @@
-const cron = require('node-cron')
-const { timezone } = require('../config')
-const Action = require('./Action')
-const HooksHandler = require('./HooksHandler')
-const scheduledMessages = require('../valueObjects/scheduledMessages')
-    .scheduledMessages
-const scheduledPolls = require('../valueObjects/scheduledPolls').scheduledPolls
+import cron from 'node-cron'
+import { config } from '../config.js'
+import Action from './Action.js'
+import HooksHandler from './HooksHandler.js'
+import { scheduledMessages } from '../valueObjects/scheduledMessages.js'
+import { scheduledPolls } from '../valueObjects/scheduledPolls.js'
+const { timezone } = config
 
 class Scheduled {
     static async postPolls (client, polls = scheduledPolls) {
@@ -58,4 +58,4 @@ class Scheduled {
     }
 }
 
-module.exports = Scheduled
+export default Scheduled

@@ -1,10 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js')
-const HooksHandler = require('../app/HooksHandler')
-const Action = require('../app/Action')
-const { voteChannel } = require('../config.js')
-const Interaction = require('../app/Interaction')
+import { SlashCommandBuilder } from 'discord.js'
+import HooksHandler from '../app/HooksHandler.js'
+import Action from '../app/Action.js'
+import Interaction from '../app/Interaction.js'
+import { config } from '../config.js'
+const { voteChannel } = config
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('hookpoll')
         .setDescription('make poll for next mission hooks'),

@@ -1,9 +1,8 @@
-const Action = require('../app/Action')
-const westMarchesRole = require('../valueObjects/roles').westMarchesRole
-const westmarchChannels = require('../valueObjects/westmarchChannels')
-    .westmarchChannels
+import Action from '../app/Action.js'
+import { westMarchesRole } from '../valueObjects/roles.js'
+import { westmarchChannels } from '../valueObjects/westmarchChannels.js'
 
-module.exports = {
+export default {
     name: 'messageCreate',
     async execute (client, message) {
         const author = message.author

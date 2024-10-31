@@ -1,6 +1,6 @@
-const Hook = require('../valueObjects/hook')
+import Hook from '../valueObjects/hook.js'
 
-module.exports = {
+export const mock = {
     client: {
         channels: {
             cache: {

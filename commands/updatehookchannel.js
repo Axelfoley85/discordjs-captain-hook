@@ -1,9 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js')
-const Action = require('../app/Action')
-const Interaction = require('../app/Interaction')
-const { hookChannel } = require('../config.js')
+import { SlashCommandBuilder } from 'discord.js'
+import Action from '../app/Action.js'
+import Interaction from '../app/Interaction.js'
+import { config } from '../config.js'
+const { hookChannel } = config
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('updatehookchannel')
         .setDescription('delete all content and repost mission hooks'),

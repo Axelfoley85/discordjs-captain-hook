@@ -1,6 +1,7 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
-module.exports = {
+export const config = {
     clientId: process.env.clientId || 'foo',
     guildId: process.env.guildId || '7565',
     token: process.env.token || 'foo',
