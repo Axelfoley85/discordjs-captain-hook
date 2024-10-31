@@ -1,9 +1,16 @@
+# node
 node_modules/
+
+# environment variables
 .env
-.coverage.lcov
+
+# local custom stuff
 docker-commands.sh
-data/
 database.sqlite.hook_backup
+data/
 test.sqlite
-.nyc_output/
+
+# coverage files
+.coverage.lcov
 coverage/lcov-report
+coverage/tmp

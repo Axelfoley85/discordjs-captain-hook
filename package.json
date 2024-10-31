@@ -7,7 +7,7 @@
   "scripts": {
     "run": "node captainHook.js",
     "fix": "eslint --fix .",
-    "test": "eslint . && c8 mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
+    "test": "eslint --report-unused-disable-directives-severity=off . && c8 mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
     "coverage": "c8 report --reporter=lcov --exclude=./test/*",
     "migrate-db": "npx sequelize-cli db:migrate --env 'default'",
     "custom-run": "c8 mocha --timeout 120000 tests/mocha/commands.js"
@@ -29,12 +29,12 @@
     "chai": "^4.5.0",
     "chai-as-promised": "^8.0.0",
     "delay": "^6.0.0",
-    "eslint": "^8.57.0",
-    "eslint-config-standard": "^17.1.0",
+    "eslint": "^9.13.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
     "mocha": "^10.7.3",
+    "neostandard": "^0.11.7",
     "sinon": "^18.0.0",
     "sinon-chai": "^3.7.0"
   }
