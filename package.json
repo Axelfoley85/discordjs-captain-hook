@@ -7,10 +7,10 @@
   "scripts": {
     "run": "node captainHook.js",
     "fix": "eslint --fix .",
-    "test": "eslint . && nyc mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
-    "coverage": "nyc report --reporter=lcov --coverage-exclude=./test/*",
+    "test": "eslint . && c8 mocha --timeout 10000 'tests/mocha/**/*.js' --recursive",
+    "coverage": "c8 report --reporter=lcov --exclude=./test/*",
     "migrate-db": "npx sequelize-cli db:migrate --env 'default'",
-    "custom-run": "nyc mocha --timeout 120000 tests/mocha/commands.js"
+    "custom-run": "c8 mocha --timeout 120000 tests/mocha/commands.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "c8": "^10.1.2",
     "chai": "^4.5.0",
     "chai-as-promised": "^8.0.0",
     "delay": "^6.0.0",
@@ -34,7 +35,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
     "mocha": "^10.7.3",
-    "nyc": "^17.0.0",
     "sinon": "^18.0.0",
     "sinon-chai": "^3.7.0"
   }
