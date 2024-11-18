@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
-    "discord-api-types": "^0.37.103",
+    "discord-api-types": "^0.37.105",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
     "node-cron": "^3.0.3",
