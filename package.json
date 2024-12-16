@@ -29,7 +29,7 @@
     "chai": "^4.5.0",
     "chai-as-promised": "^8.0.0",
     "delay": "^6.0.0",
-    "eslint": "^9.13.0",
+    "eslint": "^9.17.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.12.0",
     "eslint-plugin-promise": "^6.6.0",
