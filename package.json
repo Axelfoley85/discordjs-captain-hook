@@ -17,7 +17,7 @@
   "dependencies": {
     "@discordjs/rest": "^2.4.3",
     "discord-api-types": "^0.37.119",
-    "discord.js": "^14.17.3",
+    "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
     "node-cron": "^3.0.3",
     "sequelize": "^6.37.3",
