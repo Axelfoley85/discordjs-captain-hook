@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "c8": "^10.1.3",
-    "chai": "^4.5.0",
+    "chai": "^5.1.2",
     "chai-as-promised": "^8.0.1",
     "delay": "^6.0.0",
     "eslint": "^9.28.0",
@@ -36,6 +36,6 @@
     "mocha": "^11.5.0",
     "neostandard": "^0.12.1",
     "sinon": "^20.0.0",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^4.0.0"
   }
 }

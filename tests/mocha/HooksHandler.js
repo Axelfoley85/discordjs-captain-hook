@@ -2,7 +2,7 @@
 
 /* eslint-disable */
 
-import chai from 'chai'
+import * as chai from 'chai'
 import { describe, it } from 'mocha'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -76,7 +76,7 @@ describe('../../app/HooksHandler', () => {
                 1
             )
             const response = await HooksHandler.getHooks()
-    
+
             expect(response[0]).to.deep.equal(expectedHook)
         })
 
@@ -108,7 +108,7 @@ describe('../../app/HooksHandler', () => {
                 status: 'active'
             }}
             const response = await HooksHandler.getHooks(filter)
-    
+
             expect(response[0]).to.deep.equal(expectedHook)
         })
 
@@ -140,7 +140,7 @@ describe('../../app/HooksHandler', () => {
                 status: 'active'
             }}
             const response = await HooksHandler.getHooks(filter)
-    
+
             expect(response[0]).to.equal(undefined)
         })
     })
@@ -192,11 +192,11 @@ describe('../../app/HooksHandler', () => {
         sinon.assert.match(
             response,
             [
-                { 
+                {
                     label: 'myDM',
                     description: 'myTitle...',
                     value: '1,delete'
-                } 
+                }
             ]
         )
     })

@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import sinon from 'sinon'
-import chai from 'chai'
+import * as chai from 'chai'
 import sinonChai from 'sinon-chai'
 import chaiAsPromised from 'chai-as-promised'
 import path from 'node:path'
@@ -233,7 +233,7 @@ describe('../../commands', function () {
         it('should succede on empty DB', async function () {
                 const commandModule = await import(path.join(commandPath, 'hookdelete.js'))
                 const command = commandModule.default
-                
+
                 const getStub = sinon.stub(HooksHandler, 'getHookSelectOptions')
                     .resolves([])
                 const replyStub = sinon.stub(interaction, 'reply')

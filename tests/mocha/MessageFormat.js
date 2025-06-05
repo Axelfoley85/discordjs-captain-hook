@@ -1,8 +1,6 @@
 'use strict'
 
-/* eslint-disable */
-
-import chai from 'chai'
+import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 import MessageFormat from '../../app/MessageFormat.js'
 import { EmbedBuilder } from 'discord.js'

@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 import sinon from 'sinon'
-import chai from 'chai'
+import * as chai from 'chai'
 import sinonChai from 'sinon-chai'
-import chaiAsPromised from 'chai-as-promised' // Direct import
+import chaiAsPromised from 'chai-as-promised'
 
 import Action from '../../app/Action.js'
 import HooksHandler from '../../app/HooksHandler.js'
@@ -179,7 +179,7 @@ describe('app/Action', function () {
                 .returns(true)
 
             await Action.assignRole(member, author, westMarchesRole)
-            
+
             expect(console.log).to.have.been.calledWith(
                 'authorName, already has this role!'
             )
