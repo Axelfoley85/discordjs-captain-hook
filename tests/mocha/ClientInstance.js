@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import sinon from 'sinon'
-import chai from 'chai'
+import * as chai from 'chai'
 import sinonChai from 'sinon-chai'
 import chaiAsPromised from 'chai-as-promised'
 import ClientInstance from '../../app/ClientInstance.js'
@@ -97,12 +97,12 @@ describe('app/ClientInstance.js', function () {
 
         it('should call handlers', async function () {
             sinon.stub(interaction, 'isChatInputCommand').returns(true)
-            sinon.stub(interaction, 'isSelectMenu').returns(true)            
+            sinon.stub(interaction, 'isSelectMenu').returns(true)
 
             const chatInputStub = sinon.stub(ClientInstance, 'handleChatInputCommand')
             const selectMenuStub = sinon.stub(ClientInstance, 'handleSelectMenuType')
             const ButtonStub = sinon.stub(ClientInstance, 'logButtonInteraction')
-            
+
             await ClientInstance.handleInteraction(client, interaction)
 
             sinon.assert.calledOnce(chatInputStub)
@@ -120,7 +120,7 @@ describe('app/ClientInstance.js', function () {
         it('should call execute', async function () {
             sinon.stub(client.commands, 'get').returns(command)
             const executeStub = sinon.spy(command, 'execute')
-            
+
             await ClientInstance.handleChatInputCommand(client, interaction)
 
             sinon.assert.calledOnce(executeStub)
@@ -130,7 +130,7 @@ describe('app/ClientInstance.js', function () {
             sinon.stub(client.commands, 'get').returns(true)
             sinon.stub(command, 'execute').throws('Foo')
             const posterrorStub = sinon.stub(Interaction, 'postError')
-            
+
             await ClientInstance.handleChatInputCommand(client, interaction)
 
             sinon.assert.calledOnce(posterrorStub)
@@ -144,9 +144,9 @@ describe('app/ClientInstance.js', function () {
         it('hookselect should call selectHook', async function () {
             interaction.customId = 'hookselect'
             const callActionStub = sinon.stub(ClientInstance, 'callAction')
-                
+
             await ClientInstance.handleSelectMenuType(client, interaction)
-            
+
             sinon.assert.calledOnceWithExactly(
                 callActionStub,
                 client,
@@ -159,9 +159,9 @@ describe('app/ClientInstance.js', function () {
         it('hookselect should call procedeAfterComfirm', async function () {
             interaction.customId = 'confirmselect'
             const callActionStub = sinon.stub(ClientInstance, 'callAction')
-                
+
             await ClientInstance.handleSelectMenuType(client, interaction)
-            
+
             sinon.assert.calledOnceWithExactly(
                 callActionStub,
                 client,
@@ -171,7 +171,7 @@ describe('app/ClientInstance.js', function () {
             )
         })
     })
-    
+
     describe('ClientInstance.callAction', function () {
         it('should call ActionFunction', async function () {
             const functionStub = sinon.stub(Action, 'procedeAfterConfirm')
@@ -208,7 +208,7 @@ describe('app/ClientInstance.js', function () {
             )
         })
     })
-    
+
     describe('ClientInstance.logButtonInteraction', function () {
         it('should log interaction.message', async function () {
             const logButtonStub = sinon.spy(ClientInstance, 'logButtonInteraction')

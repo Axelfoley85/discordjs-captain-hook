@@ -1,8 +1,6 @@
 'use strict'
 
-/* eslint-disable */
-
-import chai from 'chai'
+import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
 import { mock } from '../config.js'
