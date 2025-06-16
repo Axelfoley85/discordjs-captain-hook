@@ -33,7 +33,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.20.0",
     "eslint-plugin-promise": "^7.2.1",
-    "mocha": "^11.5.0",
+    "mocha": "^11.6.0",
     "neostandard": "^0.12.1",
     "sinon": "^21.0.0",
     "sinon-chai": "^4.0.0"
