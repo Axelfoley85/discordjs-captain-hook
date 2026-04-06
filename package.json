@@ -22,7 +22,7 @@
     "node-cron": "^4.2.1",
     "sequelize": "^6.37.8",
     "sequelize-cli": "^6.6.5",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "c8": "^11.0.0",
